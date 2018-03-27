@@ -1,4 +1,13 @@
-## TigerTalk
+COS333 Spring 2018
+
+## Team Members
+
+David Major (djmajor@princeton.edu)
+Michael Stambler (mas16@princeton.edu)
+Uri Schwartz (uris@princeton.edu)
+TA: Jerry Wei
+
+
 
 You can use the [editor on GitHub](https://github.com/djmajor97/djmajor.github.io/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
 
