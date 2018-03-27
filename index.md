@@ -7,7 +7,13 @@ COS333 Spring 2018
 3. Uri Schwartz (uris@princeton.edu)
 4. Jerry Wei
 
-### Timeline
+## Elevator Speech
+
+Extracurricular clubs and actitivities are a major part of each student's life at Princeton, and they have ramifactions in one's academic, intellectual, and social life. Yet, students often make decisions on which clubs to join (especially freshman year) that are based off of little knowledge but have a huge impact on their life in college. TigerTalk aims to be the first source of honest, centralized user-inputted information on Princeton extracurricular clubs and organizations. The website will give students the opportunity to receive honest feedback on clubs and to give them information on interview processes.
+
+Check out our [design document here!](https://docs.google.com/document/d/1XlU_xynsolg1ufB3rKBThPAp3B9ScbAzqk5FxwONP-w/edit) 
+
+## Timeline
 
 ```markdown
 
@@ -50,6 +56,7 @@ COS333 Spring 2018
     Keep fixing bugs based on user demos.
     Add any fixes and feedback from beta test.
 
+```
 
 
 You can use the [editor on GitHub](https://github.com/djmajor97/djmajor.github.io/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
