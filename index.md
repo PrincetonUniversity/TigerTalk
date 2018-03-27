@@ -7,6 +7,44 @@ Michael Stambler (mas16@princeton.edu)
 Uri Schwartz (uris@princeton.edu)
 TA: Jerry Wei
 
+### Timeline
+
+```markdown
+
+1. Monday, March 26th (when we return from break):
+    Git/filesharing system set up and working.
+    Clear understanding of the systems we will be using and outline of implementation:
+    MongoDB Databse Setup
+    Basic frontend webpage setup
+    Learn Django REST framework
+    Have a basic version of the welcome page set up.
+    Scraping of ODUS database complete.
+2. Monday, April 2nd:
+    Club main pages finished. This includes club names, descriptions, and POCs (all from ODUS database).
+    Core server implementation finished.
+    Some means of accessing club pages from homepage/splash page (not necessarily through search yet). 
+3. Monday, April 9th: 
+    “Review” and “interview” sub-pages created for each club main page with overall details (without “boxes” system setup):
+    Positive/negative/neutral ratio and # reviews for “interviews” page.
+    Star rankings and # reviews for “reviews” page.
+    Search box from welcome page -> club pages implemented.
+4. Monday, April 16th:
+“Review” sub-page fully implemented.
+“Boxes” system for reviews fully implemented.
+Monday, April 23rd (Alpha test is that Friday):
+“Interview” sub-page fully implemented.
+Adapted version of “Boxes” system from “Review” sub-page applied to Interview” sub-page.
+Begin having users real-time test the website.
+Monday, April 30th (Beta test is that Friday):
+Sorting feature on sub-pages implemented.
+“I’m feeling lucky” button implemented.
+“Top 20” feature implemented
+Based on feedback from Alpha test: debugging, fixing, adding tips.
+Front-end design refined and perfected.
+Monday, May 7th (beginning of demo days!!!):
+Keep fixing bugs based on user demos.
+Add any fixes and feedback from beta test.
+
 
 
 You can use the [editor on GitHub](https://github.com/djmajor97/djmajor.github.io/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
