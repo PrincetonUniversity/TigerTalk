@@ -19,15 +19,18 @@ COS333 Spring 2018
     Learn Django REST framework
     Have a basic version of the welcome page set up.
     Scraping of ODUS database complete.
+    
 2. Monday, April 2nd:
     Club main pages finished. This includes club names, descriptions, and POCs (all from ODUS database).
     Core server implementation finished.
     Some means of accessing club pages from homepage/splash page (not necessarily through search yet). 
+    
 3. Monday, April 9th: 
     “Review” and “interview” sub-pages created for each club main page with overall details (without “boxes” system setup):
     Positive/negative/neutral ratio and # reviews for “interviews” page.
     Star rankings and # reviews for “reviews” page.
     Search box from welcome page -> club pages implemented.
+    
 4. Monday, April 16th:
 “Review” sub-page fully implemented.
 “Boxes” system for reviews fully implemented.
