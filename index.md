@@ -2,10 +2,10 @@ COS333 Spring 2018
 
 ## Team Members
 
-David Major (djmajor@princeton.edu)
-Michael Stambler (mas16@princeton.edu)
-Uri Schwartz (uris@princeton.edu)
-TA: Jerry Wei
+1. David Major (djmajor@princeton.edu)
+2. Michael Stambler (mas16@princeton.edu)
+3. Uri Schwartz (uris@princeton.edu)
+4. Jerry Wei
 
 ### Timeline
 
