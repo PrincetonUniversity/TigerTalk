@@ -32,21 +32,23 @@ COS333 Spring 2018
     Search box from welcome page -> club pages implemented.
     
 4. Monday, April 16th:
-“Review” sub-page fully implemented.
-“Boxes” system for reviews fully implemented.
-Monday, April 23rd (Alpha test is that Friday):
-“Interview” sub-page fully implemented.
-Adapted version of “Boxes” system from “Review” sub-page applied to Interview” sub-page.
-Begin having users real-time test the website.
-Monday, April 30th (Beta test is that Friday):
-Sorting feature on sub-pages implemented.
-“I’m feeling lucky” button implemented.
-“Top 20” feature implemented
-Based on feedback from Alpha test: debugging, fixing, adding tips.
-Front-end design refined and perfected.
-Monday, May 7th (beginning of demo days!!!):
-Keep fixing bugs based on user demos.
-Add any fixes and feedback from beta test.
+    “Review” sub-page fully implemented.
+    “Boxes” system for reviews fully implemented.
+    
+5. Monday, April 23rd (Alpha test is that Friday):
+    “Interview” sub-page fully implemented.
+    Adapted version of “Boxes” system from “Review” sub-page applied to Interview” sub-page.
+    Begin having users real-time test the website.
+    Monday, April 30th (Beta test is that Friday):
+    Sorting feature on sub-pages implemented.
+    “I’m feeling lucky” button implemented.
+    “Top 20” feature implemented
+    Based on feedback from Alpha test: debugging, fixing, adding tips.
+    Front-end design refined and perfected.
+    
+6. Monday, May 7th (beginning of demo days!!!):
+    Keep fixing bugs based on user demos.
+    Add any fixes and feedback from beta test.
 
 
 
