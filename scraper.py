@@ -61,8 +61,6 @@ for i in range(1, len(clubs)):
 				if (link_type == "Website"):
 					link = club_data[k]['href']
 					info_str += "Website: " + link + "; "
-	#print(club_data)
-	#print("%s; %s; %s; %s" % (club_name, club_description, club_category, info_str))
 	club_category = club_category[10:]
 	club_category = club_category.split(',')
 	if ("" in club_category):
