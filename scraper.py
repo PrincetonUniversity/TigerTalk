@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 import re
 import json
+import sys
 
 page = requests.get("https://odusapps.princeton.edu/StudentOrg/new/directory.php")
 soup = BeautifulSoup(page.content, 'html.parser')
@@ -9,8 +10,14 @@ html = list(soup.children)[3]
 body = list(html.children)[3]
 clubs = body.find_all('div', class_='jumbotron')
 
+category_pk = 1
+leader_pk = 1
+club_pk = 1
+category_list = []
+
 print('[')
 for i in range(1, len(clubs)):
+	num = i
 	club_data = list(clubs[i].children)
 	club_name = club_data[0].get_text()
 	club_data[2] = club_data[2].replace('\n', '')
@@ -66,6 +73,26 @@ for i in range(1, len(clubs)):
 	if ("" in club_category):
 		club_category.remove("")
 
+	for k in range(0,len(club_category)):
+		if club_category[k][0] == " ":
+			club_category[k] = club_category[k][1:]
+		if club_category[k] not in category_list:
+			category_list.append(club_category[k])
+			category = json.dumps({
+    			'model': 'catalog.category',
+    			'pk': category_pk,
+    			'fields': {
+    				'name': club_category[k]
+    			}
+			})
+			category_pk += 1
+			sys.stdout.write(category)
+			sys.stdout.write(',')
+		# PRINT COMMA AFTERWARDS?
+	category_final = []
+	for k in range(0,len(club_category)):
+		category_final.append(category_list.index(club_category[k]) + 1)
+
 	info_str = info_str.split(';')
 	if (" " in info_str):
 		info_str.remove(" ")
@@ -73,8 +100,8 @@ for i in range(1, len(clubs)):
 	leaders = []
 	email = ""
 	site = ""
-	for i in range(0, len(info_str)):
-		array = info_str[i].split(':')
+	for l in range(0, len(info_str)):
+		array = info_str[l].split(':')
 		for j in range(0, len(array)):
 			if (array[j][0] == " "):
 				array[j] = array[j][1:]
@@ -82,23 +109,37 @@ for i in range(1, len(clubs)):
 				email = array[j+1][1:]
 			elif (array[j] == "President" or array[j] == "Co-President" or array[j] == "Treasurer"):
 				leader_info = array[j+1].split(',')
-				leader = {}
-				leader["leader_name"] = leader_info[0][1:]
-				leader["leader_title"] = array[j]
-				leader["leader_email"] = leader_info[1][1:]
-				leaders.append(leader)
+				leader = json.dumps({
+    				'model': 'catalog.leader',
+    				'pk': leader_pk,
+    				'fields': {
+    					'name': leader_info[0][1:],
+    					'title': array[j],
+    					'email': leader_info[1][1:],
+    				}
+				})
+				leaders.append(leader_pk)
+				leader_pk += 1
+				sys.stdout.write(leader)
+				sys.stdout.write(',')
 			elif (array[j] == "Website"):
 				site = array[j+1][1:]+':'+array[j+2]
 
-
-	course = json.dumps({
-    	'name': club_name,
-    	'desc': club_description,
-    	'category': club_category,
-    	'email': email,
-    	'leaders': [le for le in leaders],
-    	'website': site,
+	club = json.dumps({
+		'model': 'catalog.club',
+		'pk': club_pk,
+		'fields': {
+	    	'name': club_name,
+	    	'desc': club_description,
+	    	'category': category_final,
+	    	'email': email,
+	    	'leaders': leaders,
+	    	'website': site,
+    	}
 	})
-	print(course)
+	sys.stdout.write(club)
+	if (num < len(clubs)-1):
+		sys.stdout.write(',')
+	club_pk += 1
 
 print(']')
