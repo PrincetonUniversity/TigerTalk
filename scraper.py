@@ -87,8 +87,7 @@ for i in range(1, len(clubs)):
 			})
 			category_pk += 1
 			sys.stdout.write(category)
-			sys.stdout.write(',')
-		# PRINT COMMA AFTERWARDS?
+			print(',')
 	category_final = []
 	for k in range(0,len(club_category)):
 		category_final.append(category_list.index(club_category[k]) + 1)
@@ -121,7 +120,7 @@ for i in range(1, len(clubs)):
 				leaders.append(leader_pk)
 				leader_pk += 1
 				sys.stdout.write(leader)
-				sys.stdout.write(',')
+				print(',')
 			elif (array[j] == "Website"):
 				site = array[j+1][1:]+':'+array[j+2]
 
@@ -139,7 +138,7 @@ for i in range(1, len(clubs)):
 	})
 	sys.stdout.write(club)
 	if (num < len(clubs)-1):
-		sys.stdout.write(',')
+		print(',')
 	club_pk += 1
 
 print(']')
