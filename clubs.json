@@ -174,7 +174,7 @@
 {"model": "catalog.leader", "pk": 108, "fields": {"name": "Colter Smith '17", "title": "Treasurer", "email": "crsmith@princeton.edu"}},
 {"model": "catalog.club", "pk": 50, "fields": {"name": "Brewers, Princeton University", "desc": "The Princeton University Brewers are devoted promoting a love of beer, as well as providing its members with the opportunity to learn more about and brew their own craft beers.", "category": [3], "email": "brew@princeton.edu", "leaders": [107, 108], "website": ""}},
 {"model": "catalog.leader", "pk": 109, "fields": {"name": "Nathan J. Finkle '21", "title": "President", "email": "nfinkle@princeton.edu"}},
-{"model": "catalog.leader", "pk": 110, "fields": {"name": "Amber Y. Lin '19", "title": "Treasurer", "email": "amberl@princeton.edu"}},
+{"model": "catalog.leader", "pk": 110, "fields": {"name": "Sam Berman '21", "title": "Treasurer", "email": "szberman@princeton.edu"}},
 {"model": "catalog.club", "pk": 51, "fields": {"name": "Bridge Club", "desc": "We hold weekly contract bridge games and lessons on campus. We also travel to local and national tournaments and organize a competition team for the ACBL Collegiate Bridge Bowl every year.", "category": [3, 11], "email": "nfinkle@princeton.edu", "leaders": [109, 110], "website": "http://bridge.princeton.edu"}},
 {"model": "catalog.leader", "pk": 111, "fields": {"name": "Jack Tait '20", "title": "President", "email": "jtait@princeton.edu"}},
 {"model": "catalog.leader", "pk": 112, "fields": {"name": "Erin H. Lynch '18", "title": "Co-President", "email": "ehlynch@princeton.edu"}},

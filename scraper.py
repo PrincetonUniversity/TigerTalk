@@ -49,7 +49,8 @@ for i in range(1, len(clubs)):
 					info_str += "Website: " + link + "; "
 	else:
 		club_category = ""
-		skip = False;
+		skip = False
+		seen_site = False
 		for k in range(4, len(club_data)):
 			if (skip):
 				skip = False;
@@ -65,9 +66,10 @@ for i in range(1, len(clubs)):
 				skip = True;
 			elif (type(club_data[k]).__name__ == "Tag" and club_data[k].name == 'a'):
 				link_type = list(club_data[k].children)[0]['title']
-				if (link_type == "Website"):
+				if (link_type == "Website" and seen_site == False):
 					link = club_data[k]['href']
 					info_str += "Website: " + link + "; "
+					seen_site = True
 	club_category = club_category[10:]
 	club_category = club_category.split(',')
 	if ("" in club_category):
