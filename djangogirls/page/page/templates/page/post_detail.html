@@ -1,0 +1,23 @@
+{% extends 'page/base.html' %}
+
+{% block content %}
+    <div class="post">
+        <center><h1>{{ club.name }}</h1>
+        <p>{{ club.desc }}</p></center>
+        <br />
+        <body>
+        	{% for leader in club.leaders.all %}
+        		<p><b>{{leader.title}}:</b> {{ leader.name }}</p>
+        	{% endfor %}
+        	<p><b>Category:</b> 
+        	{% for cat in club.category.all %}
+        		{{cat.name}}, 
+        	{% endfor %}
+        	</p>
+         	<p><b>Contact:</b> {{club.email}}</p>
+        	{% if club.website %}
+        		<p><b>Website:</b> <a href={{ club.website }}> {{ club.website }}</a></p>
+        	{% endif %}
+    	</body>	
+    </div>
+{% endblock %}
