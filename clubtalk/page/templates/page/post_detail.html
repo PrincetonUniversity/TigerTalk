@@ -11,9 +11,7 @@
         		<p><b>{{leader.title}}:</b> <a href={{ leader.email|mail }}>{{ leader.name }}</a></p>
         	{% endfor %}
         	<p><b>Category:</b> 
-        	{% for cat in club.category.all %}
-        		{{cat.name}}, 
-        	{% endfor %}
+        	{{ club.category.all|join:", " }}
         	</p>
          	<p><b>Contact:</b> <a href={{ club.email|mail }}>{{club.email}}</a></p>
         	{% if club.website %}
