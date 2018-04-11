@@ -29,6 +29,7 @@ for i in range(1, len(clubs)):
 	if (re.search(r"Category:", club_category, re.IGNORECASE) != None):
 		club_info = list(club_data[5].children)
 		skip = False;
+		seen_site = False
 		for j in range(len(club_info)):
 			if (skip):
 				skip = False;
@@ -44,9 +45,10 @@ for i in range(1, len(clubs)):
 				skip = True;
 			elif (type(club_info[j]).__name__ == "Tag" and club_info[j].name == 'a'):
 				link_type = list(club_info[j].children)[0]['title']
-				if (link_type == "Website"):
+				if (link_type == "Website" and seen_site == False):
 					link = club_info[j]['href']
 					info_str += "Website: " + link + "; "
+					seen_site = True
 	else:
 		club_category = ""
 		skip = False
@@ -81,7 +83,7 @@ for i in range(1, len(clubs)):
 		if club_category[k] not in category_list:
 			category_list.append(club_category[k])
 			category = json.dumps({
-    			'model': 'catalog.category',
+    			'model': 'page.category',
     			'pk': category_pk,
     			'fields': {
     				'name': club_category[k]
@@ -111,7 +113,7 @@ for i in range(1, len(clubs)):
 			elif (array[j] == "President" or array[j] == "Co-President" or array[j] == "Treasurer"):
 				leader_info = array[j+1].split(',')
 				leader = json.dumps({
-    				'model': 'catalog.leader',
+    				'model': 'page.leader',
     				'pk': leader_pk,
     				'fields': {
     					'name': leader_info[0][1:],
@@ -127,7 +129,7 @@ for i in range(1, len(clubs)):
 				site = array[j+1][1:]+':'+array[j+2]
 
 	club = json.dumps({
-		'model': 'catalog.club',
+		'model': 'page.club',
 		'pk': club_pk,
 		'fields': {
 	    	'name': club_name,
