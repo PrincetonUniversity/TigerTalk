@@ -1,4 +1,5 @@
 {% extends 'page/base.html' %}
+{% load templatetags %}
 
 {% block content %}
     <div class="post">
@@ -7,14 +8,14 @@
         <br />
         <body>
         	{% for leader in club.leaders.all %}
-        		<p><b>{{leader.title}}:</b> {{ leader.name }}</p>
+        		<p><b>{{leader.title}}:</b> <a href={{ leader.email|mail }}>{{ leader.name }}</a></p>
         	{% endfor %}
         	<p><b>Category:</b> 
         	{% for cat in club.category.all %}
         		{{cat.name}}, 
         	{% endfor %}
         	</p>
-         	<p><b>Contact:</b> {{club.email}}</p>
+         	<p><b>Contact:</b> <a href={{ club.email|mail }}>{{club.email}}</a></p>
         	{% if club.website %}
         		<p><b>Website:</b> <a href={{ club.website }}> {{ club.website }}</a></p>
         	{% endif %}
