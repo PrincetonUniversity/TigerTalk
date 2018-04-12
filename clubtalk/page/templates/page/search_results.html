@@ -1,0 +1,26 @@
+{% extends 'page/base.html' %}
+
+{% block content %}
+
+<html>     
+    <head>         
+    <title>Club Search</title>     
+    </head>     
+    <body>       
+        <p>You searched for: <strong>{{ query }}</strong></p>
+   
+        {% if clubs %}           
+            <p>Found {{ clubs|length }} club{{ clubs|pluralize }}.</p>
+            <ul>               
+                {% for club in clubs %}               
+                <div class="post">
+            		<h3><a href="{% url 'post_detail' pk=club.pk %}">{{ club.name }}</a></h3>
+        		</div>              
+                {% endfor %}           
+            </ul>       
+        {% else %}           
+            <p>No clubs matched your search criteria.</p>       
+        {% endif %}     
+    </body>
+</html>
+{% endblock %}

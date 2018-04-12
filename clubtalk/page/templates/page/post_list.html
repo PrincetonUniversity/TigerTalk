@@ -11,6 +11,17 @@
     <br /> 
     <br /> 
     <h2><a href="{% url 'post_list_full' %}">Click here to check out all Princeton clubs</a></h2>
+    <html>
+<head>
+    <title>Search</title>
+</head>
+<body>
+    <form action="/search/" method="get">
+        <input type="text" name="q">
+        <input type="submit" value="Search">
+    </form>
+</body>
+</html>
 </center>
 </body>
 {% endblock %}
