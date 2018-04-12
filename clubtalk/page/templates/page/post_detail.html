@@ -2,6 +2,12 @@
 {% load templatetags %}
 
 {% block content %}
+<body>
+    <form action="/search/" method="get">
+        <input type="text" name="q">
+        <input type="submit" value="Search">
+    </form>
+</body>
     <div class="post">
         <center><h1>{{ club.name }}</h1>
         <p>{{ club.desc }}</p></center>

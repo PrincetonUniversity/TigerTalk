@@ -28,6 +28,6 @@ def search(request):
         if not q:
             error = True
         else:
-            clubs = Club.objects.filter(name__icontains=q)
+            clubs = Club.objects.filter(name__icontains=q) | Club.objects.filter(desc__icontains=q)
             return render(request, 'page/search_results.html', {'clubs': clubs, 'query': q})
     return render(request, 'page/search_form.html', {'error': error})
