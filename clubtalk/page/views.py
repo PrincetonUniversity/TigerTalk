@@ -19,8 +19,17 @@ def post_list(request):
 def post_detail(request, pk):
     club = get_object_or_404(Club, pk=pk)
     review_count = club.reviews.count()
-    print(review_count)
-    return render(request, 'page/post_detail.html', {'club': club, 'review_count': review_count})
+    fun_count = 0;
+    mean_count = 0;
+    star_count = 0;
+    for r in club.reviews.all():
+        fun_count += r.fun;
+        mean_count += r.meaningful;
+        star_count += r.stars;
+
+    if (review_count != 0):
+        star_count = star_count / review_count;
+    return render(request, 'page/post_detail.html', {'club': club, 'review_count': review_count, 'fun_count': fun_count, 'mean_count': mean_count, 'star_count': star_count})
 
 def post_list_full(request):
 	clubs = Club.objects.all()
