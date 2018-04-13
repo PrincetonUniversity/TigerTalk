@@ -13,6 +13,15 @@
         <p>{{ club.desc }}</p></center>
         <br />
         <h2># Reviews: {{review_count}}</h2>
+        {% if review_count %}
+        <h2>Fun count: {{fun_count}}/{{review_count}}</h2>
+        {% endif %}
+        {% if review_count %}
+        <h2>Meaningful count: {{mean_count}}/{{review_count}}</h2>
+        {% endif %}
+        {% if review_count %}
+        <h2>STARS: {{star_count}}/5</h2>
+        {% endif %}
         <br />
         <body>
         	{% for leader in club.leaders.all %}
