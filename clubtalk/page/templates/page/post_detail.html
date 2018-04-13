@@ -12,6 +12,8 @@
         <center><h1>{{ club.name }}</h1>
         <p>{{ club.desc }}</p></center>
         <br />
+        <h2># Reviews: {{review_count}}</h2>
+        <br />
         <body>
         	{% for leader in club.leaders.all %}
         		<p><b>{{leader.title}}:</b> <a href={{ leader.email|mail }}>{{ leader.name }}</a></p>
@@ -23,10 +25,19 @@
         	{% if club.website %}
         		<p><b>Website:</b> <a href={{ club.website }}> {{ club.website }}</a></p>
         	{% endif %}
-
+            <br />
             <h2>Reviews </h2>
+            <p> --------------------------------------------------- </p>
             {% for review in club.reviews.all %}
-            <p> {{ review.text }}</p>
+            <p><b>Fun?</b> {{ review.fun }}</p>
+            <p><b>Meaningful?</b> {{ review.meaningful }}</p>
+            <p><b>Stars:</b> {{ review.stars }}</p>
+            <br />
+            <p><b>Review:</b> {{ review.text }}</p>
+            <p><b>Could be improved:</b> {{ review.CBI }}</p>
+            <br />
+            <p><b>Upvotes/downvotes:</b> {{ review.review }}</p>
+            <p> --------------------------------------------------- </p>
             {% endfor %}
 
             <a href="{% url 'post_new' pk=club.pk %}"{{club.name}}>Submit a review here!</a>
