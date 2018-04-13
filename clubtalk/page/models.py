@@ -15,6 +15,9 @@ class Leader(models.Model):
     def __str__(self):
         return self.name
 
+class Review(models.Model):
+    text = models.TextField()
+
 class Club(models.Model):
     name = models.CharField(max_length=200)
     desc = models.TextField()
@@ -22,6 +25,7 @@ class Club(models.Model):
     email = models.EmailField(max_length=200)
     leaders = models.ManyToManyField(Leader)
     website = models.TextField()
+    reviews = models.ManyToManyField(Review)
 
     def __str__(self):
         return self.name

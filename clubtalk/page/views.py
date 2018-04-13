@@ -3,12 +3,17 @@ from django.utils import timezone
 from .models import Club
 from .models import Category
 from .models import Leader
+from .models import Review
 from django.shortcuts import render, get_object_or_404
+from .forms import PostForm
+from django.shortcuts import redirect
+from django.db import models
 from django.http import HttpResponse
 
 # Create your views here.
 def post_list(request):
-	return render(request, 'page/post_list.html')
+    clubs = Club.objects.all()
+    return render(request, 'page/post_list.html', {'clubs': clubs})
 
 def post_detail(request, pk):
 	club = get_object_or_404(Club, pk=pk)
@@ -16,10 +21,27 @@ def post_detail(request, pk):
 
 def post_list_full(request):
 	clubs = Club.objects.all()
-	return render(request, 'page/post_list_full.html', {'clubs': clubs})	
+	return render(request, 'page/post_list_full.html', {'clubs': clubs})
+
+def post_new(request, pk):
+    if request.method == "POST":
+        form = PostForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.save()
+            club = get_object_or_404(Club, pk=pk)
+            club.reviews.add(review)
+            return redirect('post_detail', pk=pk)
+    else:
+        form = PostForm()
+    return render(request, 'page/post_edit.html', {'form': form})	
 
 def search_form(request):
     return render(request, 'page/search_form.html')
+
+def review_detail(request, pk):
+    review = get_object_or_404(Review, pk=pk)
+    return render(request, 'page/review_detail.html', {'review': review})
 
 def search(request):
     error = False
