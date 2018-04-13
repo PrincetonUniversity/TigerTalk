@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 class Category(models.Model):
@@ -17,6 +18,11 @@ class Leader(models.Model):
 
 class Review(models.Model):
     text = models.TextField()
+    fun = models.IntegerField(validators=[MaxValueValidator(1), MinValueValidator(0)])
+    meaningful = models.IntegerField(validators=[MaxValueValidator(1), MinValueValidator(0)])
+    stars = models.IntegerField(validators=[MaxValueValidator(5), MinValueValidator(1)])
+    CBI = models.CharField(max_length=200)
+    rating = models.IntegerField(default='0')
 
 class Club(models.Model):
     name = models.CharField(max_length=200)

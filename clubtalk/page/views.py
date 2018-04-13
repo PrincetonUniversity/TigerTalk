@@ -9,6 +9,7 @@ from .forms import PostForm
 from django.shortcuts import redirect
 from django.db import models
 from django.http import HttpResponse
+from django.db.models import Count
 
 # Create your views here.
 def post_list(request):
@@ -16,8 +17,10 @@ def post_list(request):
     return render(request, 'page/post_list.html', {'clubs': clubs})
 
 def post_detail(request, pk):
-	club = get_object_or_404(Club, pk=pk)
-	return render(request, 'page/post_detail.html', {'club': club})
+    club = get_object_or_404(Club, pk=pk)
+    review_count = club.reviews.count()
+    print(review_count)
+    return render(request, 'page/post_detail.html', {'club': club, 'review_count': review_count})
 
 def post_list_full(request):
 	clubs = Club.objects.all()
