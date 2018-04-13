@@ -23,6 +23,13 @@
         	{% if club.website %}
         		<p><b>Website:</b> <a href={{ club.website }}> {{ club.website }}</a></p>
         	{% endif %}
+
+            <h2>Reviews </h2>
+            {% for review in club.reviews.all %}
+            <p> {{ review.text }}</p>
+            {% endfor %}
+
+            <a href="{% url 'post_new' pk=club.pk %}"{{club.name}}>Submit a review here!</a>
     	</body>	
     </div>
 {% endblock %}
