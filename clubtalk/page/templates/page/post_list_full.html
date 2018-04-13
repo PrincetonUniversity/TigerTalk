@@ -7,14 +7,15 @@
         <input type="submit" value="Search">
     </form>
 </body>
-<center>
     <body>
-    {% for club in clubs %}
-        <div class="post">
-            <h3><a href="{% url 'post_detail' pk=club.pk %}">{{ club.name }}</a></h3>
-        </div>
-    {% endfor %}
-</center>
+    	<ul>               
+            {% for club in clubs %}               
+                <div class="post">
+            		<h3><a href="{% url 'post_detail' pk=club.pk %}">{{ club.name }}</a></h3>
+            		{{club.desc}}
+        		</div>              
+            {% endfor %}           
+        </ul> 
 </body>
 {% endblock %}
                 
