@@ -6,6 +6,7 @@ urlpatterns = [
     url(r'^post/(?P<pk>\d+)/$', views.post_detail, name='post_detail'),
     url(r'^clublist$', views.post_list_full, name='post_list_full'),
     url(r'^search/$', views.search),
+    url(r'^login$', views.login, name='login'),
     url(r'^post/new/(?P<pk>\d+)/$', views.post_new, name='post_new'),
     url(r'^review/(?P<pk>\d+)/$', views.review_detail, name='review_detail'),
 ]

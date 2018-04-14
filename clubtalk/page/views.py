@@ -10,6 +10,7 @@ from django.shortcuts import redirect
 from django.db import models
 from django.http import HttpResponse
 from django.db.models import Count
+from . import CASClient
 
 # Create your views here.
 def post_list(request):
@@ -65,3 +66,14 @@ def search(request):
             clubs = Club.objects.filter(name__icontains=q) | Club.objects.filter(desc__icontains=q)
             return render(request, 'page/search_results.html', {'clubs': clubs, 'query': q})
     return render(request, 'page/search_form.html', {'error': error})
+
+def login(request):
+    C = CASClient.CASClient(request)
+    auth_attempt = C.Authenticate()
+    if "netid" in auth_attempt:
+        request.session["netid"] = auth_attempt["netid"]
+        return redirect('/clublist')  
+    elif "location" in auth_attempt:
+        return redirect(auth_attempt["location"])
+    else:
+        abort(500)
