@@ -1,20 +1,31 @@
 {% extends 'page/base.html' %}
 
 {% block content %}
+<style>
+.content {
+    max-width: 500px;
+    margin: auto;
+}
+</style>
 <body>
     <center>
     <br />
-    <h1>Welcome to TigerTalk!</h1> 
-        <br />
-        <p>Scroll below for information on all of Princeton's clubs!</p>
-        <p>If you have any questions please contact tigertalk@princeton.edu</p>
+    <div class="intro">
+	    <h1>Welcome to TigerTalk!</h1> 
+	        <br />
+	        <p>Scroll below for information on all of Princeton's clubs!</p>
+	        <p>If you have any questions please contact tigertalk@princeton.edu</p>
+    </div>
     <br /> 
     <br /> 
-    <h2><a href="{% url 'post_list_full' %}">Click here to check out all Princeton clubs</a></h2>
-    <form action="/search/" method="get">
-        <input type="text" name="q">
-        <input type="submit" value="Search">
-    </form>
+    <div class="enter">
+	    <h2><a href="{% url 'post_list_full' %}" class="btn btn-warning btn-block">Click here to check out all Princeton clubs</a></h2>
+	    <h2><a href="{% url 'post_list_full' %}">Click here to check out all Princeton clubs</a></h2>
+	    <form action="/search/" method="get">
+	        <input type="text" name="q">
+	        <input type="submit" value="Search">
+	    </form>
+	</div>
 
 	<div class="dropdown show">
 		<a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -46,6 +57,7 @@
 	<br />
 	<br />
 	<h2><a href="{% url 'login' %}">Click here to login</a></h2>
+</center>
 </body>
 {% endblock %}
                 
