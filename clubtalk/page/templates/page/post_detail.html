@@ -35,18 +35,22 @@
         		<p><b>Website:</b> <a href={{ club.website }}> {{ club.website }}</a></p>
         	{% endif %}
             <br />
+
             <h2>Reviews </h2>
-            <p> --------------------------------------------------- </p>
             {% for review in club.reviews.all %}
-            <p><b>Fun?</b> {{ review.fun }}</p>
-            <p><b>Meaningful?</b> {{ review.meaningful }}</p>
-            <p><b>Stars:</b> {{ review.stars }}</p>
-            <br />
-            <p><b>Review:</b> {{ review.text }}</p>
-            <p><b>Could be improved:</b> {{ review.CBI }}</p>
-            <br />
-            <p><b>Upvotes/downvotes:</b> {{ review.review }}</p>
-            <p> --------------------------------------------------- </p>
+            <div class="panel panel-default">
+                <div class="panel-heading">Review</div>
+                <div class="panel-body">
+                    <p><b>Fun?</b> {{ review.fun }}</p>
+                    <p><b>Meaningful?</b> {{ review.meaningful }}</p>
+                    <p><b>Stars:</b> {{ review.stars }}</p>
+                    <br />
+                    <p><b>Review:</b> {{ review.text }}</p>
+                    <p><b>Could be improved:</b> {{ review.CBI }}</p>
+                    <br />
+                    <p><b>Upvotes/downvotes:</b> {{ review.review }}</p>
+                </div>
+            </div>
             {% endfor %}
 
             <a href="{% url 'post_new' pk=club.pk %}"{{club.name}}>Submit a review here!</a>
