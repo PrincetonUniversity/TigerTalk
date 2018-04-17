@@ -15,7 +15,7 @@ from . import CASClient
 # Create your views here.
 def post_list(request):
     clubs = Club.objects.all()
-    return render(request, 'page/post_list.html', {'clubs': clubs})
+    return render(request, 'page/index.html', {'clubs': clubs})
 
 def post_detail(request, pk):
     club = get_object_or_404(Club, pk=pk)

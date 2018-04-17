@@ -11,8 +11,8 @@
     	<ul>               
             {% for club in clubs %}               
                 <div class="post">
-            		<h3><a href="{% url 'post_detail' pk=club.pk %}">{{ club.name }}</a></h3>
-            		{{club.desc}}
+            		<h3><b><a href="{% url 'post_detail' pk=club.pk %}">{{ club.name }}</a></b></h3>
+            		<p>{{club.desc}}</p>
         		</div>              
             {% endfor %}           
         </ul> 
