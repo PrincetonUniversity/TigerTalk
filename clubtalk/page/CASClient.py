@@ -39,7 +39,6 @@ class CASClient:
       #if os.environ.has_key('REQUEST_URI'):
       if (settings.DEBUG):
          ret = "http://127.0.0.1:" + self.request.get_full_path()
-         print(self.request.get_full_path())
       else:
          ret = 'http://' + self.request.META['HTTP_HOST'] + self.request.get_full_path()
          ret = re.sub(r'ticket=[^&]*&?', '', ret)
