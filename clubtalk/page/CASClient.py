@@ -1,5 +1,6 @@
 import sys, os, cgi, urllib, re
 import urllib.request
+from django.conf import settings
 
 form = cgi.FieldStorage()
 
@@ -29,16 +30,20 @@ class CASClient:
       val_url = self.cas_url + "validate" + \
          '?service=' + urllib.parse.quote(self.ServiceURL()) + \
          '&ticket=' + urllib.parse.quote(ticket)
-      r = urllib.urlopen(val_url).readlines()   # returns 2 lines
+      r = [x.decode('UTF-8') for x in urllib.urlopen(val_url).readlines()]   # returns 2 lines
       if len(r) == 2 and re.match("yes", r[0]) != None:
          return r[1].strip()
       return None
 
    def ServiceURL(self):
       #if os.environ.has_key('REQUEST_URI'):
-      ret = 'http://' + self.request.META['HTTP_HOST'] + self.request.get_full_path()
-      ret = re.sub(r'ticket=[^&]*&?', '', ret)
-      ret = re.sub(r'\?&?$|&$', '', ret)
+      if (settings.DEBUG):
+         ret = "http://127.0.0.1:" + self.request.get_full_path()
+         print(self.request.get_full_path())
+      else:
+         ret = 'http://' + self.request.META['HTTP_HOST'] + self.request.get_full_path()
+         ret = re.sub(r'ticket=[^&]*&?', '', ret)
+         ret = re.sub(r'\?&?$|&$', '', ret)
       return ret
       # return "something is badly wrong"
 
