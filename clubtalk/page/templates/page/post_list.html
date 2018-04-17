@@ -2,22 +2,22 @@
 
 {% block content %}
 
-<style>
-.content {
-    max-width: 500px;
-    margin: auto;
-}
-</style>
-
+<head>
+	<style>
+		.content {
+		    max-width: 500px;
+		    margin: auto;
+		}
+	</style>
+</head>
 <body>
     <center>
     <br />
     <div class="intro">
 	    <h1>Welcome to TigerTalk!</h1> 
-	        <br />
-	        <p>Scroll below for information on all of Princeton's clubs!</p>
-	        <p>If you have any questions please contact tigertalk@princeton.edu</p>
-
+	    <br />
+	    <p>Scroll below for information on all of Princeton's clubs!</p>
+	    <p>If you have any questions please contact tigertalk@princeton.edu</p>
     </div>
     <br /> 
     <br /> 
@@ -29,18 +29,13 @@
 	        <input type="submit" value="Search">
 	    </form>
 	</div>
-
 	<div class="category">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-
-
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
-
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
 		<select class="selectpicker" data-style="btn-warning">
 				<option>All Categories</option>
 	  			<option>A Capella</option>
@@ -62,13 +57,11 @@
 	 			<option>Social</option>
 	 			<option>Special Interest</option>
 	 			<option>Theater</option>
-			</select>
+		</select>
 	</div>
 
 	<div class="dropdown show">
-		<a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		    Filter by Category
-		</a>
+		<a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filter by Category</a>
 
 		<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
 			<a class="dropdown-item" href="#">A Capella</a>
@@ -95,8 +88,7 @@
 	<br />
 	<br />
 	<h2><a href="{% url 'login' %}">Click here to login</a></h2>
-</center>
-
+	</center>
 </body>
 {% endblock %}
                 

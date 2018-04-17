@@ -2,32 +2,29 @@
 
 {% block content %}
 
-<html>
-<body>
+<html>  
+    <head>         
+        <title>Club Search</title>     
+    </head>     
+    <body>
     <form action="/search/" method="get">
         <input type="text" name="q">
         <input type="submit" value="Search">
-    </form>
-</body>     
-    <head>         
-    <title>Club Search</title>     
-    </head>     
-    <body>       
-        <p>You searched for: <strong>{{ query }}</strong></p>
-   
-        {% if clubs %}           
-            <p>Found {{ clubs|length }} club{{ clubs|pluralize }}.</p>
-            <ul>               
-                {% for club in clubs %}               
+    </form>  
+    <p>You searched for: <strong>{{ query }}</strong></p>
+    {% if clubs %}           
+        <p>Found {{ clubs|length }} club{{ clubs|pluralize }}.</p>
+        <ul>               
+            {% for club in clubs %}               
                 <div class="post">
-            		<h3><a href="{% url 'post_detail' pk=club.pk %}">{{ club.name }}</a></h3>
-            		{{club.desc}}
-        		</div>              
-                {% endfor %}           
-            </ul>       
-        {% else %}           
-            <p>No clubs matched your search criteria.</p>       
-        {% endif %}     
+                	<h3><a href="{% url 'post_detail' pk=club.pk %}">{{ club.name }}</a></h3>
+                	{{club.desc}}
+            	</div>              
+            {% endfor %}           
+        </ul>       
+    {% else %}           
+        <p>No clubs matched your search criteria.</p>       
+    {% endif %}     
     </body>
 </html>
 {% endblock %}
