@@ -1,42 +1,13 @@
-<!DOCTYPE HTML>
+{% extends 'page/base.html' %}
 {% load static %}
 <!--
 	Ion by TEMPLATED
 	templated.co @templatedco
 	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
 -->
-<html>
-	<head>
-		<title>TigerTalk Princeton</title>
-		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-		<meta name="description" content="" />
-		<meta name="keywords" content="" />
-		<!--[if lte IE 8]><script src="js/html5shiv.js"></script><![endif]-->
-		<script src="{% static 'js/jquery.min.js' %}"></script>
-		<script src="{% static 'js/skel.min.js' %}"></script>
-		<script src="{% static 'js/skel-layers.min.js' %}"></script>
-		<script src="{% static 'js/init.js' %}"></script>
-			<link rel="stylesheet" href="{% static 'css/skel.css' %}">
-			<link rel="stylesheet" href="{% static 'css/style.css' %}">
-			<link rel="stylesheet" href="{% static 'css/style-xlarge.css' %}">
-		
-	</head>
-	<body id="top">
-
-		<!-- Header -->
-			<header id="header" class="skel-layers-fixed">
-				<h1><a href="#"><b>TigerTalk</b></a></h1>
-				<nav id="nav">
-					<ul>
-						<li><a href="/">Home</a></li>
-						<li><a href="{% url 'post_list_full' %}">All clubs</a></li>
-						<li><a href="right-sidebar.html">Top 20</a></li>
-						<li><a href="no-sidebar.html">About us!</a></li>
-						<li><a href="{% url 'login' %}" class="button special">Log in</a></li>
-					</ul>
-				</nav>
-			</header>
-
+{% block content %}
+<html> 
+	<body id ="top">
 		<!-- Banner -->
 			<section id="banner">
 				<div class="inner">
@@ -196,3 +167,4 @@
 
 	</body>
 </html>
+{% endblock %}

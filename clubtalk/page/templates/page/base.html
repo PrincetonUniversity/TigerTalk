@@ -24,19 +24,19 @@
     <body id="top">
 
         <!-- Header -->
-            <header id="header" class="skel-layers-fixed">
-                <h1><a href="/"><b>TigerTalk</b></a></h1>
-                <nav id="nav">
-                    <ul>
-                        <li><a href="/">Home</a></li>
-                        <li><a href="{% url 'post_list_full' %}">All clubs</a></li>
-                        <li><a href="right-sidebar.html">Top 20</a></li>
-                        <li><a href="no-sidebar.html">About us!</a></li>
-                        <li><a href="#" class="button special">Log in</a></li>
-                    </ul>
-                </nav>
-            </header>
-                {% block content %}
-                {% endblock %}
+        <header id="header" class="skel-layers-fixed">
+            <h1><a href="/"><b>TigerTalk</b></a></h1>
+            <nav id="nav">
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="{% url 'post_list_full' %}">All clubs</a></li>
+                    <li><a href="right-sidebar.html">Top 20</a></li>
+                    <li><a href="no-sidebar.html">About us!</a></li>
+                    <li><a href="{% url 'login' %}" class="button special">Log in</a></li>
+                </ul>
+            </nav>
+        </header>
+        {% block content %}
+        {% endblock %}
     </body>
 </html>

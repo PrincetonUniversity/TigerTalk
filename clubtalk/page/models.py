@@ -17,8 +17,12 @@ class Leader(models.Model):
         return self.name
 
 class Review(models.Model):
+    FUN_CHOICES = (
+        (1, 'Yes'),
+        (0, 'No'),
+    )
     text = models.TextField()
-    fun = models.IntegerField(validators=[MaxValueValidator(1), MinValueValidator(0)])
+    fun = models.IntegerField(choices=FUN_CHOICES)
     meaningful = models.IntegerField(validators=[MaxValueValidator(1), MinValueValidator(0)])
     stars = models.IntegerField(validators=[MaxValueValidator(5), MinValueValidator(1)])
     CBI = models.CharField(max_length=200)
