@@ -63,7 +63,10 @@ def search(request):
         if not q:
             error = True
         else:
-            clubs = Club.objects.filter(name__icontains=q) | Club.objects.filter(desc__icontains=q)
+            q2 = q.split(' ')
+            clubs = Club.objects.filter(name__icontains=q2[0]) | Club.objects.filter(desc__icontains=q2[0])
+            for i in range(1, len(q2)):
+                clubs = clubs.filter(name__icontains=q2[i]) | clubs.filter(desc__icontains=q2[i])
             return render(request, 'page/search_results.html', {'clubs': clubs, 'query': q})
     return render(request, 'page/search_form.html', {'error': error})
 
