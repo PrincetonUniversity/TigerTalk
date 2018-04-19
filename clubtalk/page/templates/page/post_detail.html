@@ -44,6 +44,27 @@
             <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Interview Comments</a>
             </li>
         </ul>
+
+        <section id="one" class="wrapper style1">
+                <div class="container-fluid">
+                    <!--<div class="row">-->
+                        {% for review in club.reviews.all %}
+                            <div class="4u">
+                                <section class="special box">
+                                    <i class="icon major">{{ review.stars }}</i>
+                                    <i class="button1">Fun!</i>
+                                    <i class="button2">fun!</i>
+                                    <h6>Review:</h6>
+                                    <p>{{ review.text }}</p>
+                                    <h5>Could be improved:</h5>
+                                    <p>{{ review.CBI }}</p>
+                                </section>
+                                <br>
+                            </div>
+                        {% endfor %}
+                    <!--</div>-->
+                </div>
+            </section>
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                 <a href="{% url 'post_new' pk=club.pk %}"{{club.name}}>Submit a review here!</a>
