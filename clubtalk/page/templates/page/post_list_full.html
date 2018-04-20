@@ -5,7 +5,7 @@
     <br>
         <br>
         <form action="/search/" method="get">
-            <b>Filter Groups By Category:</b> <br>
+            <b>Filter Clubs By Category:</b> <br>
             <select id="type" name="type">
                 <option value="%">All</option>
                 <option value="17">A Cappella</option>
@@ -35,6 +35,7 @@
             <div class="post">
             	<h3><a href="{% url 'post_detail' pk=club.pk %}">{{ club.name }}</a></h3>
             	<p>{{club.desc}}</p>
+                <br>
         	</div>              
         {% endfor %}           
     </ul> 

@@ -10,7 +10,7 @@
         <br>
         <br>
         <form action="/search/" method="get">
-            <b>Filter Groups By Category:</b> <br>
+            <b>Filter Clubs By Category:</b> <br>
             <select id="type" name="type">
                 <option value="%">All</option>
                 <option value="17">A Cappella</option>
@@ -35,8 +35,10 @@
             <input type="text" name="q">
             <input type="submit" value="Search">
         </form> 
-        
+
+    {% if query %}
     <p>You searched for: <strong>{{ query }}</strong></p>
+    {% endif %}
     {% if clubs %}           
         <p>Found {{ clubs|length }} club{{ clubs|pluralize }}.</p>
         <ul>               
@@ -44,7 +46,8 @@
                 <div class="post">
                 	<h3><a href="{% url 'post_detail' pk=club.pk %}">{{ club.name }}</a></h3>
                 	{{club.desc}}
-            	</div>              
+            	</div>
+                <br>
             {% endfor %}           
         </ul>       
     {% else %}           

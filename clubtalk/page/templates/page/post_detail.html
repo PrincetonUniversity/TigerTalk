@@ -10,7 +10,7 @@
     <br>
     <br>
         <form action="/search/" method="get">
-            <b>Filter Groups By Category:</b> <br>
+            <b>Filter Clubs By Category:</b> <br>
             <select id="type" name="type">
                 <option value="%">All</option>
                 <option value="17">A Cappella</option>
@@ -31,10 +31,10 @@
                 <option value="12">Social</option>
                 <option value="3">Special Interest</option>
                 <option value="16">Theater</option>
-            </select>                        
+            </select>
             <input type="text" name="q">
             <input type="submit" value="Search">
-        </form> 
+        </form>
 
     <div class="section categories">
         <div class="containerTop">
@@ -60,8 +60,12 @@
                         <b>{{leader.title}}:</b> <a href="{{leader.email|mail}}">{{leader.name}}</a>
                         <br>
                     {% endfor %}
-                    <b>Category:</b> {{ club.category.all|join:", " }}<br>
-                    <b>Contact:</b> <a href="{{club.email|mail}}">{{club.email}}</a></p>
+                    {% if club.category.all %}
+                        <b>Category:</b> {{ club.category.all|join:", " }}<br>
+                    {% endif %}
+                    {% if club.email %}
+                        <b>Contact:</b> <a href="{{club.email|mail}}">{{club.email}}</a></p>
+                    {% endif %}
                 </div>
                 <div class="one-half column category">
                     <p><b># Reviews:</b> {{review_count}}<br>
@@ -102,7 +106,7 @@
 
         <!-- Header -->
         <header id="header" class="skel-layers-fixed">
-            <h1><a href="/"><b>TigerTalk</b></a></h1>
+            <h1><a href="/"><b>ClubTalk</b></a></h1>
             <nav id="nav">
                 <ul>
                     <li><a href="/">Home</a></li>
