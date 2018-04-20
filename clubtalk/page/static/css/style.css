@@ -314,15 +314,15 @@
 
 	input[type="checkbox"],
 	input[type="radio"] {
-		-moz-appearance: none;
-		-webkit-appearance: none;
-		-o-appearance: none;
-		-ms-appearance: none;
-		appearance: none;
+		-moz-appearance: radio;
+		-webkit-appearance: radio;
+		-o-appearance: radio;
+		-ms-appearance: radio;
+		appearance: radio;
 		display: block;
 		float: left;
-		margin-right: -2em;
-		opacity: 0;
+		margin-right: 2;
+		opacity: 100;
 		width: 1em;
 		z-index: -1;
 	}
@@ -330,7 +330,7 @@
 		input[type="checkbox"] + label,
 		input[type="radio"] + label {
 			text-decoration: none;
-			color: #555f66;
+			color: #555f66; 
 			cursor: pointer;
 			display: inline-block;
 			font-size: 1em;

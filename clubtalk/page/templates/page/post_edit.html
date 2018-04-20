@@ -1,9 +1,15 @@
 {% extends 'page/base.html' %}
 {% load static %}
+{% load ratings %}
 {% block content %}
+<html>
+    <link rel="stylesheet" href="{% static 'star-ratings/css/star-ratings.css' %}">
+    <script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
+    
     <h1>New review</h1>
     <form method="POST" class="post-form">{% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="save btn btn-default">Submit me!</button>
     </form>
+</html>
 {% endblock %}

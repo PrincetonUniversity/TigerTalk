@@ -1,4 +1,5 @@
 from django.conf.urls import url
+from django.conf.urls import include
 from . import views
 
 urlpatterns = [
@@ -9,4 +10,5 @@ urlpatterns = [
     url(r'^login$', views.login, name='login'),
     url(r'^post/new/(?P<pk>\d+)/$', views.post_new, name='post_new'),
     url(r'^review/(?P<pk>\d+)/$', views.review_detail, name='review_detail'),
+    url(r'^ratings/', include('star_ratings.urls', namespace='ratings')), #app_name='ratings')),
 ]
