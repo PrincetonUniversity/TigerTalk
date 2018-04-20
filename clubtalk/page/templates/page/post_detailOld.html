@@ -1,0 +1,93 @@
+{% extends 'page/base.html' %}
+{% load templatetags %}
+
+{% block content %}
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <form action="/search/" method="get">
+        <input type="text" name="q">
+        <input type="submit" value="Search">
+    </form>
+    <div class="post">
+        <center><h1>{{ club.name }}</h1>
+        <p>{{ club.desc }}</p></center>
+        <br />
+        <h2># Reviews: {{review_count}}</h2>
+        {% if review_count %}
+            <h2>Fun count: {{fun_count}}/{{review_count}}</h2>
+        {% endif %}
+        {% if review_count %}
+            <h2>Meaningful count: {{mean_count}}/{{review_count}}</h2>
+        {% endif %}
+        {% if review_count %}
+            <h2>STARS: {{star_count}}/5</h2>
+        {% endif %}
+        <br />
+        {% for leader in club.leaders.all %}
+            <p><b>{{leader.title}}:</b> <a href={{ leader.email|mail }}>{{ leader.name }}</a></p>
+        {% endfor %}
+        <p><b>Category:</b> {{ club.category.all|join:", " }} </p>
+        <p><b>Contact:</b> <a href={{ club.email|mail }}>{{club.email}}</a></p>
+        {% if club.website %}
+            <p><b>Website:</b> <a href={{ club.website }}> {{ club.website }}</a></p>
+        {% endif %}
+        <br />
+
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+            <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Reviews</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Interview Comments</a>
+            </li>
+        </ul>
+
+        <section id="one" class="wrapper style1">
+                <div class="container-fluid">
+                    <!--<div class="row">-->
+                        {% for review in club.reviews.all %}
+                            <div class="4u">
+                                <section class="special box">
+                                    <i class="icon major">{{ review.stars }}</i>
+                                    <i class="button1">Fun!</i>
+                                    <i class="button2">fun!</i>
+                                    <h6>Review:</h6>
+                                    <p>{{ review.text }}</p>
+                                    <h5>Could be improved:</h5>
+                                    <p>{{ review.CBI }}</p>
+                                </section>
+                                <br>
+                            </div>
+                        {% endfor %}
+                    <!--</div>-->
+                </div>
+            </section>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <a href="{% url 'post_new' pk=club.pk %}"{{club.name}}>Submit a review here!</a>
+                {% for review in club.reviews.all %}
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Review</div>
+                        <div class="panel-body">
+                            <p><b>Fun?</b> {{ review.fun }}</p>
+                            <p><b>Meaningful?</b> {{ review.meaningful }}</p>
+                            <p><b>Stars:</b> {{ review.stars }}</p>
+                            <br />
+                            <p><b>Review:</b> {{ review.text }}</p>
+                            <p><b>Could be improved:</b> {{ review.CBI }}</p>
+                            <br />
+                            <p><b>Upvotes/downvotes:</b> {{ review.review }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                THIS IS WHERE INTERVIEW STUFF WILL GO
+            </div>
+        </div>
+    </div>
+</body>	
+{% endblock %}

@@ -51,6 +51,7 @@
 		margin: 0 0 1em 0;
 		text-transform: uppercase;
 		letter-spacing: 0.125em;
+
 	}
 
 	h6 {
@@ -179,6 +180,17 @@
 		color: #bbb;
 		position: relative;
 		margin: 0 0 1.5em 0;
+	}
+
+	header h2 a {
+		color: #666f77;
+		font-weight: 300;
+		line-height: 1em;
+		margin: 0 0 1em 0;
+		text-transform: uppercase;
+		letter-spacing: 0.125em;
+		font-size: 1.5em;
+		line-height: 1.5em;
 	}
 
 	header h2 + p {
