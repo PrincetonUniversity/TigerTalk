@@ -66,10 +66,11 @@
                 <div class="one-half column category">
                     <p><b># Reviews:</b> {{review_count}}<br>
                     {% if review_count %}
+                        <b>Fun count:</b> {{fun_count}}/{{review_count}}<br>
                         <b>Meaningful count:</b> {{mean_count}}/{{review_count}}<br>
                     {% endif %}
                     {% if review_count %}
-                        <b>STARS:</b> {{star_count|floatformat:"2"}}/5</p>
+                        <b>STARS:</b> {{star_count|floatformat:"-2"}}/5</p>
                     {% endif %}
                 </div>
             </div>            
@@ -80,7 +81,7 @@
         <div class="container">
             <a class="button button-primary" href= {{ club.website }}>Have an opinion?</a>
             {% if club.website %}
-            <a class="button button-primary" href= {{ club.website }}>Check out their website!</a>
+                <a class="button button-primary" href= {{ club.website }}>Check out their website!</a>
             {% endif %}
             <a class="button button-primary" href= {{ club.website }}>Took an interview?</a>
             <br>
