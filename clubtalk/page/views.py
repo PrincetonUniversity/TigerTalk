@@ -20,17 +20,11 @@ def post_list(request):
 def post_detail(request, pk):
     club = get_object_or_404(Club, pk=pk)
     review_count = club.reviews.count()
-    fun_count = 0;
-    mean_count = 0;
-    star_count = 0;
-    for r in club.reviews.all():
-        fun_count += r.fun;
-        mean_count += r.meaningful;
-        star_count += r.stars;
-
+    star_result = 0;
     if (review_count != 0):
-        star_count = star_count / review_count;
-    return render(request, 'page/post_detail.html', {'club': club, 'review_count': review_count, 'fun_count': fun_count, 'mean_count': mean_count, 'star_count': star_count})
+        star_result = club.total_stars / review_count
+
+    return render(request, 'page/post_detail.html', {'club': club, 'review_count': review_count, 'fun_count': club.fun_count, 'mean_count': club.meaning_count, 'star_count': star_result})
 
 def post_list_full(request):
 	clubs = Club.objects.all()
@@ -44,10 +38,14 @@ def post_new(request, pk):
             review.save()
             club = get_object_or_404(Club, pk=pk)
             club.reviews.add(review)
+            club.fun_count += review.fun
+            club.meaning_count += review.meaningful
+            club.total_stars += review.stars
+            club.save()
             return redirect('post_detail', pk=pk)
     else:
         form = PostForm()
-    return render(request, 'page/post_edit.html', {'form': form})	
+    return render(request, 'page/post_edit.html', {'form': form})   
 
 def search_form(request):
     return render(request, 'page/search_form.html')
