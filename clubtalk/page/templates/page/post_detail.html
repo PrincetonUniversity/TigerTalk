@@ -1,93 +1,123 @@
 {% extends 'page/base.html' %}
-{% load templatetags %}
-
+{% load static %}
 {% block content %}
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <form action="/search/" method="get">
-        <input type="text" name="q">
-        <input type="submit" value="Search">
-    </form>
-    <div class="post">
-        <center><h1>{{ club.name }}</h1>
-        <p>{{ club.desc }}</p></center>
-        <br />
-        <h2># Reviews: {{review_count}}</h2>
-        {% if review_count %}
-            <h2>Fun count: {{fun_count}}/{{review_count}}</h2>
-        {% endif %}
-        {% if review_count %}
-            <h2>Meaningful count: {{mean_count}}/{{review_count}}</h2>
-        {% endif %}
-        {% if review_count %}
-            <h2>STARS: {{star_count}}/5</h2>
-        {% endif %}
-        <br />
-        {% for leader in club.leaders.all %}
-            <p><b>{{leader.title}}:</b> <a href={{ leader.email|mail }}>{{ leader.name }}</a></p>
-        {% endfor %}
-        <p><b>Category:</b> {{ club.category.all|join:", " }} </p>
-        <p><b>Contact:</b> <a href={{ club.email|mail }}>{{club.email}}</a></p>
-        {% if club.website %}
-            <p><b>Website:</b> <a href={{ club.website }}> {{ club.website }}</a></p>
-        {% endif %}
-        <br />
-
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item">
-            <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Reviews</a>
-            </li>
-            <li class="nav-item">
-            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Interview Comments</a>
-            </li>
-        </ul>
-
-        <section id="one" class="wrapper style1">
-                <div class="container-fluid">
-                    <!--<div class="row">-->
-                        {% for review in club.reviews.all %}
-                            <div class="4u">
-                                <section class="special box">
-                                    <i class="icon major">{{ review.stars }}</i>
-                                    <i class="button1">Fun!</i>
-                                    <i class="button2">fun!</i>
-                                    <h6>Review:</h6>
-                                    <p>{{ review.text }}</p>
-                                    <h5>Could be improved:</h5>
-                                    <p>{{ review.CBI }}</p>
-                                </section>
-                                <br>
-                            </div>
-                        {% endfor %}
-                    <!--</div>-->
-                </div>
-            </section>
-        <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                <a href="{% url 'post_new' pk=club.pk %}"{{club.name}}>Submit a review here!</a>
-                {% for review in club.reviews.all %}
-                    <div class="panel panel-default">
-                        <div class="panel-heading">Review</div>
-                        <div class="panel-body">
-                            <p><b>Fun?</b> {{ review.fun }}</p>
-                            <p><b>Meaningful?</b> {{ review.meaningful }}</p>
-                            <p><b>Stars:</b> {{ review.stars }}</p>
-                            <br />
-                            <p><b>Review:</b> {{ review.text }}</p>
-                            <p><b>Could be improved:</b> {{ review.CBI }}</p>
-                            <br />
-                            <p><b>Upvotes/downvotes:</b> {{ review.review }}</p>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                THIS IS WHERE INTERVIEW STUFF WILL GO
-            </div>
+    <div class="section categories">
+        <div class="containerTop">
+            <h1 class="section-heading"><u>{{club.name}}</u></h1>
         </div>
+        <div class="containerMain">
+            <p class="section-description">{{club.desc}}</p>
+            <div class="row">
+                <div class="one-half column category">
+                    <img class="u-max-full-width" src="{% static 'images/example_pic1.jpg' %}">
+                </div>
+            
+                <div class="one-half column category">
+                    <img class="u-max-full-width" src="{% static 'images/example_pic2.jpg' %}">
+                </div>
+            </div>
+            <br>
+            <br>
+            <div class="row">
+                <div class="one-half column category">
+                    <p>
+                    {% for leader in club.leaders.all %}
+                        <b>{{leader.title}}:</b> {{ leader.name }}
+                        <br>
+                    {% endfor %}
+                    <b>Category:</b> {{ club.category.all|join:", " }}<br>
+                    <b>Contact:</b> {{club.email}}</a></p>
+                </div>
+                <div class="one-half column category">
+                    <p><b># Reviews:</b> {{review_count}}<br>
+                    {% if review_count %}
+                        <b>Meaningful count:</b> {{mean_count}}/{{review_count}}<br>
+                    {% endif %}
+                    {% if review_count %}
+                        <b>STARS:</b> {{star_count}}/5</p>
+                    {% endif %}
+                </div>
+            </div>            
+        </div>
+        <br>
+        {% if club.website %}
+        <br>
+        <div class="container">
+            <a class="button button-primary" href= {{ club.website }}>Have an opinion?</a>
+            <a class="button button-primary" href= {{ club.website }}>Check out their website!</a>
+            <a class="button button-primary" href= {{ club.website }}>Took an interview?</a>
+            <br>
+            <br>
+        </div>
+        <h3>Leave a review!</h3>
+        {% endif %}
     </div>
-</body>	
+    <div class="container">
+        <section id="one" class="wrapper style1">
+            <div class="row">
+                <div class="twelve columns" style="margin-top: 0%">
+                    <center>Hey this is txt.</center>
+                </div>
+            </div>
+        </section>
+        <body id="top">
+
+        <!-- Header -->
+        <header id="header" class="skel-layers-fixed">
+            <h1><a href="/"><b>TigerTalk</b></a></h1>
+            <nav id="nav">
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="{% url 'post_list_full' %}">All clubs</a></li>
+                    <li><a href="right-sidebar.html">Top 20</a></li>
+                    <li><a href="no-sidebar.html">About us!</a></li>
+                    <li><a href="{% url 'login' %}" class="button special">Log in</a></li>
+                </ul>
+            </nav>
+        </header>
+        </body>
+        <section id="one" class="wrapper style1">
+                    {% for review in club.reviews.all %}
+                    <div class="row">
+                            <div class="six columns" style="margin-top: 0%">
+                                    <center>
+                                    <section class="special box">
+                                        <i class="icon major">{{ review.stars }}</i>
+                                        <i class="button1">Fun!</i>
+                                        <i class="button2">fun!</i>
+                                        <h6>Review:</h6>
+                                        <p>{{ review.text }}</p>
+                                        <h5>Could be improved:</h5>
+                                        <p>{{ review.CBI }}</p>
+                                    </section>
+                                    </center>
+                            </div>
+                            <div class="six columns" style="margin-top: 0%">
+                                
+                                    <center>
+                                    <section class="special box">
+                                        <i class="icon major">{{ review.stars }}</i>
+                                        <i class="button1">Fun!</i>
+                                        <i class="button2">fun!</i>
+                                        <h6>Review:</h6>
+                                        <p>{{ review.text }}</p>
+                                        <h5>Could be improved:</h5>
+                                        <p>{{ review.CBI }}</p>
+                                    </section>
+                                    </center>
+                            </div>
+                    
+                    </div>
+                    {% endfor %}
+        </section>
+    </div>
+
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
 {% endblock %}
