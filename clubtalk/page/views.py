@@ -60,15 +60,28 @@ def search(request):
     error = False
     if 'q' in request.GET:
         q = request.GET['q']
-        if not q:
-            error = True
+        type = request.GET['type']
+
+        if type == "%":
+            if not q:
+                clubs = Club.objects.all()
+                return render(request, 'page/search_results.html', {'clubs': clubs})
+            else:
+                q2 = q.split(' ')
+                clubs = Club.objects.filter(name__icontains=q2[0]) | Club.objects.filter(desc__icontains=q2[0])
+                for i in range(1, len(q2)):
+                    clubs = clubs.filter(name__icontains=q2[i]) | clubs.filter(desc__icontains=q2[i])
+                return render(request, 'page/search_results.html', {'clubs': clubs, 'query': q})
         else:
-            q2 = q.split(' ')
-            clubs = Club.objects.filter(name__icontains=q2[0]) | Club.objects.filter(desc__icontains=q2[0])
-            for i in range(1, len(q2)):
-                clubs = clubs.filter(name__icontains=q2[i]) | clubs.filter(desc__icontains=q2[i])
-            return render(request, 'page/search_results.html', {'clubs': clubs, 'query': q})
-    return render(request, 'page/search_form.html', {'error': error})
+            clubs = Club.objects.filter(category__id=type)
+            if not q:
+                return render(request, 'page/search_results.html', {'clubs': clubs})
+            else:
+                q2 = q.split(' ')
+                clubs = clubs.filter(name__icontains=q2[0]) | clubs.filter(desc__icontains=q2[0])
+                for i in range(1, len(q2)):
+                    clubs = clubs.filter(name__icontains=q2[i]) | clubs.filter(desc__icontains=q2[i])
+                return render(request, 'page/search_results.html', {'clubs': clubs, 'query': q}) 
 
 def login(request):
     C = CASClient.CASClient(request)

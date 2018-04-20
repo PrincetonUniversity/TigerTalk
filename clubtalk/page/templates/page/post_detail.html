@@ -1,11 +1,41 @@
 {% extends 'page/base.html' %}
 {% load static %}
+{% load templatetags %}
 {% block content %}
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
+    <br>
+    <br>
+        <form action="/search/" method="get">
+            <b>Filter Groups By Category:</b> <br>
+            <select id="type" name="type">
+                <option value="%">All</option>
+                <option value="17">A Cappella</option>
+                <option value="5">Academic</option>
+                <option value="6">Career Opportunity</option>
+                <option value="9">Cultural</option>
+                <option value="14">Dance</option>
+                <option value="4">Educational</option>
+                <option value="10">Environmental</option>
+                <option value="11">Games</option>
+                <option value="2">Media</option>
+                <option value="15">Music</option>
+                <option value="13">Performing Arts</option>
+                <option value="8">Political</option>
+                <option value="1">Publication</option>
+                <option value="18">Religious</option>
+                <option value="7">Service</option>
+                <option value="12">Social</option>
+                <option value="3">Special Interest</option>
+                <option value="16">Theater</option>
+            </select>                        
+            <input type="text" name="q">
+            <input type="submit" value="Search">
+        </form> 
+
     <div class="section categories">
         <div class="containerTop">
             <h1 class="section-heading"><u>{{club.name}}</u></h1>
@@ -27,11 +57,11 @@
                 <div class="one-half column category">
                     <p>
                     {% for leader in club.leaders.all %}
-                        <b>{{leader.title}}:</b> {{ leader.name }}
+                        <b>{{leader.title}}:</b> <a href="{{leader.email|mail}}">{{leader.name}}</a>
                         <br>
                     {% endfor %}
                     <b>Category:</b> {{ club.category.all|join:", " }}<br>
-                    <b>Contact:</b> {{club.email}}</a></p>
+                    <b>Contact:</b> <a href="{{club.email|mail}}">{{club.email}}</a></p>
                 </div>
                 <div class="one-half column category">
                     <p><b># Reviews:</b> {{review_count}}<br>
@@ -39,7 +69,7 @@
                         <b>Meaningful count:</b> {{mean_count}}/{{review_count}}<br>
                     {% endif %}
                     {% if review_count %}
-                        <b>STARS:</b> {{star_count}}/5</p>
+                        <b>STARS:</b> {{star_count|floatformat:"2"}}/5</p>
                     {% endif %}
                 </div>
             </div>            
