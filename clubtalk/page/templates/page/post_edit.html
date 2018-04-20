@@ -8,8 +8,57 @@
     
     <h1>New review</h1>
     <form method="POST" class="post-form">{% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="save btn btn-default">Submit me!</button>
-    </form>
+    	<div class="row">
+    		<div class="four columns"><h2></h2>
+    		</div>
+    		<div class="four columns">
+    			<h2>Star ranking:</h2>
+    			<p>{{form.stars}}</p>
+    		</div>
+    		<div class="four columns"><h2></h2>
+    		</div>
+    	</div>
+    	<div class="row">
+    		<div class="three columns"><h2></h2>
+    		</div>
+    		<div class="three columns">
+    			<center>
+    			<h2>Fun?</h2>
+    			<h3>{{form.fun}}</h3>
+    			</center>
+    		</div>
+    		<div class="three columns">
+    			<center>
+    			<h2>Meaningful?</h2>
+    			<h3>{{form.meaningful}}</h3>
+    			</center>
+    		</div>
+    		<div class="three columns">
+    			<h3></h3>
+    		</div>
+    	</div>
+    	<div class="row">
+    		<div class="two columns"><h2></h2>
+    		</div>
+    		<div class="eight columns">
+    			<label for="exampleEmailInput">Your review</label>
+    			{{form.text}}
+    		</div>
+    		<div class="two columns"><h2></h2>
+    		</div>
+    	</div>
+    	<div class="row">
+    		<div class="two columns"><h2></h2>
+    		</div>
+    		<div class="eight columns">
+    			<label for="exampleEmailInput">Could be improved:</label>
+    			{{form.CBI}}
+    		</div>
+    		<div class="two columns"><h2></h2>
+    		</div>
+    	</div>
+    	<center><button type="submit" class="save btn btn-default">Submit me!</button></center>
+  		
+  	</form>
 </html>
 {% endblock %}

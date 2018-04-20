@@ -14,11 +14,11 @@
             <p class="section-description">{{club.desc}}</p>
             <div class="row">
                 <div class="one-half column category">
-                    <img class="u-max-full-width" src="{% static 'images/example_pic1.jpg' %}">
+                    <img class="u-max-normal-width" src="{% static 'images/example_pic1.jpg' %}">
                 </div>
             
                 <div class="one-half column category">
-                    <img class="u-max-full-width" src="{% static 'images/example_pic2.jpg' %}">
+                    <img class="u-max-normal-width" src="{% static 'images/example_pic2.jpg' %}">
                 </div>
             </div>
             <br>
@@ -37,6 +37,9 @@
                     <p><b># Reviews:</b> {{review_count}}<br>
                     {% if review_count %}
                         <b>Meaningful count:</b> {{mean_count}}/{{review_count}}<br>
+                    {% endif %}
+                    {% if review_count %}
+                        <b>Fun count:</b> {{fun_count}}/{{review_count}}<br>
                     {% endif %}
                     {% if review_count %}
                         <b>STARS:</b> {{star_count}}/5</p>
