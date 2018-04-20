@@ -75,17 +75,19 @@
             </div>            
         </div>
         <br>
-        {% if club.website %}
+        
         <br>
         <div class="container">
             <a class="button button-primary" href= {{ club.website }}>Have an opinion?</a>
+            {% if club.website %}
             <a class="button button-primary" href= {{ club.website }}>Check out their website!</a>
+            {% endif %}
             <a class="button button-primary" href= {{ club.website }}>Took an interview?</a>
             <br>
             <br>
         </div>
         <h3><a class="button button-primary" href="{% url 'post_new' pk=club.pk %}">Leave a review!</a></h3>
-        {% endif %}
+        
     </div>
     <div class="container">
         <section id="one" class="wrapper style1">
