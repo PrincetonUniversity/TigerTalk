@@ -35,7 +35,22 @@ def post_detail(request, pk):
     else:
         happy_result = 0
 
-    return render(request, 'page/post_detail2.html', {'club': club, 'review_count': review_count, 'fun_count': club.fun_count, 'mean_count': club.meaning_count, 'happy_result': happy_result, 'star_count': star_result})
+    reviews = club.reviews.all()
+    reviews.time = reviews.order_by('-created_at')
+    reviews.rating = reviews.order_by('-rating')
+
+    if 'sort' in request.GET:
+        sort = request.GET['sort']
+
+        if sort == "1":
+            return render(request, 'page/post_detail2.html', {'club': club, 'review_count': review_count, 'fun_count': club.fun_count, 'mean_count': club.meaning_count, 'happy_result': happy_result, 'star_count': star_result, 'reviews' : reviews.time})
+
+        elif sort == "2":
+            return render(request, 'page/post_detail3.html', {'club': club, 'review_count': review_count, 'fun_count': club.fun_count, 'mean_count': club.meaning_count, 'happy_result': happy_result, 'star_count': star_result, 'reviews' : reviews.rating})
+
+    else:
+        return render(request, 'page/post_detail2.html', {'club': club, 'review_count': review_count, 'fun_count': club.fun_count, 'mean_count': club.meaning_count, 'happy_result': happy_result, 'star_count': star_result, 'reviews' : reviews.time})
+
 
 def post_list_full(request):
 	clubs = Club.objects.all()
@@ -66,7 +81,6 @@ def review_detail(request, pk):
     return render(request, 'page/review_detail.html', {'review': review})
 
 def search(request):
-    error = False
     if 'q' in request.GET:
         q = request.GET['q']
         type = request.GET['type']

@@ -16,6 +16,11 @@ class Leader(models.Model):
     def __str__(self):
         return self.name
 
+
+class AutoDateTimeField(models.DateTimeField):
+    def pre_save(self, model_instance, add):
+        return datetime.datetime.now()
+
 class Review(models.Model):
     FUN_CHOICES = (
         (1, 'Yes'),
@@ -27,6 +32,7 @@ class Review(models.Model):
     stars = models.IntegerField(validators=[MaxValueValidator(5), MinValueValidator(1)])
     CBI = models.CharField(max_length=200)
     rating = models.IntegerField(default='0')
+    created_at = models.DateTimeField(default=timezone.now)
 
 class Club(models.Model):
     name = models.CharField(max_length=200)
