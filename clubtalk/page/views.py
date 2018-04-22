@@ -20,17 +20,20 @@ def post_list(request):
 def post_detail(request, pk):
     club = get_object_or_404(Club, pk=pk)
     review_count = club.reviews.count()
-    star_result = 0;
+    star_result = 0
     if (review_count != 0):
         star_result = club.total_stars / review_count
-    total_happy = 0;
-    happy_result = 0;
+    total_happy = 0
+    happy_result = 0
     for review in club.reviews.all():
         total_happy += review.fun
-    if ((total_happy / review_count) >= .5):
-        happy_result = 1;
-    elif ((total_happy / review_count) < .5):
-        happy_result = 0;
+    if (review_count):
+        if ((total_happy / review_count) >= .5):
+            happy_result = 1
+        elif ((total_happy / review_count) < .5):
+            happy_result = 0
+    else:
+        happy_result = 0
 
     return render(request, 'page/post_detail2.html', {'club': club, 'review_count': review_count, 'fun_count': club.fun_count, 'mean_count': club.meaning_count, 'happy_result': happy_result, 'star_count': star_result})
 
