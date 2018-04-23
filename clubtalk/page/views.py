@@ -38,18 +38,19 @@ def post_detail(request, pk):
     reviews = club.reviews.all()
     reviews.time = reviews.order_by('-created_at')
     reviews.rating = reviews.order_by('-rating')
+    time = 1
 
     if 'sort' in request.GET:
         sort = request.GET['sort']
 
         if sort == "1":
-            return render(request, 'page/post_detail2.html', {'club': club, 'review_count': review_count, 'fun_count': club.fun_count, 'mean_count': club.meaning_count, 'happy_result': happy_result, 'star_count': star_result, 'reviews' : reviews.time})
+            return render(request, 'page/post_detail2.html', {'club': club, 'review_count': review_count, 'fun_count': club.fun_count, 'mean_count': club.meaning_count, 'happy_result': happy_result, 'star_count': star_result, 'reviews' : reviews.time, 'time' : time})
 
         elif sort == "2":
-            return render(request, 'page/post_detail3.html', {'club': club, 'review_count': review_count, 'fun_count': club.fun_count, 'mean_count': club.meaning_count, 'happy_result': happy_result, 'star_count': star_result, 'reviews' : reviews.rating})
+            return render(request, 'page/post_detail2.html', {'club': club, 'review_count': review_count, 'fun_count': club.fun_count, 'mean_count': club.meaning_count, 'happy_result': happy_result, 'star_count': star_result, 'reviews' : reviews.rating})
 
     else:
-        return render(request, 'page/post_detail2.html', {'club': club, 'review_count': review_count, 'fun_count': club.fun_count, 'mean_count': club.meaning_count, 'happy_result': happy_result, 'star_count': star_result, 'reviews' : reviews.time})
+        return render(request, 'page/post_detail2.html', {'club': club, 'review_count': review_count, 'fun_count': club.fun_count, 'mean_count': club.meaning_count, 'happy_result': happy_result, 'star_count': star_result, 'reviews' : reviews.time, 'time' : time})
 
 
 def post_list_full(request):

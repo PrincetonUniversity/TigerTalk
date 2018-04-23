@@ -11,7 +11,7 @@
         <br>
         <form action="/search/" method="get">
             <b>Filter Clubs By Category:</b> <br>
-            <select id="type" name="type">
+            <select id="type" name="type" value="<?php echo $_GET['type'];?>">
                 <option value="%">All</option>
                 <option value="17">A Cappella</option>
                 <option value="5">Academic</option>
@@ -31,7 +31,7 @@
                 <option value="12">Social</option>
                 <option value="3">Special Interest</option>
                 <option value="16">Theater</option>
-            </select>                        
+            </select>                       
             <input type="text" name="q">
             <input type="submit" value="Search">
         </form> 

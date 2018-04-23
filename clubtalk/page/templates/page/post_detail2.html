@@ -137,11 +137,17 @@
               <h4 class="card-title"><center>Reviews</center></h4>
               <form method="get">
                   <b>Sort Reviews By:</b> <br>
+                  {% if time %}
                   <select id="sort" name="sort" onchange="this.form.submit()">
-                      <option hidden>Sort</option>
                       <option selected="selected" value="1">Review Date</option>
                       <option value="2">Review Rating</option>
                   </select>
+                  {% else %}
+                  <select id="sort" name="sort" onchange="this.form.submit()">
+                      <option value="1">Review Date</option>
+                      <option selected="selected" value="2">Review Rating</option>
+                  </select>
+                  {% endif %}
               </form>
             </div>
             <div class="card-footer">
@@ -161,6 +167,7 @@
                   {% else %}
                     <i class="fas fa-eye-slash"></i>
                   {% endif %}
+                  {{ review.created_at }}
                   
 
                 </div>
