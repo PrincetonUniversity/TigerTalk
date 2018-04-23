@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Business Frontpage - Start Bootstrap Template</title>
+    <title>Princeton Club Talk</title>
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
@@ -33,7 +33,7 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="#">Home
+              <a class="nav-link" href="/">Home
                 <span class="sr-only">(current)</span>
               </a>
             </li>
@@ -161,7 +161,6 @@
                   {% else %}
                     <i class="fas fa-eye-slash"></i>
                   {% endif %}
-                  {{review.rating}}
                   
 
                 </div>
@@ -169,16 +168,24 @@
                   <strong>Review</strong><br><br>
                   {{review.text}}<br><br>
                   <strong>Could be improved</strong><br>
-                  {{review.CBI}}
-                  <br><br>
+                  {{review.CBI}}<br><br>
+                  
                   <div class="btn-group btn-group-toggle" data-toggle="buttons">
                     <label class="btn btn-primary active">
-                      <input type="radio" name="options" id="option1" autocomplete="off" checked> <i class="fas fa-arrow-alt-circle-up"></i>
+                      <a href = "{% url 'review_increment' club.pk review.pk %}">
+                        <input type="radio" name="options" id="option1" autocomplete="off" checked> <i class="fas fa-arrow-alt-circle-up"></i>
+                      </a>
                     </label>
-                    <label class="btn btn-secondary">
-                      <input type="radio" name="options" id="option2" autocomplete="off"> <i class="fas fa-arrow-alt-circle-down"></i>
+                    <label class="btn btn-info active">
+                      {{review.rating}}
+                    </label>
+                    <label class="btn btn-primary active">
+                      <a href="{% url 'review_decrement' club.pk review.pk %}">
+                        <input type="radio" name="options" id="option1" autocomplete="off" checked> <i class="fas fa-arrow-alt-circle-down"></i>
+                      </a>
                     </label>
                   </div>
+
                 </div>
               </div>
               <br>
