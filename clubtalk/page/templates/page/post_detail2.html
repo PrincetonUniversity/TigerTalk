@@ -137,7 +137,7 @@
               <h4 class="card-title"><center>Reviews</center></h4>
               <form method="get">
                   <b>Sort Reviews By:</b> <br>
-                  {% if time %}
+                  {% if time == 1 %}
                   <select id="sort" name="sort" onchange="this.form.submit()">
                       <option selected="selected" value="1">Review Date</option>
                       <option value="2">Review Rating</option>

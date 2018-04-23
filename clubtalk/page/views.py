@@ -12,12 +12,15 @@ from django.http import HttpResponse
 from django.db.models import Count
 from . import CASClient
 
+time = 1
+
 # Create your views here.
 def post_list(request):
     clubs = Club.objects.all()
     return render(request, 'page/index.html', {'clubs': clubs})
 
 def post_detail(request, pk):
+    global time
     club = get_object_or_404(Club, pk=pk)
     review_count = club.reviews.count()
     star_result = 0
@@ -38,16 +41,16 @@ def post_detail(request, pk):
     reviews = club.reviews.all()
     reviews.time = reviews.order_by('-created_at')
     reviews.rating = reviews.order_by('-rating')
-    time = 1
 
     if 'sort' in request.GET:
         sort = request.GET['sort']
-
         if sort == "1":
+            time = 1
             return render(request, 'page/post_detail2.html', {'club': club, 'review_count': review_count, 'fun_count': club.fun_count, 'mean_count': club.meaning_count, 'happy_result': happy_result, 'star_count': star_result, 'reviews' : reviews.time, 'time' : time})
 
         elif sort == "2":
-            return render(request, 'page/post_detail2.html', {'club': club, 'review_count': review_count, 'fun_count': club.fun_count, 'mean_count': club.meaning_count, 'happy_result': happy_result, 'star_count': star_result, 'reviews' : reviews.rating})
+            time = 2
+            return render(request, 'page/post_detail2.html', {'club': club, 'review_count': review_count, 'fun_count': club.fun_count, 'mean_count': club.meaning_count, 'happy_result': happy_result, 'star_count': star_result, 'reviews' : reviews.rating, 'time' : time})
 
     else:
         return render(request, 'page/post_detail2.html', {'club': club, 'review_count': review_count, 'fun_count': club.fun_count, 'mean_count': club.meaning_count, 'happy_result': happy_result, 'star_count': star_result, 'reviews' : reviews.time, 'time' : time})
