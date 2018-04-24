@@ -38,6 +38,18 @@ def post_detail(request, pk):
     else:
         happy_result = 0
 
+    total_mean = 0
+    mean_result = 0
+    for review in club.reviews.all():
+        total_mean += review.meaningful
+    if (review_count):
+        if ((total_mean / review_count) >= .5):
+            mean_result = 1
+        elif ((total_happy / review_count) < .5):
+            mean_result = 0
+    else:
+        mean_result = 0
+
     reviews = club.reviews.all()
     reviews.time = reviews.order_by('-created_at')
     reviews.rating = reviews.order_by('-rating')
@@ -46,7 +58,7 @@ def post_detail(request, pk):
         sort = request.GET['sort']
         if sort == "1":
             time = 1
-            return render(request, 'page/post_detail2.html', {'club': club, 'review_count': review_count, 'fun_count': club.fun_count, 'mean_count': club.meaning_count, 'happy_result': happy_result, 'star_count': star_result, 'reviews' : reviews.time, 'time' : time})
+            return render(request, 'page/post_detail2.html', {'club': club, 'review_count': review_count, 'fun_count': club.fun_count, 'mean_count': club.meaning_count, 'happy_result': happy_result, 'mean_result': mean_result, 'star_count': star_result, 'reviews' : reviews.time, 'time' : time})
 
         elif sort == "2":
             time = 2
@@ -55,6 +67,10 @@ def post_detail(request, pk):
     else:
         return render(request, 'page/post_detail2.html', {'club': club, 'review_count': review_count, 'fun_count': club.fun_count, 'mean_count': club.meaning_count, 'happy_result': happy_result, 'star_count': star_result, 'reviews' : reviews.time, 'time' : time})
 
+def top20(request):
+    clubs = Club.objects.all()
+    clubs = clubs.order_by('-total_stars', 'name')[:20]
+    return render(request, 'page/top20.html', {'clubs': clubs})
 
 def post_list_full(request):
 	clubs = Club.objects.all()
@@ -79,10 +95,15 @@ def post_new(request, pk):
             review = form.save(commit=False)
             review.save()
             club = get_object_or_404(Club, pk=pk)
-            club.reviews.add(review)
             club.fun_count += review.fun
             club.meaning_count += review.meaningful
-            club.total_stars += review.stars
+            if club.reviews.count() != 0:
+                club.total_stars = club.total_stars * club.reviews.count();
+                club.total_stars += review.stars
+                club.total_stars = club.total_stars / club.reviews.count();
+            else: 
+                club.total_stars += review.stars
+            club.reviews.add(review)
             club.save()
             return redirect('post_detail', pk=pk)
     else:
