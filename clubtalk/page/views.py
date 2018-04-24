@@ -25,7 +25,7 @@ def post_detail(request, pk):
     review_count = club.reviews.count()
     star_result = 0
     if (review_count != 0):
-        star_result = club.total_stars / review_count
+        star_result = club.total_stars;
     total_happy = 0
     happy_result = 0
     for review in club.reviews.all():
@@ -100,7 +100,7 @@ def post_new(request, pk):
             if club.reviews.count() != 0:
                 club.total_stars = club.total_stars * club.reviews.count();
                 club.total_stars += review.stars
-                club.total_stars = club.total_stars / club.reviews.count();
+                club.total_stars = club.total_stars / (club.reviews.count()+1);
             else: 
                 club.total_stars += review.stars
             club.reviews.add(review)

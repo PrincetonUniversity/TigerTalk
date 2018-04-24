@@ -44,7 +44,7 @@ class Club(models.Model):
     reviews = models.ManyToManyField(Review)
     fun_count = models.IntegerField(default = 0)
     meaning_count = models.IntegerField(default = 0)
-    total_stars = models.IntegerField(default = 0)
+    total_stars = models.FloatField(default = 0)
 
     def __str__(self):
         return self.name
