@@ -1,58 +1,151 @@
-{% extends 'page/base.html' %}
+{% load static %}
+{% load templatetags %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block content %}
+  <head>
 
-<html>  
-    <head>         
-        <title>Club Search</title>     
-    </head>     
-    <body>
-        <br>
-        <br>
-        <form action="/search/" method="get">
-            <b>Filter Clubs By Category:</b> <br>
-            <select id="type" name="type" value="<?php echo $_GET['type'];?>">
-                <option value="%">All</option>
-                <option value="17">A Cappella</option>
-                <option value="5">Academic</option>
-                <option value="6">Career Opportunity</option>
-                <option value="9">Cultural</option>
-                <option value="14">Dance</option>
-                <option value="4">Educational</option>
-                <option value="10">Environmental</option>
-                <option value="11">Games</option>
-                <option value="2">Media</option>
-                <option value="15">Music</option>
-                <option value="13">Performing Arts</option>
-                <option value="8">Political</option>
-                <option value="1">Publication</option>
-                <option value="18">Religious</option>
-                <option value="7">Service</option>
-                <option value="12">Social</option>
-                <option value="3">Special Interest</option>
-                <option value="16">Theater</option>
-            </select>                       
-            <input type="text" name="q">
-            <input type="submit" value="Search">
-        </form> 
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
+    <title>Princeton Club Talk</title>
+    <link rel="icon" href="{% static 'images/tiger_logo.png' %}">
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'fontawesome/fontawesome-all.css' %}" rel="stylesheet">
+    <link href="{% static 'css/business-frontpage.css' %}" rel="stylesheet">
+
+  </head>
+
+  <body>
+
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="/"><i class="far fa-comments"></i> Princeton Club Talk <span class="badge badge-dark">Beta</span></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="/">Home
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Clubs</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Top 20</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">(Hi BWK!)</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <br>
+
+    <div class="container">
     {% if query %}
-    <p>You searched for: <strong>{{ query }}</strong></p>
+        <p>You searched for: <strong>{{ query }}</strong></p>
     {% endif %}
     {% if clubs %}           
-        <p>Found {{ clubs|length }} club{{ clubs|pluralize }}.</p>
-        <ul>               
+        <p>Found {{ clubs|length }} club{{ clubs|pluralize }}.</p>               
             {% for club in clubs %}               
-                <div class="post">
-                	<h3><a href="{% url 'post_detail' pk=club.pk %}">{{ club.name }}</a></h3>
-                	{{club.desc}}
-            	</div>
-                <br>
+
+      <div class="body1">
+        <div class="jumbotron">
+        <div class="row">
+          <div class="col-sm-8">
+            <h2 class="mt-4"><a href="{% url 'post_detail' pk=club.pk %}">{{club.name}}</a>
+              {% if club.total_stars %}
+                &nbsp; &nbsp;{{club.total_stars|floatformat:"-2"}} <a data-toggle="tooltip" data-placement="top" title="Average ranking for {{club.name}}"><i class="fas fa-star"></a></i>  
+              {% endif %}
+            </h2>
+            <p>{{club.desc}}</p>
+            <p>
+            </p>
+          </div>
+          <div class="col-sm-4">
+            <address>
+              <br>
+              <strong>Involved Students</strong>
+              <i class="fas fa-user"></i>
+              {% for leader in club.leaders.all %}
+                <br>{{leader.title}}: <a href="{{leader.email|mail}}">{{leader.name}}</a>
+              {% endfor %}
+              <br>
+              <br>
+              {% if club.category.all %}
+                <strong>Categories <a data-toggle="tooltip" data-placement="top" title="These are all the ODUS-listed club categories that {{club.name}} fell into."><i class="fas fa-align-justify"></i></a></strong>
+                  <br>{{ club.category.all|join:", " }}<br>
+              {% endif %}
+            </address>
+          </div>
+        </div>
+        </div>
+      </div>
+
             {% endfor %}           
         </ul>       
-    {% else %}           
-        <p>No clubs matched your search criteria.</p>       
-    {% endif %}     
-    </body>
+    {% else %}  
+        <div class="jumbotron">
+            <div class="row"> 
+                <div class="col-sm-12">
+                    <center>
+                        <h1>No clubs matched your search criteria.</h1>
+                        <h1>Not sure where to look?</h1>
+                    </center>
+                </div>
+            </div>
+            <br>
+            <div class="row"> 
+                <div class="col-sm-12">
+                    <center>
+                        <img class="img-responsive" src="{% static 'images/sad_tiger.jpg' %}" alt="Chania">
+                    </center>
+                </div>
+            </div>
+            <br>
+            <br>
+            <div class="row"> 
+                <div class="col-sm-6">
+                    <center>
+                        <a href="/clublist" class="btn btn-primary"><h4>Check out all of Princeton's clubs!</h4></a>
+                    </center>
+                </div>
+                <div class="col-sm-6">
+                    <center>
+                        <a href="/top20" class="btn btn-primary"><h4>Check out Princeton's 20 top clubs!</h4></a>
+                    </center>
+                </div>
+            </div>
+        </div>            
+    {% endif %}  
+
+
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script>
+      $(document).ready(function(){
+          $('[data-toggle="tooltip"]').tooltip();   
+      });
+    </script>
+
+  </body>
+
 </html>
-{% endblock %}
+
