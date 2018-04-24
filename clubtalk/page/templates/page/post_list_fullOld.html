@@ -1,0 +1,44 @@
+{% extends 'page/base.html' %}
+
+{% block content %}
+<body>
+    <br>
+        <br>
+        <form action="/search/" method="get">
+            <b>Filter Clubs By Category:</b> <br>
+            <select id="type" name="type">
+                <option value="%">All</option>
+                <option value="17">A Cappella</option>
+                <option value="5">Academic</option>
+                <option value="6">Career Opportunity</option>
+                <option value="9">Cultural</option>
+                <option value="14">Dance</option>
+                <option value="4">Educational</option>
+                <option value="10">Environmental</option>
+                <option value="11">Games</option>
+                <option value="2">Media</option>
+                <option value="15">Music</option>
+                <option value="13">Performing Arts</option>
+                <option value="8">Political</option>
+                <option value="1">Publication</option>
+                <option value="18">Religious</option>
+                <option value="7">Service</option>
+                <option value="12">Social</option>
+                <option value="3">Special Interest</option>
+                <option value="16">Theater</option>
+            </select>                        
+            <input type="text" name="q">
+            <input type="submit" value="Search">
+        </form> 
+    <ul>               
+        {% for club in clubs %}               
+            <div class="post">
+            	<h3><a href="{% url 'post_detail' pk=club.pk %}">{{ club.name }}</a></h3>
+            	<p>{{club.desc}}</p>
+                <br>
+        	</div>              
+        {% endfor %}           
+    </ul> 
+</body>
+{% endblock %}
+                
