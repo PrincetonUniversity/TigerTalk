@@ -1,0 +1,182 @@
+{% extends 'page/baseB.html' %}
+{% load static %}
+{% load templatetags %}
+{% block content %}
+
+    <br>
+    <div class="container">
+
+      <div class="row">
+        <div class="col-sm-8">
+
+          <div class="jumbotron">
+            <center>
+            <h1 class="mt-4">{{club.name}}</h1>
+
+            <h2>
+              {% if club.total_stars %}
+                {{club.total_stars|floatformat:"-2"}} <a data-toggle="tooltip" data-placement="top" title="Average ranking for {{club.name}}"><i class="fas fa-star"></a></i>  
+              {% endif %}
+              {% if review_count %}
+                {% if happy_result %}
+                  &nbsp;&nbsp;<a data-toggle="tooltip" data-placement="top" title="A majority of reviews found {{club.name}} fun!"><i class="fas fa-smile"></i></a>
+                {% else %}
+                  &nbsp;&nbsp;<a data-toggle="tooltip" data-placement="top" title="A majority of reviews didn't find {{club.name}} fun."><i class="fas fa-frown"></i></a>
+                {% endif %}
+              {% endif %}
+              {% if review_count %}
+                {% if mean_result %}
+                  &nbsp;&nbsp;<a data-toggle="tooltip" data-placement="top" title="A majority found {{club.name}} meaningful!"><i class="fas fa-eye"></i></a>
+                {% else %}
+                  &nbsp;&nbsp;<a data-toggle="tooltip" data-placement="top" title="A majority didn't find {{club.name}} meaningful."><i class="fas fa-eye-slash"></i></a>
+                {% endif %}
+              {% endif %}
+            </h2>
+            <p>{{club.desc}}</p>
+            <p>
+            </center>
+              <br>
+              <center>
+              <a class="btn btn-primary btn-lg" href="{% url 'post_new' pk=club.pk %}">Add a review!</a>
+              </center>
+            </p>
+          </div>
+
+      
+
+          <div class="card">
+            
+            <div class="card-footer">
+              
+                <!--All reviews go here -->
+                {% for review in reviews %}
+                <div class="card">
+
+                  <div class="card-footer">
+
+                    <div class="container">
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <center>
+                            <button type="button" class="btn btn">
+                              {{ review.stars }}<i class="fas fa-star"></i>  
+                            </button>
+                            <button type="button" class="btn btn">
+                              {% if review.fun %}
+                                <a data-toggle="tooltip" data-placement="top" title="The user found this club fun!"><i class="fas fa-smile"></i></a>
+                              {% else %}
+                                <a data-toggle="tooltip" data-placement="top" title="The user didn't find this club fun."><i class="fas fa-frown"></i></a>
+                              {% endif %}
+                            </button>
+                            <button type="button" class="btn btn">
+                              {% if review.meaningful %}
+                                <a data-toggle="tooltip" data-placement="top" title="The user found this club meaningful!"><i class="fas fa-eye"></i></a>
+                              {% else %}
+                                <a data-toggle="tooltip" data-placement="top" title="The user didn't find this club meaningful."><i class="fas fa-eye-slash"></i></a>
+                              {% endif %}
+                            </button>
+                          </center>
+                          
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="card-body">
+                    <center>{{ review.created_at }}</center>
+                    <strong>Review</strong><br><br>
+                    {{review.text}}<br><br>
+                    <strong>Could be improved</strong><br>
+                    {{review.CBI}}<br><br>
+                    
+                      <label class="btn btn-primary active">
+                        <a href = "{% url 'review_increment' club.pk review.pk %}">
+                          <i class="fas fa-arrow-alt-circle-up"></i>
+                        </a>
+                      </label>
+                      <label class="btn btn-info active">
+                        <a data-toggle="tooltip" data-placement="top" title="How many users found this review helpful.">{{review.rating}}</a>
+                      </label>
+                      <label class="btn btn-primary active">
+                        <a href="{% url 'review_decrement' club.pk review.pk %}">
+                          <i class="fas fa-arrow-alt-circle-down"></i>
+                        </a>
+                      </label>
+
+                  </div>
+
+                </div>
+                <br>
+                {% endfor %}
+            </div>
+          </div>
+        </div>
+
+        <!-- Right bar -->
+        <div class="col-sm-4">
+
+              <center><span class="badge badge-dark"><h3>&nbsp;Review Info:&nbsp;</h3></span></center>
+              <br>
+
+            <center>
+
+              <div class="jumbotron">
+                <h3><span class="badge badge-primary">{{review_count}}</span> student{{review_count|pluralize}} reviewed this club.</h3>
+              </div>
+
+              <div class="jumbotron">
+                <h3><span class="badge badge-success">{{club.fun_count}}</span> student{{ club.fun_count|pluralize}} out of {{review_count}} rated this club fun.</h3>
+              </div>
+
+              <div class="jumbotron">
+                <h3><span class="badge badge-danger">{{club.meaning_count}}</span> student{{ club.meaning_count|pluralize}} out of {{review_count}} rated this club meaningful.</h3>
+              </div>
+
+              <div class="jumbotron">
+                <h3>Dissatisfied?</h3>
+                <h3>Tell us why!</h3>
+                <br>
+                <a class="btn btn-primary btn-lg" href="{% url 'post_new' pk=club.pk %}">Add a review!</a>
+              </div>
+
+            </center>
+        </div>
+      </div>
+
+
+
+
+    </div>
+    <br>
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

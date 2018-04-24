@@ -26,26 +26,19 @@ def post_detail(request, pk):
     star_result = 0
     if (review_count != 0):
         star_result = club.total_stars;
-    total_happy = 0
-    happy_result = 0
-    for review in club.reviews.all():
-        total_happy += review.fun
+
     if (review_count):
-        if ((total_happy / review_count) >= .5):
+        if ((club.fun_count / review_count) >= .5):
             happy_result = 1
-        elif ((total_happy / review_count) < .5):
+        elif ((club.fun_count / review_count) < .5):
             happy_result = 0
     else:
         happy_result = 0
 
-    total_mean = 0
-    mean_result = 0
-    for review in club.reviews.all():
-        total_mean += review.meaningful
     if (review_count):
-        if ((total_mean / review_count) >= .5):
+        if ((club.meaning_count / review_count) >= .5):
             mean_result = 1
-        elif ((total_happy / review_count) < .5):
+        elif ((club.meaning_count / review_count) < .5):
             mean_result = 0
     else:
         mean_result = 0
@@ -58,19 +51,64 @@ def post_detail(request, pk):
         sort = request.GET['sort']
         if sort == "1":
             time = 1
-            return render(request, 'page/post_detail2.html', {'club': club, 'review_count': review_count, 'fun_count': club.fun_count, 'mean_count': club.meaning_count, 'happy_result': happy_result, 'mean_result': mean_result, 'star_count': star_result, 'reviews' : reviews.time, 'time' : time})
+            return render(request, 'page/post_detail2.html', {'club': club, 'review_count': review_count, 'fun_count': club.fun_count, 'happy_result': happy_result, 'mean_result': mean_result, 'star_count': star_result, 'reviews' : reviews.time, 'time' : time})
 
         elif sort == "2":
             time = 2
-            return render(request, 'page/post_detail2.html', {'club': club, 'review_count': review_count, 'fun_count': club.fun_count, 'mean_count': club.meaning_count, 'happy_result': happy_result, 'star_count': star_result, 'reviews' : reviews.rating, 'time' : time})
+            return render(request, 'page/post_detail2.html', {'club': club, 'review_count': review_count, 'fun_count': club.fun_count, 'mean_count': club.meaning_count, 'happy_result': happy_result, 'mean_result': mean_result, 'star_count': star_result, 'reviews' : reviews.rating, 'time' : time})
 
     else:
-        return render(request, 'page/post_detail2.html', {'club': club, 'review_count': review_count, 'fun_count': club.fun_count, 'mean_count': club.meaning_count, 'happy_result': happy_result, 'star_count': star_result, 'reviews' : reviews.time, 'time' : time})
+        return render(request, 'page/post_detail2.html', {'club': club, 'review_count': review_count, 'fun_count': club.fun_count, 'mean_count': club.meaning_count, 'happy_result': happy_result, 'mean_result': mean_result, 'star_count': star_result, 'reviews' : reviews.time, 'time' : time})
 
 def top20(request):
     clubs = Club.objects.all()
     clubs = clubs.order_by('-total_stars', 'name')[:20]
     return render(request, 'page/top20.html', {'clubs': clubs})
+
+def all_reviews(request, pk):
+    global time;
+    club = get_object_or_404(Club, pk=pk)
+    reviews = club.reviews.all()
+    review_count = club.reviews.count()
+
+    if (review_count):
+        if ((club.fun_count / review_count) >= .5):
+            happy_result = 1
+        elif ((club.fun_count / review_count) < .5):
+            happy_result = 0
+    else:
+        happy_result = 0
+
+    if (review_count):
+        if ((club.meaning_count / review_count) >= .5):
+            mean_result = 1
+        elif ((club.meaning_count / review_count) < .5):
+            mean_result = 0
+    else:
+        mean_result = 0
+
+    reviews = club.reviews.all()
+    reviews.time = reviews.order_by('-created_at')
+    reviews.rating = reviews.order_by('-rating')
+
+    if 'sort' in request.GET:
+        sort = request.GET['sort']
+        if sort == "1":
+            time = 1
+            return render(request, 'page/all_reviews.html', {'club': club, 'fun_count': club.fun_count, 
+                'happy_result': happy_result, 'mean_result': mean_result, 
+                'reviews' : reviews.time, 'time' : time})
+
+        elif sort == "2":
+            time = 2
+            return render(request, 'page/all_reviews.html', {'club': club, 'review_count': review_count, 
+                'fun_count': club.fun_count, 'mean_count': club.meaning_count, 'happy_result': happy_result, 
+                'mean_result': mean_result, 'reviews' : reviews.rating, 
+                'time' : time})
+
+    else:
+        return render(request, 'page/all_reviews.html', {'club': club, 'review_count': review_count, 'fun_count': club.fun_count, 'mean_count': club.meaning_count, 'happy_result': happy_result, 'mean_result': mean_result, 'reviews' : reviews.time, 'time' : time})
+    return render(request, 'page/all_reviews.html', {'club': club, 'reviews': reviews})
 
 def post_list_full(request):
 	clubs = Club.objects.all()
