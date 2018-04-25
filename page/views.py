@@ -11,6 +11,8 @@ from django.db import models
 from django.http import HttpResponse
 from django.db.models import Count
 from . import CASClient
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 time = 1
 
@@ -46,6 +48,12 @@ def post_detail(request, pk):
     reviews = club.reviews.all()
     reviews.time = reviews.order_by('-created_at')
     reviews.rating = reviews.order_by('-rating')
+
+    if 'upvote' in request.GET:
+        review = get_object_or_404(Review, pk=pk_Review)
+        review.rating += 1;
+        review.save()
+        
 
     if 'sort' in request.GET:
         sort = request.GET['sort']
@@ -90,7 +98,7 @@ def all_reviews(request, pk):
     reviews = club.reviews.all()
     reviews.time = reviews.order_by('-created_at')
     reviews.rating = reviews.order_by('-rating')
-
+            
     if 'sort' in request.GET:
         sort = request.GET['sort']
         if sort == "1":
@@ -118,13 +126,13 @@ def review_increment(request, pk_Club, pk_Review):
     review = get_object_or_404(Review, pk=pk_Review)
     review.rating += 1;
     review.save()
-    return post_detail(request, pk_Club)
+    return HttpResponseRedirect(reverse('post_detail', args=[pk_Club]))
 
 def review_decrement(request, pk_Club, pk_Review):
     review = get_object_or_404(Review, pk=pk_Review)
     review.rating -= 1;
     review.save()
-    return post_detail(request, pk_Club)
+    return HttpResponseRedirect(reverse('post_detail', args=[pk_Club]))
 
 def post_new(request, pk):
     if request.method == "POST":

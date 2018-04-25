@@ -172,12 +172,11 @@
                       <label class="btn btn-info active">
                         <a data-toggle="tooltip" data-placement="top" title="How many users found this review helpful.">{{review.rating}}</a>
                       </label>
-                      <label class="btn btn-primary active">
+                      <label class="btn btn-primary active" name="downvote">
                         <a href="{% url 'review_decrement' club.pk review.pk %}">
                           <i class="fas fa-arrow-alt-circle-down"></i>
                         </a>
                       </label>
-
                   </div>
 
                 </div>
