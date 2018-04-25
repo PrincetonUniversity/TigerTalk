@@ -15,7 +15,7 @@
 
             <h2>
               {% if club.total_stars %}
-                {{club.total_stars|floatformat:"-2"}} <a data-toggle="tooltip" data-placement="top" title="Average ranking for {{club.name}}"><i class="fas fa-star"></a></i>  
+                {{club.total_stars|floatformat:"-1"}} <a data-toggle="tooltip" data-placement="top" title="Average ranking for {{club.name}}"><i class="fas fa-star"></a></i>  
               {% endif %}
               {% if review_count %}
                 {% if happy_result %}
@@ -121,15 +121,15 @@
             <center>
 
               <div class="jumbotron">
-                <h3><span class="badge badge-primary">{{review_count}}</span> student{{review_count|pluralize}} reviewed this club.</h3>
+                <h1><span class="badge badge-primary">{{review_count}}</span></h1><h3>student{{review_count|pluralize}} reviewed this club.</h3>
               </div>
 
               <div class="jumbotron">
-                <h3><span class="badge badge-success">{{club.fun_count}}</span> student{{ club.fun_count|pluralize}} out of {{review_count}} rated this club fun.</h3>
+                <h1><span class="badge badge-success">{{club.fun_count}}</span></h1><h3> student{{ club.fun_count|pluralize}} out of {{review_count}} rated this club fun.</h3>
               </div>
 
               <div class="jumbotron">
-                <h3><span class="badge badge-danger">{{club.meaning_count}}</span> student{{ club.meaning_count|pluralize}} out of {{review_count}} rated this club meaningful.</h3>
+                <h1><span class="badge badge-danger">{{club.meaning_count}}</span></h1><h3> student{{ club.meaning_count|pluralize}} out of {{review_count}} rated this club meaningful.</h3>
               </div>
 
               <div class="jumbotron">
