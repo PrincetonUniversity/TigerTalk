@@ -46,6 +46,7 @@ class Club(models.Model):
     meaning_count = models.IntegerField(default = 0)
     total_stars = models.FloatField(default = 0)
 
+
     def __str__(self):
         return self.name
 
