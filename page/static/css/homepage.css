@@ -6,7 +6,9 @@
 
 body {
   padding-top: 54px;
-  
+  background-image: url("../images/nassau_hall.jpg");
+  background-size:     cover;                      /* <------ */
+  background-repeat:   no-repeat;
 }
 
 @media (min-width: 992px) {
@@ -15,6 +17,9 @@ body {
   }
 }
 
+.panel-default {
+  background-color: white;
+}
 .navbar {
   background-color: orange;
   color: black;
@@ -57,3 +62,27 @@ body {
 .card {
   height: 100%;
 }
+
+.panelT {
+  border: 2px solid black;
+  background-color: white;
+  opacity: .85;
+
+}
+
+#imaginary_container{
+    margin-top:20%; /* Don't copy this */
+}
+.stylish-input-group .input-group-addon{
+    background: white !important; 
+}
+.stylish-input-group .form-control{
+  border-right:0; 
+  box-shadow:0 0 0; 
+  border-color:#ccc;
+}
+.stylish-input-group button{
+    border:0;
+    background:transparent;
+}
+

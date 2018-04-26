@@ -18,7 +18,7 @@
 
     <!-- Custom styles for this template -->
     <link href="{% static 'fontawesome/fontawesome-all.css' %}" rel="stylesheet">
-    <link href="{% static 'css/business-frontpage.css' %}" rel="stylesheet">
+    <link href="{% static 'css/homepage.css' %}" rel="stylesheet">
 
   </head>
 
@@ -82,9 +82,70 @@
             </div>
           </div>
         </nav>
-            {% block content %}
-            {% endblock %}
 
+    	<div class="container">
+    		<br>
+    		<br>
+    		<br>
+    		<br>
+    		<br>
+	     	<div class="top">
+	     		<div class="jumbotron-trans">
+		        	<div class="row">
+		        		<div class="col-sm-2">
+		        		</div>
+		          		<div class="col-sm-8">
+		            		<div class="panelT panel-default-1">
+							  	<div class="panel-body">
+								  	<center>
+								  		<br>
+								  		<h1>Princeton Club Talk</h1>
+								  		<h2>Welcome to Club Talk! Search for a club below.</h2>
+							            <div id="imaginary_container"> 
+							                <div class="input-group stylish-input-group">
+							                <form action="/search/" method="get">
+							                	<select id="type" name="type">
+											     	<option value="%">All</option>
+													<option value="17">A Cappella</option>
+													<option value="5">Academic</option>
+													<option value="6">Career Opportunity</option>
+													<option value="9">Cultural</option>
+													<option value="14">Dance</option>
+													<option value="4">Educational</option>
+													<option value="10">Environmental</option>
+													<option value="11">Games</option>
+													<option value="2">Media</option>
+													<option value="15">Music</option>
+													<option value="13">Performing Arts</option>
+													<option value="8">Political</option>
+													<option value="1">Publication</option>
+													<option value="18">Religious</option>
+													<option value="7">Service</option>
+													<option value="12">Social</option>
+													<option value="3">Special Interest</option>
+													<option value="16">Theater</option>
+												</select>
+							                    <input type="text" name="q"  >
+							                    <span class="input-group-addon">
+							                        <button type="submit" value="Search">
+							                            <i class="fas fa-search"></i>
+							                        </button>  
+							                    </span>
+							                </form>
+							                </div>
+							            </div>
+									</center>
+								</div>
+							</div>
+		        		</div>
+		        		<div class="col-sm-2">
+		        		</div>
+		    		</div>
+		    	</div>
+	    	</div>
+	    </div>	
+
+    
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

@@ -19,7 +19,7 @@ time = 1
 # Create your views here.
 def post_list(request):
     clubs = Club.objects.all()
-    return render(request, 'page/index.html', {'clubs': clubs})
+    return render(request, 'page/splash-page.html', {'clubs': clubs})
 
 def post_detail(request, pk):
     global time
