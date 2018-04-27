@@ -184,6 +184,14 @@
                 {% endfor %}
 
               <center>
+                {% if messages %}
+                  <script>
+                  // <ul class="messages">
+                    {% for message in messages %}
+                      alert("{{ message }}");
+                    {% endfor %}
+                  </script>
+                {% endif %}
                 <a href="{% url 'post_new' pk=club.pk %}" class="btn btn-primary">Add a review!</a>
                 &nbsp;
                 <a href="{% url 'all_reviews' pk=club.pk %}" class="btn btn-primary">See all reviews</a>

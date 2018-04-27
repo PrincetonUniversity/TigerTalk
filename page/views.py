@@ -8,7 +8,7 @@ from django.db.models import Count
 from django.http import HttpResponse, HttpResponseRedirect
 from . import CASClient
 from django.urls import reverse
-from django.contrib import auth
+from django.contrib import auth, messages
 from django.contrib.auth.models import User
 
 time = 1
@@ -45,12 +45,6 @@ def post_detail(request, pk):
 
     reviews.time = reviews.order_by('-created_at')
     reviews.rating = reviews.order_by('-rating')
-
-    if 'upvote' in request.GET:
-        review = get_object_or_404(Review, pk=pk_Review)
-        review.rating += 1;
-        review.save()
-        
 
     if 'sort' in request.GET:
         sort = request.GET['sort']
@@ -97,7 +91,7 @@ def all_reviews(request, pk):
 
     reviews.time = reviews.order_by('-created_at')
     reviews.rating = reviews.order_by('-rating')
-            
+
     if 'sort' in request.GET:
         sort = request.GET['sort']
         if sort == "1":
@@ -124,40 +118,56 @@ def post_list_full(request):
 
 def review_increment(request, pk_Club, pk_Review):
     review = get_object_or_404(Review, pk=pk_Review)
-    review.rating += 1;
-    review.save()
-    return HttpResponseRedirect(reverse('post_detail', args=[pk_Club]))
+    if request.user.student.review_votes.filter(pk=review.pk):
+        return HttpResponseRedirect(reverse('post_detail', args=[pk_Club]))
+    else:
+        review.rating += 1;
+        review.save()
+        request.user.student.review_votes.add(review)
+        request.user.student.save()
+        return HttpResponseRedirect(reverse('post_detail', args=[pk_Club]))
 
 def review_decrement(request, pk_Club, pk_Review):
     review = get_object_or_404(Review, pk=pk_Review)
-    review.rating -= 1;
-    review.save()
-    return HttpResponseRedirect(reverse('post_detail', args=[pk_Club]))
+    if request.user.student.review_votes.filter(pk=review.pk):
+        return HttpResponseRedirect(reverse('post_detail', args=[pk_Club]))
+    else:
+        review.rating += 1;
+        review.save()
+        request.user.student.review_votes.add(review)
+        request.user.student.save()
+        return HttpResponseRedirect(reverse('post_detail', args=[pk_Club]))
 
 @CAS_login_required
 def post_new(request, pk):
-    if request.method == "POST":
-        form = PostForm(request.POST)
-        if form.is_valid():
-            club = get_object_or_404(Club, pk=pk)
-            review = form.save(commit=False)
-            review.student = request.user.student
-            review.club = club
-            club.fun_count += review.fun
-            club.meaning_count += review.meaningful
-            review_count = club.review_set.count()
-            if review_count != 0:
-                club.total_stars = club.total_stars * review_count
-                club.total_stars += review.stars
-                club.total_stars = club.total_stars / (review_count+1)
-            else: 
-                club.total_stars = review.stars
-            review.save()
-            club.save()
-            return redirect('post_detail', pk=pk)
+    if request.user.student.clubs_reviewed.filter(pk=pk):
+        messages.info(request, 'You cannot review a club twice!')
+        return HttpResponseRedirect(reverse('post_detail', args=[pk]))
     else:
-        form = PostForm()
-    return render(request, 'page/post_edit.html', {'form': form, 'user': request.user})  
+        if request.method == "POST":
+            form = PostForm(request.POST)
+            if form.is_valid():
+                club = get_object_or_404(Club, pk=pk)
+                review = form.save(commit=False)
+                review.student = request.user.student
+                review.club = club
+                club.fun_count += review.fun
+                club.meaning_count += review.meaningful
+                review_count = club.review_set.count()
+                if review_count != 0:
+                    club.total_stars = club.total_stars * review_count
+                    club.total_stars += review.stars
+                    club.total_stars = club.total_stars / (review_count+1)
+                else: 
+                    club.total_stars = review.stars
+                review.save()
+                club.save()
+                request.user.student.clubs_reviewed.add(club)
+                request.user.student.save()
+                return redirect('post_detail', pk=pk)
+        else:
+            form = PostForm()
+        return render(request, 'page/post_edit.html', {'form': form, 'user': request.user})  
 
 def search_form(request):
     return render(request, 'page/search_form.html')
