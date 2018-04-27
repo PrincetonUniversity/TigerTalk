@@ -100,7 +100,6 @@ for i in range(1, len(clubs)):
 	if (" " in info_str):
 		info_str.remove(" ")
 
-	leaders = []
 	email = ""
 	site = ""
 	for l in range(0, len(info_str)):
@@ -119,9 +118,9 @@ for i in range(1, len(clubs)):
     					'name': leader_info[0][1:],
     					'title': array[j],
     					'email': leader_info[1][1:],
+    					'club': club_pk,
     				}
 				})
-				leaders.append(leader_pk)
 				leader_pk += 1
 				sys.stdout.write(leader)
 				print(',')
@@ -136,10 +135,10 @@ for i in range(1, len(clubs)):
 	    	'desc': club_description,
 	    	'category': category_final,
 	    	'email': email,
-	    	'leaders': leaders,
 	    	'website': site,
     	}
 	})
+
 	sys.stdout.write(club)
 	if (num < len(clubs)-1):
 		print(',')
