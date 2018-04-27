@@ -71,7 +71,7 @@
             <address>
               <strong>Leadership</strong>
               <i class="fas fa-user"></i>
-              {% for leader in club.leaders.all %}
+              {% for leader in club.leader_set.all %}
                 <br>{{leader.title}}: <a href="{{leader.email|mail}}">{{leader.name}}</a>
               {% endfor %}
               <br>
