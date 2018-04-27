@@ -1,28 +1,27 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
-from .models import Club
-from .models import Category
-from .models import Leader
-from .models import Review
-from django.shortcuts import render, get_object_or_404
-from .forms import PostForm
-from django.shortcuts import redirect
+from .models import Club, Category, Leader, Review, Student
+from .forms import PostForm, LoginForm
+from .decorators import CAS_login_required
 from django.db import models
-from django.http import HttpResponse
 from django.db.models import Count
+from django.http import HttpResponse
 from . import CASClient
+from django.contrib import auth
+from django.contrib.auth.models import User
 
 time = 1
 
-# Create your views here.
 def post_list(request):
     clubs = Club.objects.all()
     return render(request, 'page/index.html', {'clubs': clubs})
 
+@CAS_login_required
 def post_detail(request, pk):
     global time
     club = get_object_or_404(Club, pk=pk)
-    review_count = club.reviews.count()
+    reviews = club.review_set.all()
+    review_count = reviews.count()
     star_result = 0
     if (review_count != 0):
         star_result = club.total_stars;
@@ -43,7 +42,6 @@ def post_detail(request, pk):
     else:
         mean_result = 0
 
-    reviews = club.reviews.all()
     reviews.time = reviews.order_by('-created_at')
     reviews.rating = reviews.order_by('-rating')
 
@@ -60,16 +58,19 @@ def post_detail(request, pk):
     else:
         return render(request, 'page/post_detail2.html', {'club': club, 'review_count': review_count, 'fun_count': club.fun_count, 'mean_count': club.meaning_count, 'happy_result': happy_result, 'mean_result': mean_result, 'star_count': star_result, 'reviews' : reviews.time, 'time' : time})
 
+@CAS_login_required
 def top20(request):
     clubs = Club.objects.all()
     clubs = clubs.order_by('-total_stars', 'name')[:20]
     return render(request, 'page/top20.html', {'clubs': clubs})
 
+@CAS_login_required
 def all_reviews(request, pk):
     global time;
     club = get_object_or_404(Club, pk=pk)
-    reviews = club.reviews.all()
-    review_count = club.reviews.count()
+
+    reviews = club.review_set.all()
+    review_count = reviews.count()
 
     if (review_count):
         if ((club.fun_count / review_count) >= .5):
@@ -87,7 +88,6 @@ def all_reviews(request, pk):
     else:
         mean_result = 0
 
-    reviews = club.reviews.all()
     reviews.time = reviews.order_by('-created_at')
     reviews.rating = reviews.order_by('-rating')
 
@@ -110,9 +110,10 @@ def all_reviews(request, pk):
         return render(request, 'page/all_reviews.html', {'club': club, 'review_count': review_count, 'fun_count': club.fun_count, 'mean_count': club.meaning_count, 'happy_result': happy_result, 'mean_result': mean_result, 'reviews' : reviews.time, 'time' : time})
     return render(request, 'page/all_reviews.html', {'club': club, 'reviews': reviews})
 
+@CAS_login_required
 def post_list_full(request):
-	clubs = Club.objects.all()
-	return render(request, 'page/post_list_full.html', {'clubs': clubs})
+    clubs = Club.objects.all()
+    return render(request, 'page/post_list_full.html', {'clubs': clubs})
 
 def review_increment(request, pk_Club, pk_Review):
     review = get_object_or_404(Review, pk=pk_Review)
@@ -126,35 +127,40 @@ def review_decrement(request, pk_Club, pk_Review):
     review.save()
     return post_detail(request, pk_Club)
 
+@CAS_login_required
 def post_new(request, pk):
     if request.method == "POST":
         form = PostForm(request.POST)
         if form.is_valid():
-            review = form.save(commit=False)
-            review.save()
             club = get_object_or_404(Club, pk=pk)
+            review = form.save(commit=False)
+            review.student = request.user.student
+            review.club = club
             club.fun_count += review.fun
             club.meaning_count += review.meaningful
-            if club.reviews.count() != 0:
-                club.total_stars = club.total_stars * club.reviews.count();
+            review_count = club.review_set.count()
+            if review_count != 0:
+                club.total_stars = club.total_stars * review_count
                 club.total_stars += review.stars
-                club.total_stars = club.total_stars / (club.reviews.count()+1);
+                club.total_stars = club.total_stars / (review_count+1)
             else: 
-                club.total_stars += review.stars
-            club.reviews.add(review)
+                club.total_stars = review.stars
+            review.save()
             club.save()
             return redirect('post_detail', pk=pk)
     else:
         form = PostForm()
-    return render(request, 'page/post_edit.html', {'form': form})   
+    return render(request, 'page/post_edit.html', {'form': form, 'user': request.user})  
 
 def search_form(request):
     return render(request, 'page/search_form.html')
 
+@CAS_login_required
 def review_detail(request, pk):
     review = get_object_or_404(Review, pk=pk)
     return render(request, 'page/review_detail.html', {'review': review})
 
+@CAS_login_required
 def search(request):
     if 'q' in request.GET:
         q = request.GET['q']
@@ -181,13 +187,58 @@ def search(request):
                     clubs = clubs.filter(name__icontains=q2[i]) | clubs.filter(desc__icontains=q2[i])
                 return render(request, 'page/search_results.html', {'clubs': clubs, 'query': q}) 
 
-def login(request):
+def logintemp(request):
     C = CASClient.CASClient(request)
     auth_attempt = C.Authenticate()
     if "netid" in auth_attempt:
-        request.session["netid"] = auth_attempt["netid"]
-        return redirect('/clublist')  
+        netid = auth_attempt["netid"]
+        request.session["netid"] = netid
+        username = netid
+        password = netid
+        user = auth.authenticate(username=username, password=password)
+        if user is not None:
+            # User has already logged in before
+            auth.login(request, user)
+            return redirect('/') 
+        else:
+            # first time loggin in - create a user
+            user = User.objects.create_user(username=username, password=password)
+            email = netid + "@princeton.edu"
+            is_club = False
+            if Club.objects.filter(email=email):
+                is_club = True
+            student = Student(user=user, netid=netid, is_club=is_club)
+            student.save()
+            auth.login(request, user)
+            return redirect('/')
     elif "location" in auth_attempt:
         return redirect(auth_attempt["location"])
     else:
         abort(500)
+
+def login(request):
+    if request.method == "POST":
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            netid = form.cleaned_data['username']
+            username = netid
+            password = form.cleaned_data['password']
+            user = auth.authenticate(username=username, password=password)
+            if user is not None:
+                # User has already logged in before
+                auth.login(request, user)
+                return redirect('post_list_full') 
+            else:
+                # first time loggin in - create a user
+                user = User.objects.create_user(username=username, password=password)
+                email = netid + "@princeton.edu"
+                is_club = False
+                if Club.objects.filter(email=email):
+                    is_club = True
+                student = Student(user=user, netid=netid, is_club=is_club)
+                student.save()
+                auth.login(request, user)
+                return redirect('post_list_full')
+    else:
+        form = LoginForm()
+    return render(request, 'page/logintemp.html', {'form': form}) 

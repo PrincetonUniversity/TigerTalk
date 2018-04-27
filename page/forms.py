@@ -30,3 +30,7 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = Review
         fields = ('text', 'fun', 'meaningful', 'stars', 'CBI',)
+
+class LoginForm(forms.Form):
+    username = forms.CharField(label="Net ID")
+    password = forms.CharField(label="Password", widget=forms.PasswordInput)
