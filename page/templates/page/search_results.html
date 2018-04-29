@@ -23,6 +23,9 @@
             </h2>
             <p>{{club.desc}}</p>
             <p>
+              <a class="btn btn-primary btn-lg" href="{% url 'post_detail' pk=club.pk %}">Club Page</a>&nbsp;&nbsp;
+              <a class="btn btn-primary btn-lg" href="{% url 'all_reviews' pk=club.pk %}">Reviews</a>&nbsp;&nbsp;
+              <a class="btn btn-primary btn-lg" href="{% url 'all_reviews' pk=club.pk %}">Interviews</a>
             </p>
           </div>
           <div class="col-sm-4">

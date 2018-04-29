@@ -119,34 +119,17 @@
           <div class="card">
             <div class="card-body">
               <h4 class="card-title">
-                <center>Reviews</center>
-              </h4>
-              <center>
-              <form method="get">
-                  <b>Sort Reviews By:</b> <br>
-                  {% if time == 1 %}
-                  <select id="sort" name="sort" onchange="this.form.submit()">
-                      <option selected="selected" value="1">Review Date</option>
-                      <option value="2">Review Rating</option>
-                  </select>
-                  {% else %}
-                  <select id="sort" name="sort" onchange="this.form.submit()">
-                      <option value="1">Review Date</option>
-                      <option selected="selected" value="2">Review Rating</option>
-                  </select>
-                  {% endif %}
-                  {% if reviews %}
-                  {% else %}
-                    <br><br>
-                    <h5><center>{{club.name}} has no reviews. Add one below!</center></h5>
-                  {% endif %}
-              </form>
-              </center>
+                <center>Reviews</center></h4>
+                <center>
+                  <a href="{% url 'post_new' pk=club.pk %}" class="btn btn-primary">Add a review!</a>
+                  &nbsp;
+                  <a href="{% url 'all_reviews' pk=club.pk %}" class="btn btn-primary">See all reviews</a>
+                </center>
             </div>
             <div class="card-footer">
               
                 <!--All reviews go here -->
-                {% for review in reviews %}
+                {% if review1 != None %}
                 <div class="card">
 
                   <div class="card-footer">
@@ -156,17 +139,17 @@
                         <div class="col-sm-12">
                           <center>
                             <button type="button" class="btn btn">
-                              {{ review.stars }}<i class="fas fa-star"></i>  
+                              {{ review1.stars }}<i class="fas fa-star"></i>  
                             </button>
                             <button type="button" class="btn btn">
-                              {% if review.fun %}
+                              {% if review1.fun %}
                                 <a data-toggle="tooltip" data-placement="top" title="The user found this club fun!"><i class="fas fa-smile"></i></a>
                               {% else %}
                                 <a data-toggle="tooltip" data-placement="top" title="The user didn't find this club fun."><i class="fas fa-frown"></i></a>
                               {% endif %}
                             </button>
                             <button type="button" class="btn btn">
-                              {% if review.meaningful %}
+                              {% if review1.meaningful %}
                                 <a data-toggle="tooltip" data-placement="top" title="The user found this club meaningful!"><i class="fas fa-eye"></i></a>
                               {% else %}
                                 <a data-toggle="tooltip" data-placement="top" title="The user didn't find this club meaningful."><i class="fas fa-eye-slash"></i></a>
@@ -180,22 +163,22 @@
                   </div>
 
                   <div class="card-body">
-                    <center>{{ review.created_at }}</center>
+                    <center>{{ review1.created_at }}</center>
                     <strong>Review</strong><br><br>
-                    {{review.text}}<br><br>
+                    {{review1.text}}<br><br>
                     <strong>Could be improved</strong><br>
-                    {{review.CBI}}<br><br>
+                    {{review1.CBI}}<br><br>
                     
                       <label class="btn btn-primary active">
-                        <a href = "{% url 'review_increment' club.pk review.pk %}">
+                        <a href = "{% url 'review_increment' club.pk review1.pk %}">
                           <i class="fas fa-arrow-alt-circle-up"></i>
                         </a>
                       </label>
                       <label class="btn btn-info active">
-                        <a data-toggle="tooltip" data-placement="top" title="How many users found this review helpful.">{{review.rating}}</a>
+                        <a data-toggle="tooltip" data-placement="top" title="How many users found this review helpful.">{{review1.rating}}</a>
                       </label>
                       <label class="btn btn-primary active" name="downvote">
-                        <a href="{% url 'review_decrement' club.pk review.pk %}">
+                        <a href="{% url 'review_decrement' club.pk review1.pk %}">
                           <i class="fas fa-arrow-alt-circle-down"></i>
                         </a>
                       </label>
@@ -203,7 +186,71 @@
 
                 </div>
                 <br>
-                {% endfor %}
+                {% endif %}
+
+                {% if review2 != None %}
+                <div class="card">
+
+                  <div class="card-footer">
+
+                    <div class="container">
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <center>
+                            <button type="button" class="btn btn">
+                              {{ review2.stars }}<i class="fas fa-star"></i>  
+                            </button>
+                            <button type="button" class="btn btn">
+                              {% if review2.fun %}
+                                <a data-toggle="tooltip" data-placement="top" title="The user found this club fun!"><i class="fas fa-smile"></i></a>
+                              {% else %}
+                                <a data-toggle="tooltip" data-placement="top" title="The user didn't find this club fun."><i class="fas fa-frown"></i></a>
+                              {% endif %}
+                            </button>
+                            <button type="button" class="btn btn">
+                              {% if review2.meaningful %}
+                                <a data-toggle="tooltip" data-placement="top" title="The user found this club meaningful!"><i class="fas fa-eye"></i></a>
+                              {% else %}
+                                <a data-toggle="tooltip" data-placement="top" title="The user didn't find this club meaningful."><i class="fas fa-eye-slash"></i></a>
+                              {% endif %}
+                            </button>
+                          </center>
+                          
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="card-body">
+                    <center>{{ review2.created_at }}</center>
+                    <strong>Review</strong><br><br>
+                    {{review2.text}}<br><br>
+                    <strong>Could be improved</strong><br>
+                    {{review2.CBI}}<br><br>
+                    
+                      <label class="btn btn-primary active">
+                        <a href = "{% url 'review_increment' club.pk review2.pk %}">
+                          <i class="fas fa-arrow-alt-circle-up"></i>
+                        </a>
+                      </label>
+                      <label class="btn btn-info active">
+                        <a data-toggle="tooltip" data-placement="top" title="How many users found this review helpful.">{{review2.rating}}</a>
+                      </label>
+                      <label class="btn btn-primary active" name="downvote">
+                        <a href="{% url 'review_decrement' club.pk review2.pk %}">
+                          <i class="fas fa-arrow-alt-circle-down"></i>
+                        </a>
+                      </label>
+                  </div>
+
+                </div>
+                <br>
+                <center>
+                <a href="{% url 'post_new' pk=club.pk %}" class="btn btn-primary">Add a review!</a>
+                &nbsp;
+                <a href="{% url 'all_reviews' pk=club.pk %}" class="btn btn-primary">See all reviews</a>
+                </center>
+                {% endif %}
 
               <center>
                 {% if messages %}
@@ -214,9 +261,6 @@
                     {% endfor %}
                   </script>
                 {% endif %}
-                <a href="{% url 'post_new' pk=club.pk %}" class="btn btn-primary">Add a review!</a>
-                &nbsp;
-                <a href="{% url 'all_reviews' pk=club.pk %}" class="btn btn-primary">See all reviews</a>
               </center>
             </div>
           </div>
