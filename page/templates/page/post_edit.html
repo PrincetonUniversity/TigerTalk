@@ -1,13 +1,54 @@
 {% extends 'page/baseB.html' %}
 {% load static %}
 {% block content %}
-<html>
-    <br />
-    <br />
-    <h1>New review by {{user.username}}</h1>
-    <form method="POST" class="post-form">{% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="save btn btn-default">Submit me!</button>
-    </form>
-</html>
+
+	<br>
+	<br>
+	<div class="container">
+	    <div class="row">
+	    	<div class="col-sm-12">
+			    <center>
+			    	<h1><u>New Review!</u></h1>
+			    </center>
+			</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="jumbotron">
+			    <center>
+			    	<h2>Hi {{user.username}},</h2>
+			    </center>
+			    <br>	 
+			   	<p>Thanks for writing a review for {{club.name}}! A couple of things to keep in mind: the goal of Princeton Club Talk is to help students make more informed choices about extracurricular clubs. We ask that you be honest in your review but also civil and constructive. This means no profanity and rude or hostile language. Any reviews that violate this rule will be deleted. In addition, if there is a repeated pattern of violations, that account can be suspended. Happy reviewing!<br></p>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="jumbotron">
+
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<div class="jumbotron">
+					<p> Write your review below:</p>
+					<center>{{form.text}}</center>
+					<br>
+					<p>What could be improved about this club? (200 characters max)</p>
+					<center>{{form.CBI}}</center>
+				</div>
+			</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-sm-12">
+			    <form method="POST" class="post-form">{% csrf_token %}
+			        {{ form.as_p }}
+			        <button type="submit" class="save btn btn-default">Submit me!</button>
+			    </form>
+			</div>
+		</div>
+	</div>
+
 {% endblock %}

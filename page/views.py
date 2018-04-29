@@ -22,6 +22,16 @@ def post_detail(request, pk):
     global time
     club = get_object_or_404(Club, pk=pk)
     reviews = club.review_set.all()
+    print(reviews)
+    
+    review1 = None;
+    review2 = None;
+    if reviews.count() > 1:
+        review1 = reviews[reviews.count()-1]
+        review2 = reviews[reviews.count()-2]
+    elif reviews.count() == 1:
+        review1 = reviews[0]
+
     review_count = reviews.count()
     star_result = 0
     if (review_count != 0):
@@ -78,14 +88,26 @@ def post_detail(request, pk):
         sort = request.GET['sort']
         if sort == "1":
             time = 1
-            return render(request, 'page/post_detail2.html', {'club': club, 'review_count': review_count, 'fun_count': club.fun_count, 'happy_result': happy_result, 'mean_result': mean_result, 'star_count': star_result, 'reviews': reviews.time, 'time': time, 'count':photo_count, 'photo1':photo1, 'photo2':photo2, 'photo3':photo3})
+            return render(request, 'page/post_detail2.html', {'club': club, 'review_count': review_count, 'fun_count': club.fun_count, 
+                'happy_result': happy_result, 'mean_result': mean_result, 'star_count': star_result, 
+                'reviews': reviews.time, 'time': time, 'count':photo_count, 'photo1':photo1, 
+                'photo2':photo2, 'photo3':photo3, 'review1':review1, 'review2': review2})
 
         elif sort == "2":
             time = 2
-            return render(request, 'page/post_detail2.html', {'club': club, 'review_count': review_count, 'fun_count': club.fun_count, 'mean_count': club.meaning_count, 'happy_result': happy_result, 'mean_result': mean_result, 'star_count': star_result, 'reviews': reviews.rating, 'time': time, 'count':photo_count, 'photo1':photo1, 'photo2':photo2, 'photo3':photo3})
+            return render(request, 'page/post_detail2.html', {'club': club, 
+                'review_count': review_count, 'fun_count': club.fun_count, 
+                'mean_count': club.meaning_count, 'happy_result': happy_result, 
+                'mean_result': mean_result, 'star_count': star_result, 'reviews': reviews.rating, 
+                'time': time, 'count':photo_count, 'photo1':photo1, 'photo2':photo2, 
+                'photo3':photo3, 'review1':review1, 'review2': review2})
 
     else:
-        return render(request, 'page/post_detail2.html', {'club': club, 'review_count': review_count, 'fun_count': club.fun_count, 'mean_count': club.meaning_count, 'happy_result': happy_result, 'mean_result': mean_result, 'star_count': star_result, 'reviews': reviews.time, 'time': time, 'count':photo_count, 'photo1':photo1, 'photo2':photo2, 'photo3':photo3})
+        return render(request, 'page/post_detail2.html', {'club': club, 'review_count': review_count, 
+            'fun_count': club.fun_count, 'mean_count': club.meaning_count, 'happy_result': happy_result, 
+            'mean_result': mean_result, 'star_count': star_result, 'reviews': reviews.time, 
+            'time': time, 'count':photo_count, 'photo1':photo1, 'photo2':photo2, 'photo3':photo3, 
+            'review1':review1, 'review2': review2})
 
 @CAS_login_required
 def top20(request):
@@ -195,7 +217,8 @@ def post_new(request, pk):
                 return redirect('post_detail', pk=pk)
         else:
             form = PostForm()
-        return render(request, 'page/post_edit.html', {'form': form, 'user': request.user})
+            club = get_object_or_404(Club, pk=pk)
+        return render(request, 'page/post_edit.html', {'form': form, 'user': request.user, 'club': club})
 
 
 @CAS_login_required
