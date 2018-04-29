@@ -10,6 +10,8 @@ from . import CASClient
 from django.urls import reverse
 from django.contrib import auth, messages
 from django.contrib.auth.models import User
+from django.forms import inlineformset_factory
+
 
 time = 1
 
@@ -201,6 +203,7 @@ def post_new(request, pk):
 @CAS_login_required
 def edit_page(request, pk):
     club = get_object_or_404(Club, pk=pk)
+    LeaderInlineFormSet = inlineformset_factory(Club, Leader, fields=('name','title','email'), min_num=1)
     email = club.email.split('@')
     if not request.user.student.is_club:
         messages.info(request, 'You cannot edit a club if you are a student!')
@@ -210,6 +213,7 @@ def edit_page(request, pk):
         return HttpResponseRedirect(reverse('post_detail', args=[pk]))
     if request.method == "POST":
         form = EditForm(request.POST, request.FILES, instance=club)
+        formset = LeaderInlineFormSet(request.POST, request.FILES, instance=club)
         if form.is_valid():
             if request.FILES.get('photo1') != None:
                 club.photo1 = request.FILES.get('photo1')
@@ -227,11 +231,14 @@ def edit_page(request, pk):
             elif request.POST.get('delete3'):
                 club.photo3.delete()
             form.save()
-            return redirect('post_detail', pk=pk)
+            return redirect('edit_page', pk=pk)
+        if formset.is_valid():
+            formset.save()
+            return redirect('edit_page', pk=pk)
     else:
-        form = EditForm({'name': club.name, 'desc': club.desc, 'website': club.website, 'email': club.email})  
-    return render(request, 'page/club_edit.html', {'form': form, 'user': request.user, 'club': club})       
-
+        form = EditForm({'name': club.name, 'desc': club.desc, 'website': club.website, 'email': club.email})
+        formset = LeaderInlineFormSet(instance=club) 
+    return render(request, 'page/club_edit.html', {'form': form, 'formset':formset, 'user': request.user, 'club': club})       
 
 def search_form(request):
     return render(request, 'page/search_form.html')

@@ -47,7 +47,18 @@
        	Want to add a picture?
         {{ form.photo3 }}<br>
        	{% endif %}
-        <button type="submit" class="save btn btn-default">Submit me!</button>
+        <button type="submit" class="save btn btn-default">Save changes!</button>
     </form>
+    <h3>Edit Your Club's Leaders Here!</h3><br>
+    <form method="post" action="">{% csrf_token %}
+	    {{ formset.management_form }}
+	    <table>
+	        {% for form in formset %}
+	        {{ form }}
+	        {% endfor %}
+	    </table>
+	    <button type="submit" class="save btn btn-default">Save changes!</button>
+	</form>
+	<a href="{% url 'post_detail' pk=club.pk %}" class="btn btn-primary"><h3>Take me back to my club page!</h3></a>
 </html>
 {% endblock %}
