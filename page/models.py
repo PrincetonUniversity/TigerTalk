@@ -37,10 +37,13 @@ class Club(models.Model):
     desc = models.TextField()
     category = models.ManyToManyField(Category)
     email = models.EmailField(max_length=200)
-    website = models.TextField()
+    website = models.CharField(max_length=200)
     fun_count = models.IntegerField(default = 0)
     meaning_count = models.IntegerField(default = 0)
     total_stars = models.FloatField(default = 0)
+    photo1 = models.ImageField(upload_to='gallery', null=True)
+    photo2 = models.ImageField(upload_to='gallery', null=True)
+    photo3 = models.ImageField(upload_to='gallery', null=True)
 
 
     def __str__(self):

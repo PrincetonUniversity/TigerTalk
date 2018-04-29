@@ -21,21 +21,43 @@
     <div class="container">
 
       <div class="row">
+        {% if count == 3 %}
         <div class="col-sm-4 my-4">
 
-            <img class="img-thumbnail" src="http://www.princetonroaring20.com/wp-content/uploads/2016/04/delancey-logo-backgroundless.png" alt="">
+            <img class="img-thumbnail" src="{{photo1.url}}" alt="">
 
         </div>
         <div class="col-sm-4 my-4">
 
-            <img class="img-thumbnail" src="http://rag532wr4du1nlsxu2nehjbv.wpengine.netdna-cdn.com/wp-content/uploads/2016/06/20161201_PrincetonDanceFest16_BD002-0x1000-c-default.jpg" alt="">
+            <img class="img-thumbnail" src="{{photo2.url}}" alt="">
 
         </div>
         <div class="col-sm-4 my-4">
 
-            <img class="img-thumbnail" src="http://www.brucesallan.com/wp-content/uploads/2015/02/Unstrumental-Acapella-Group-pose.png" alt="">
+            <img class="img-thumbnail" src="{{photo3.url}}" alt="">
 
         </div>
+        {% elif count == 2 %}
+        <div class="col-sm-6 my-4">
+
+            <img class="img-thumbnail" src="{{photo1.url}}" alt="">
+
+        </div>
+        <div class="col-sm-6 my-4">
+
+            <img class="img-thumbnail" src="{{photo2.url}}" alt="">
+
+        </div>
+        {% elif count == 1 %}
+        <div class="col-sm-12 my-4">
+
+            <img class="img-thumbnail" src="{{photo1.url}}" alt="">
+
+        </div>
+        {% else %}
+        <div class="col-sm-12 my-4">
+        </div>
+        {% endif %}
       </div>
       <div class="body1">
         <div class="jumbotron">
@@ -223,7 +245,7 @@
       <div class="jumbotron">
         <div class="row">
           <div class="col-sm-12 my-12">
-            <center><h2>Are you a leader of {{club.name}}? Edit your club's information <a href="#" class="btn btn-primary"><h3>here!</h3></a></h2></center>
+            <center><h2>Are you a leader of {{club.name}}? Edit your club's information <a href="{% url 'edit_page' pk=club.pk %}" class="btn btn-primary"><h3>here!</h3></a></h2></center>
           </div>
         </div>
       </div>

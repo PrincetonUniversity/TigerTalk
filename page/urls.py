@@ -15,4 +15,5 @@ urlpatterns = [
     url(r'^review/(?P<pk_Club>\d+)/(?P<pk_Review>\d+)/dec/$', views.review_decrement, name='review_decrement'),
     url(r'^top20$', views.top20, name='top20'),
     url(r'^review/(?P<pk>\d+)/allreviews$', views.all_reviews, name='all_reviews'),
+    url(r'^post/edit/(?P<pk>\d+)/$', views.edit_page, name='edit_page'),
 ]

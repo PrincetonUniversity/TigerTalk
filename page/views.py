@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from .models import Club, Category, Leader, Review, Student
-from .forms import PostForm, LoginForm
+from .forms import PostForm, LoginForm, EditForm
 from .decorators import CAS_login_required
 from django.db import models
 from django.db.models import Count
@@ -43,6 +43,34 @@ def post_detail(request, pk):
     else:
         mean_result = 0
 
+    photo_count = 0
+    photo1 = None
+    photo2 = None
+    photo3 = None
+    if club.photo1:
+        photo_count += 1
+        photo1 = club.photo1
+        if club.photo2:
+            photo_count += 1
+            photo2 = club.photo2
+            if club.photo3:
+                photo_count += 1
+                photo3 = club.photo3
+        else:
+            if club.photo3:
+                photo_count += 1
+                photo2 = club.photo3
+    elif club.photo2:
+        photo_count += 1
+        photo1 = club.photo2
+        if club.photo3:
+            photo_count += 1
+            photo2 = club.photo3
+    else:
+        if club.photo3:
+            photo_count += 1
+            photo1 = club.photo3
+
     reviews.time = reviews.order_by('-created_at')
     reviews.rating = reviews.order_by('-rating')
 
@@ -50,14 +78,14 @@ def post_detail(request, pk):
         sort = request.GET['sort']
         if sort == "1":
             time = 1
-            return render(request, 'page/post_detail2.html', {'club': club, 'review_count': review_count, 'fun_count': club.fun_count, 'happy_result': happy_result, 'mean_result': mean_result, 'star_count': star_result, 'reviews' : reviews.time, 'time' : time})
+            return render(request, 'page/post_detail2.html', {'club': club, 'review_count': review_count, 'fun_count': club.fun_count, 'happy_result': happy_result, 'mean_result': mean_result, 'star_count': star_result, 'reviews': reviews.time, 'time': time, 'count':photo_count, 'photo1':photo1, 'photo2':photo2, 'photo3':photo3})
 
         elif sort == "2":
             time = 2
-            return render(request, 'page/post_detail2.html', {'club': club, 'review_count': review_count, 'fun_count': club.fun_count, 'mean_count': club.meaning_count, 'happy_result': happy_result, 'mean_result': mean_result, 'star_count': star_result, 'reviews' : reviews.rating, 'time' : time})
+            return render(request, 'page/post_detail2.html', {'club': club, 'review_count': review_count, 'fun_count': club.fun_count, 'mean_count': club.meaning_count, 'happy_result': happy_result, 'mean_result': mean_result, 'star_count': star_result, 'reviews': reviews.rating, 'time': time, 'count':photo_count, 'photo1':photo1, 'photo2':photo2, 'photo3':photo3})
 
     else:
-        return render(request, 'page/post_detail2.html', {'club': club, 'review_count': review_count, 'fun_count': club.fun_count, 'mean_count': club.meaning_count, 'happy_result': happy_result, 'mean_result': mean_result, 'star_count': star_result, 'reviews' : reviews.time, 'time' : time})
+        return render(request, 'page/post_detail2.html', {'club': club, 'review_count': review_count, 'fun_count': club.fun_count, 'mean_count': club.meaning_count, 'happy_result': happy_result, 'mean_result': mean_result, 'star_count': star_result, 'reviews': reviews.time, 'time': time, 'count':photo_count, 'photo1':photo1, 'photo2':photo2, 'photo3':photo3})
 
 @CAS_login_required
 def top20(request):
@@ -167,7 +195,43 @@ def post_new(request, pk):
                 return redirect('post_detail', pk=pk)
         else:
             form = PostForm()
-        return render(request, 'page/post_edit.html', {'form': form, 'user': request.user})  
+        return render(request, 'page/post_edit.html', {'form': form, 'user': request.user})
+
+
+@CAS_login_required
+def edit_page(request, pk):
+    club = get_object_or_404(Club, pk=pk)
+    email = club.email.split('@')
+    if not request.user.student.is_club:
+        messages.info(request, 'You cannot edit a club if you are a student!')
+        return HttpResponseRedirect(reverse('post_detail', args=[pk]))
+    elif not request.user.student.netid == email[0]:
+        messages.info(request, 'You cannot edit a club other than your own!')
+        return HttpResponseRedirect(reverse('post_detail', args=[pk]))
+    if request.method == "POST":
+        form = EditForm(request.POST, request.FILES, instance=club)
+        if form.is_valid():
+            if request.FILES.get('photo1') != None:
+                club.photo1 = request.FILES.get('photo1')
+                club.save()
+            elif request.POST.get('delete1'):
+                club.photo1.delete()
+            if request.FILES.get('photo2') != None:
+                club.photo2 = request.FILES.get('photo2')
+                club.save()
+            elif request.POST.get('delete2'):
+                club.photo2.delete()
+            if request.FILES.get('photo3') != None:
+                club.photo3 = request.FILES.get('photo3')
+                club.save()
+            elif request.POST.get('delete3'):
+                club.photo3.delete()
+            form.save()
+            return redirect('post_detail', pk=pk)
+    else:
+        form = EditForm({'name': club.name, 'desc': club.desc, 'website': club.website, 'email': club.email})  
+    return render(request, 'page/club_edit.html', {'form': form, 'user': request.user, 'club': club})       
+
 
 def search_form(request):
     return render(request, 'page/search_form.html')
