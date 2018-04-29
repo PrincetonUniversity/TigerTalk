@@ -237,7 +237,7 @@ def edit_page(request, pk):
     if request.method == "POST":
         form = EditForm(request.POST, request.FILES, instance=club)
         formset = LeaderInlineFormSet(request.POST, request.FILES, instance=club)
-        if form.is_valid():
+        if form.is_valid() or formset.is_valid():
             if request.FILES.get('photo1') != None:
                 club.photo1 = request.FILES.get('photo1')
                 club.save()
@@ -254,10 +254,8 @@ def edit_page(request, pk):
             elif request.POST.get('delete3'):
                 club.photo3.delete()
             form.save()
-            return redirect('edit_page', pk=pk)
-        if formset.is_valid():
             formset.save()
-            return redirect('edit_page', pk=pk)
+            return redirect('post_detail', pk=pk)
     else:
         form = EditForm({'name': club.name, 'desc': club.desc, 'website': club.website, 'email': club.email})
         formset = LeaderInlineFormSet(instance=club) 
