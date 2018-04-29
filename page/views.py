@@ -228,12 +228,16 @@ def edit_page(request, pk):
     club = get_object_or_404(Club, pk=pk)
     LeaderInlineFormSet = inlineformset_factory(Club, Leader, fields=('name','title','email'), min_num=1)
     email = club.email.split('@')
-    if not request.user.student.is_club:
-        messages.info(request, 'You cannot edit a club if you are a student!')
-        return HttpResponseRedirect(reverse('post_detail', args=[pk]))
-    elif not request.user.student.netid == email[0]:
-        messages.info(request, 'You cannot edit a club other than your own!')
-        return HttpResponseRedirect(reverse('post_detail', args=[pk]))
+    if not request.user.student.netid == email[0]:
+        leaders = club.leader_set.all()
+        accept = False
+        for leader in leaders:
+            emailL = leader.email.split('@')
+            if request.user.student.netid == emailL[0]:
+                accept = True
+        if accept == False:
+            messages.info(request, 'You cannot edit a club other than your own!')
+            return HttpResponseRedirect(reverse('post_detail', args=[pk]))
     if request.method == "POST":
         form = EditForm(request.POST, request.FILES, instance=club)
         formset = LeaderInlineFormSet(request.POST, request.FILES, instance=club)
@@ -313,10 +317,7 @@ def logintemp(request):
             # first time loggin in - create a user
             user = User.objects.create_user(username=username, password=password)
             email = netid + "@princeton.edu"
-            is_club = False
-            if Club.objects.filter(email=email):
-                is_club = True
-            student = Student(user=user, netid=netid, is_club=is_club)
+            student = Student(user=user, netid=netid)
             student.save()
             auth.login(request, user)
             return redirect('/')
@@ -341,10 +342,7 @@ def login(request):
                 # first time loggin in - create a user
                 user = User.objects.create_user(username=username, password=password)
                 email = netid + "@princeton.edu"
-                is_club = False
-                if Club.objects.filter(email=email):
-                    is_club = True
-                student = Student(user=user, netid=netid, is_club=is_club)
+                student = Student(user=user, netid=netid)
                 student.save()
                 auth.login(request, user)
                 return redirect('post_list_full')

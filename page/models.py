@@ -43,9 +43,9 @@ class Club(models.Model):
     fun_count = models.IntegerField(default = 0)
     meaning_count = models.IntegerField(default = 0)
     total_stars = models.FloatField(default = 0)
-    photo1 = models.ImageField(upload_to='gallery', null=True)
-    photo2 = models.ImageField(upload_to='gallery', null=True)
-    photo3 = models.ImageField(upload_to='gallery', null=True)
+    photo1 = models.ImageField(upload_to='gallery', null=True, blank=True)
+    photo2 = models.ImageField(upload_to='gallery', null=True, blank=True)
+    photo3 = models.ImageField(upload_to='gallery', null=True, blank=True)
 
 
     def __str__(self):
@@ -65,7 +65,6 @@ class Student(models.Model):
     clubs_reviewed = models.ManyToManyField(Club, related_name="submissions")
     club_interviews_reviewed = models.ManyToManyField(Club, related_name="interviews")
     review_votes = models.ManyToManyField(Review, related_name="votes")
-    is_club = models.BooleanField(default=False)
     clubs_liked = models.ManyToManyField(Club, related_name="likes")
 
     def __str__(self):

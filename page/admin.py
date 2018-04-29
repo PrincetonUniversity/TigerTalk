@@ -26,6 +26,4 @@ class ReviewAdmin(admin.ModelAdmin):
     list_display = ('text', 'author', 'club')
 admin.site.register(Review, ReviewAdmin)
 
-class StudentAdmin(admin.ModelAdmin):
-    list_display = ('netid', 'is_club')
-admin.site.register(Student, StudentAdmin)
+admin.site.register(Student)
