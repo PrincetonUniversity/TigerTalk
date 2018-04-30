@@ -1,59 +1,123 @@
 {% extends 'page/baseB.html' %}
 {% load static %}
 {% block content %}
-<html>
-    <br />
-    <br />
+    <br>
+    <br>
     <form method="POST" class="post-form" enctype="multipart/form-data">{% csrf_token %}
-        <h3>Club Name</h3><br>
-        {{ form.name }}<br>
-        <h3>Club Description</h3>
-        {{ form.desc }}<br>
-        <h3>Website</h3><br>
-        {{ form.website }}<br>
-        <h3>Email</h3><br>
-        {{ form.email }}<br>
-        <h3>Photo</h3><br>
-        {% if club.photo1 %}
-        <img class="img-thumbnail" src="{{ club.photo1.url }}">
-        Want to change this picture?
-        {{ form.photo1 }}<br>
-       	Want to delete this picture? 
-       	<input type="checkbox" name="delete1">
-       	<label for="delete1">Delete Picture</label>
-       	{% else %}
-       	Want to add a picture?
-        {{ form.photo1 }}<br>
-       	{% endif %}
-     	{% if club.photo2 %}
-        <img class="img-thumbnail" src="{{ club.photo2.url }}">
-        Want to change this picture?
-        {{ form.photo2 }}<br>
-       	Want to delete this picture? 
-       	<input type="checkbox" name="delete2">
-       	<label for="delete2">Delete Picture</label>
-       	{% else %}
-       	Want to add a picture?
-        {{ form.photo2 }}<br>
-       	{% endif %}
-       	{% if club.photo3 %}
-        <img class="img-thumbnail" src="{{ club.photo3.url }}">
-        Want to change this picture?
-        {{ form.photo3 }}<br>
-       	Want to delete this picture? 
-       	<input type="checkbox" name="delete3">
-       	<label for="delete3">Delete Picture</label>
-       	{% else %}
-       	Want to add a picture?
-        {{ form.photo3 }}<br>
-       	{% endif %}
-	    {{ formset.management_form }}
-	    <table>
-	        {% for form in formset %}
-	        {{ form }}
-	        {% endfor %}
-	    </table>
-	    <button type="submit" class="save btn btn-default">Submit Changes!</button>
-	</form>
-</html>
+
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12">
+              <center>
+                <h1><u>Edit {{club.name}}'s information!</u></h1>
+                <br>
+                <p>Below you can change all your club's information, plus add new and exciting content that can help attract new members! Please take this as an opportunity to make your club page truly unique and fun!</p>
+              </center>
+              <br>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="jumbotron">
+              <center><h3>Basic info</h3></center>
+              <br>
+              <h6>Club name:</h6>
+                {{form.name}}
+              <br>
+              <br>
+              <h6>Club description:</h6>
+                {{form.desc}}
+              <br>
+              <br>
+              <h6>Website:</h6>
+              {{ form.website }}
+              <br>
+              <br>
+              <h6>Email:</h6>
+              {{ form.email }}
+              <br>
+              <br>
+            </div>
+          </div>
+
+          <div class="col-sm-6">
+            <div class="jumbotron">
+              <center><h3>Leadership</h3></center>
+              <br>
+              <table>
+                {{ formset.management_form }}
+                {% for form in formset %}
+                {{ form }}
+                {% endfor %}
+              </table>
+
+
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="jumbotron">
+              <center>
+                <h3>Pictures</h3>
+                <p>Pictures are integral to making your club page unique. In this vein, we offer several options for displaying your pictures. If you submit <b>one</b> picture, it will be displayed as a banner (851 x 315 pixels). If you submit <b>two</b> pictures, they will displayed together as two mini banners (425 x 157 pixels each). If you submit <b>three</b> pictures, they will be displayed as three boxes (300 x 200 pixels each).</p>
+              </center>
+              <br>
+              {% if club.photo1 %}
+                <img class="img-thumbnail" src="{{ club.photo1.url }}">
+                Want to change this picture?
+                {{ form.photo1 }}<br>
+                Want to delete this picture? 
+                <input type="checkbox" name="delete1">
+                <label for="delete1">Delete Picture</label>
+                <br>
+              {% else %}
+                Want to add a picture?
+                {{ form.photo1 }}<br>
+                <br>
+              {% endif %}
+              {% if club.photo2 %}
+                <img class="img-thumbnail" src="{{ club.photo2.url }}">
+                Want to change this picture?
+                {{ form.photo2 }}<br>
+                Want to delete this picture? 
+                <input type="checkbox" name="delete2">
+                <label for="delete2">Delete Picture</label>
+                <br>
+              {% else %}
+                Want to add a picture?
+                {{ form.photo2 }}<br>
+                <br>
+              {% endif %}
+              {% if club.photo3 %}
+                <img class="img-thumbnail" src="{{ club.photo3.url }}">
+                Want to change this picture?
+                {{ form.photo3 }}<br>
+                Want to delete this picture? 
+                <input type="checkbox" name="delete3">
+                <label for="delete3">Delete Picture</label>
+                <br>
+              {% else %}
+                Want to add a picture?
+                {{ form.photo3 }}<br>
+                <br>
+              {% endif %}
+
+
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12">
+
+            <button type="submit" class="save btn btn-default">Submit Changes!</button>
+          </div>
+        </div>
+      </div>
+
+    </form>
+
 {% endblock %}
