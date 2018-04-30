@@ -1,11 +1,27 @@
 {% extends 'page/baseB.html' %}
 {% load static %}
+{% load templatetags %}
 {% block content %}
-<html>
+<br>
+    <div class="container">
+
+      <div class="top1">
+        <div class="row">
+          <div class="col-sm-12">
+            <center>
+              <h1><u>We're Interested!</u></h1>
+              <p>Below is a list of the emails of students who have expressed interest in your club! Feel free to reach out to them and add them to your listserv!</p>
+            </center>
+          </div>
+        </div>
+      </div>
+      <br>
     <br />
     <br />
     {% for student in students %}
-    {{student.netid}}@princeton.edu
+    <p>
+    <a href="{{student.netid|mail}}@princeton.edu">{{student.netid}}@princeton.edu</a>
+	</p>
     {% endfor %}
-</html>
+
 {% endblock %}

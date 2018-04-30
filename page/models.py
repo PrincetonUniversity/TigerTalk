@@ -32,8 +32,6 @@ class Review(models.Model):
     student = models.ForeignKey('Student', on_delete=models.PROTECT, null=True)
     club = models.ForeignKey('Club', on_delete=models.PROTECT, null=True)
 
-    
-
 class Club(models.Model):
     name = models.CharField(max_length=200)
     desc = models.TextField()
