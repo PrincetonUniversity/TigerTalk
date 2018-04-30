@@ -38,6 +38,15 @@ body {
   height: 200px;
 }
 
+.img-thumbnail-two {
+  width: 425px;
+  height: 157px;
+}
+
+.img-thumbnail-cover {
+  width: 851px;
+  height: 315px;
+}
 
 
 .modal-header {

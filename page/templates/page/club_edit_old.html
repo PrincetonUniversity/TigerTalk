@@ -1,0 +1,59 @@
+{% extends 'page/baseB.html' %}
+{% load static %}
+{% block content %}
+<html>
+    <br />
+    <br />
+    <form method="POST" class="post-form" enctype="multipart/form-data">{% csrf_token %}
+        <h3>Club Name</h3><br>
+        {{ form.name }}<br>
+        <h3>Club Description</h3>
+        {{ form.desc }}<br>
+        <h3>Website</h3><br>
+        {{ form.website }}<br>
+        <h3>Email</h3><br>
+        {{ form.email }}<br>
+        <h3>Photo</h3><br>
+        {% if club.photo1 %}
+        <img class="img-thumbnail" src="{{ club.photo1.url }}">
+        Want to change this picture?
+        {{ form.photo1 }}<br>
+        Want to delete this picture? 
+        <input type="checkbox" name="delete1">
+        <label for="delete1">Delete Picture</label>
+        {% else %}
+        Want to add a picture?
+        {{ form.photo1 }}<br>
+        {% endif %}
+      {% if club.photo2 %}
+        <img class="img-thumbnail" src="{{ club.photo2.url }}">
+        Want to change this picture?
+        {{ form.photo2 }}<br>
+        Want to delete this picture? 
+        <input type="checkbox" name="delete2">
+        <label for="delete2">Delete Picture</label>
+        {% else %}
+        Want to add a picture?
+        {{ form.photo2 }}<br>
+        {% endif %}
+        {% if club.photo3 %}
+        <img class="img-thumbnail" src="{{ club.photo3.url }}">
+        Want to change this picture?
+        {{ form.photo3 }}<br>
+        Want to delete this picture? 
+        <input type="checkbox" name="delete3">
+        <label for="delete3">Delete Picture</label>
+        {% else %}
+        Want to add a picture?
+        {{ form.photo3 }}<br>
+        {% endif %}
+      {{ formset.management_form }}
+      <table>
+          {% for form in formset %}
+          {{ form }}
+          {% endfor %}
+      </table>
+      <button type="submit" class="save btn btn-default">Submit Changes!</button>
+  </form>
+</html>
+{% endblock %}
