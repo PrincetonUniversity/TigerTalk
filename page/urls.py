@@ -16,4 +16,5 @@ urlpatterns = [
     url(r'^top20$', views.top20, name='top20'),
     url(r'^review/(?P<pk>\d+)/allreviews$', views.all_reviews, name='all_reviews'),
     url(r'^post/edit/(?P<pk>\d+)/$', views.edit_page, name='edit_page'),
+    url(r'^post/interest/(?P<pk>\d+)/$', views.interest_page, name='interest_page'),
 ]

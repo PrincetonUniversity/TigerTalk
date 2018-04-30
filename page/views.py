@@ -86,6 +86,13 @@ def post_detail(request, pk):
     reviews.time = reviews.order_by('-created_at')
     reviews.rating = reviews.order_by('-rating')
 
+    if request.method == "POST":
+        if request.POST.get("interest"):
+            if request.user.student.clubs_interested.filter(pk=pk):
+                messages.info(request, 'You already expressed interest in this club!')
+                return HttpResponseRedirect(reverse('post_detail', args=[pk]))
+            request.user.student.clubs_interested.add(club)
+
     if 'sort' in request.GET:
         sort = request.GET['sort']
         if sort == "1":
@@ -272,6 +279,24 @@ def search_form(request):
 def review_detail(request, pk):
     review = get_object_or_404(Review, pk=pk)
     return render(request, 'page/review_detail.html', {'review': review})
+
+@CAS_login_required
+def interest_page(request, pk):
+    club = get_object_or_404(Club, pk=pk)
+    email = club.email.split('@')
+    if not request.user.student.netid == email[0]:
+        leaders = club.leader_set.all()
+        accept = False
+        for leader in leaders:
+            emailL = leader.email.split('@')
+            if request.user.student.netid == emailL[0]:
+                accept = True
+        if accept == False:
+            messages.info(request, 'You cannot access the information of a club that is not your own!')
+            return HttpResponseRedirect(reverse('post_detail', args=[pk]))
+    students = Student.objects.filter(clubs_interested__id=pk)
+    return render(request, 'page/interest.html', {'students': students, 'club':club})       
+
 
 @CAS_login_required
 def search(request):

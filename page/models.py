@@ -66,6 +66,7 @@ class Student(models.Model):
     club_interviews_reviewed = models.ManyToManyField(Club, related_name="interviews")
     review_votes = models.ManyToManyField(Review, related_name="votes")
     clubs_liked = models.ManyToManyField(Club, related_name="likes")
+    clubs_interested = models.ManyToManyField(Club, related_name="interested")
 
     def __str__(self):
         return self.netid

@@ -1,0 +1,11 @@
+{% extends 'page/baseB.html' %}
+{% load static %}
+{% block content %}
+<html>
+    <br />
+    <br />
+    {% for student in students %}
+    {{student.netid}}@princeton.edu
+    {% endfor %}
+</html>
+{% endblock %}

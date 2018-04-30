@@ -87,6 +87,9 @@
             <p>
               <a class="btn btn-primary btn-lg" href="{% url 'all_reviews' pk=club.pk %}">Check out our reviews!</a>
             </p>
+            <form method="POST" class="post-form">{% csrf_token %}
+              <button type="submit" class="btn btn-primary btn-md" name="interest" value="interest">I'm Interested!</button>
+          </form>
           </div>
           <div class="col-sm-4">
             <h2 class="mt-4">Club info</h2>
@@ -290,6 +293,7 @@
         <div class="row">
           <div class="col-sm-12 my-12">
             <center><h2>Are you a leader of {{club.name}}? Edit your club's information <a href="{% url 'edit_page' pk=club.pk %}" class="btn btn-primary"><h3>here!</h3></a>
+            <center><h2>See who is interested in your club <a href="{% url 'interest_page' pk=club.pk %}" class="btn btn-primary"><h3>here!</h3></a>
             </h2></center>
           </div>
         </div>
