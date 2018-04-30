@@ -175,6 +175,12 @@ def post_list_full(request):
     clubs = Club.objects.all()
     return render(request, 'page/post_list_full.html', {'clubs': clubs})
 
+@CAS_login_required
+def my_clubs(request):
+    email = request.user.student.netid + "@princeton.edu"
+    clubs = Club.objects.filter(email=email).distinct() | Club.objects.filter(leader__email=email).distinct()
+    return render(request, 'page/my_clubs.html', {'clubs': clubs})
+
 def review_increment(request, pk_Club, pk_Review):
     review = get_object_or_404(Review, pk=pk_Review)
     if request.user.student.review_votes.filter(pk=review.pk):
@@ -248,7 +254,7 @@ def edit_page(request, pk):
     if request.method == "POST":
         form = EditForm(request.POST, request.FILES, instance=club)
         formset = LeaderInlineFormSet(request.POST, request.FILES, instance=club)
-        if form.is_valid() or formset.is_valid():
+        if form.is_valid() and formset.is_valid():
             if request.FILES.get('photo1') != None:
                 club.photo1 = request.FILES.get('photo1')
                 club.save()
