@@ -13,6 +13,10 @@ body {
 
 }
 
+.m-0.text-center.text-white {
+  font-family: Times Header !important;
+}
+
 .container-1 {
   background-image: url("../images/nassau_hall.jpg");
   background-size:     cover;                      /* <------ */
