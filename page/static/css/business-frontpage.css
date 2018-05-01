@@ -64,6 +64,7 @@ body {
 }
 
 
+
 .modal-header {
   background-color: orange;
 }
@@ -78,6 +79,4 @@ body {
   -o-background-size: cover;
 }
 
-.card {
-  height: 100%;
-}
+
