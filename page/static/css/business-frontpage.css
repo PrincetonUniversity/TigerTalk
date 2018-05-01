@@ -24,6 +24,21 @@ body {
   }
 }
 
+.btn.btn-lg{
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.btn.btn-md{
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.btn.btn-sm{
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
 .body1 {
   background.color: blue !important;
 }
