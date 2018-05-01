@@ -292,7 +292,7 @@
                 <center>
                   <a href="{% url 'interview_new' pk=club.pk %}" class="btn btn-primary btn-md">Add an interview!</a>
                   &nbsp;
-                  <a href="#" class="btn btn-primary btn-md">See all</a>
+                  <a href="{% url 'all_interviews' pk=club.pk %}" class="btn btn-primary btn-md">See all</a>
                 </center>
             </div>
             <div class="card-footer">
@@ -379,7 +379,7 @@
                   <center>
                     <a href="{% url 'interview_new' pk=club.pk %}" class="btn btn-primary btn-md">Add an interview!</a>
                     &nbsp;
-                    <a href="#" class="btn btn-primary btn-md">See all</a>
+                    <a href="{% url 'all_interviews' pk=club.pk %}" class="btn btn-primary btn-md">See all</a>
                   </center>
 
                 </div>
