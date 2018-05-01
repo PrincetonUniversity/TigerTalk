@@ -36,26 +36,23 @@ class PostForm(forms.ModelForm):
         model = Review
         fields = ('text', 'fun', 'meaningful', 'stars', 'CBI',)
 
-class PostForm(forms.ModelForm):
+class InterviewForm(forms.ModelForm):
 
-    BIN_OPTIONS = (
-        (1, 'Yes'),
-        (0, 'No'),
+    BIN_OPTIONS_1 = (
+        (1, 'Positive'),
+        (0, 'Negative'),
     )
 
-    STARS = (
-        (1, '1'),
-        (2, '2'),
-        (3, '3'),
-        (4, '4'),
-        (5, '5'),
+    BIN_OPTIONS_2 = (
+        (1, 'Easy'),
+        (0, 'Hard'),
     )
 
-    positive = forms.ChoiceField(widget=HorizRadioSelect, choices=BIN_OPTIONS)
-    hard = forms.ChoiceField(widget=HorizRadioSelect, choices=BIN_OPTIONS)
+    positive = forms.ChoiceField(widget=HorizRadioSelect, choices=BIN_OPTIONS_1)
+    hard = forms.ChoiceField(widget=HorizRadioSelect, choices=BIN_OPTIONS_2)
 
     class Meta:
-        model = Review
+        model = Interview
         fields = ('text', 'positive', 'hard',)
 
 class EditForm(forms.ModelForm):

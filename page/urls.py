@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'^search/$', views.search),
     url(r'^login$', views.login, name='login'),
     url(r'^post/new/(?P<pk>\d+)/$', views.post_new, name='post_new'),
+    url(r'^interview/new/(?P<pk>\d+)/$', views.interview_new, name='interview_new'),
     url(r'^review/(?P<pk>\d+)/$', views.review_detail, name='review_detail'),
     url(r'^ratings/', include('star_ratings.urls', namespace='ratings')), #app_name='ratings')),
     url(r'^review/(?P<pk_Club>\d+)/(?P<pk_Review>\d+)/inc/$', views.review_increment, name='review_increment'),

@@ -1,0 +1,51 @@
+{% extends 'page/baseB.html' %}
+{% load static %}
+{% block content %}
+
+	<br>
+	<br>
+	<div class="container">
+	    <div class="row">
+	    	<div class="col-sm-12">
+			    <center>
+			    	<h1><u>New Review!</u></h1>
+			    </center>
+			</div>
+		</div>
+		<br>
+		<form method="POST" class="post-form">{% csrf_token %}
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="jumbotron">
+			    <center>
+			    	<h2>Hi {{user.username}},</h2>
+			    </center>
+			    <br>	 
+			   	<p>BLAH BLAH BLAH interview ettiquete etc.<br></p>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="jumbotron">
+					<p>Was your interview for {{club.name}} a positive or negative experience?</p>
+					<center>{{form.positive}}</center>
+					<br>
+					<p>Was your interview for {{club.name}} easy or difficult?</p>
+					<center>{{form.hard}}</center>
+				</div>
+
+			<center><button type="submit" class="btn btn-primary btn-lg">&nbsp;&nbsp;&nbsp;Submit me!&nbsp;&nbsp;&nbsp;</button></center>
+			</div>
+			<div class="col-sm-6">
+				<div class="jumbotron">
+					<p> Write about your interview experience below:</p>
+					<center>{{form.text}}</center>
+				</div>
+			</div>
+		</div>
+		</form>
+		<br>
+	</div>
+
+{% endblock %}

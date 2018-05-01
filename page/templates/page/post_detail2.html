@@ -287,6 +287,11 @@
           <div class="card">
             <div class="card-body">
               <h4 class="card-title">Interviews</h4>
+              <center>
+                  <a href="{% url 'interview_new' pk=club.pk %}" class="btn btn-primary">Tell us about your interview!</a>
+                  &nbsp;
+                  <a href="{% url 'all_reviews' pk=club.pk %}" class="btn btn-primary">See all interview comments</a>
+                </center>
               <address>
                 <div class="card">
                   <div class="card-body">

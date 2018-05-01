@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from .models import Club, Category, Leader, Review, Student
-from .forms import PostForm, LoginForm, EditForm
+from .forms import PostForm, LoginForm, EditForm, InterviewForm
 from .decorators import CAS_login_required
 from django.db import models
 from django.db.models import Count
@@ -197,7 +197,7 @@ def review_decrement(request, pk_Club, pk_Review):
     if request.user.student.review_votes.filter(pk=review.pk):
         return HttpResponseRedirect(reverse('post_detail', args=[pk_Club]))
     else:
-        review.rating += 1;
+        review.rating -= 1;
         review.save()
         request.user.student.review_votes.add(review)
         request.user.student.save()
@@ -234,6 +234,31 @@ def post_new(request, pk):
             form = PostForm()
             club = get_object_or_404(Club, pk=pk)
         return render(request, 'page/post_edit.html', {'form': form, 'user': request.user, 'club': club})
+
+@CAS_login_required
+def interview_new(request, pk):
+    if request.user.student.club_interviews_reviewed.filter(pk=pk):
+        messages.info(request, "You already wrote about your interview experience with this club!")
+        return HttpResponseRedirect(reverse('post_detail', args=[pk]))
+    else:
+        if request.method == "POST":
+            form = InterviewForm(request.POST)
+            if form.is_valid():
+                club = get_object_or_404(Club, pk=pk)
+                interview = form.save(commit=False)
+                interview.student = request.user.student
+                interview.club = club
+                club.positive_count += interview.positive
+                club.hard_count += interview.hard
+                interview.save()
+                club.save()
+                request.user.student.club_interviews_reviewed.add(club)
+                request.user.student.save()
+                return redirect('post_detail', pk=pk)
+        else:
+            form = InterviewForm()
+            club = get_object_or_404(Club, pk=pk)
+        return render(request, 'page/interview_edit.html', {'form': form, 'user': request.user, 'club': club})
 
 
 @CAS_login_required
