@@ -212,7 +212,7 @@ def all_interviews(request, pk):
     if (interview_count):
         if ((club.positive_count / interview_count) >= .5):
             positive_result = 1
-        elif ((club.hard_count / interview_count) < .5):
+        elif ((club.positive_count / interview_count) < .5):
             positive_result = 0
     else:
         positive_result = 0
@@ -233,20 +233,20 @@ def all_interviews(request, pk):
         if sort == "1":
             time = 1
             return render(request, 'page/all_interviews.html', {'club': club, 'interview_count': interview_count,
-                'positive_count': club.positive_count, 'hard_count': club.positive_count,
+                'positive_count': club.positive_count, 'hard_count': interview_count - club.hard_count,
                 'positive_result': positive_result, 'hard_result': hard_result, 
                 'interviews' : interviews.time, 'time' : time})
 
         elif sort == "2":
             time = 2
             return render(request, 'page/all_interviews.html', {'club': club, 'interview_count': interview_count,
-                'positive_count': club.positive_count, 'hard_count': club.positive_count,
+                'positive_count': club.positive_count, 'hard_count': interview_count - club.hard_count,
                 'positive_result': positive_result, 'hard_result': hard_result, 
                 'interviews' : interviews.time, 'time' : time})
 
     else:
         return render(request, 'page/all_interviews.html', {'club': club, 'interview_count': interview_count,
-                'positive_count': club.positive_count, 'hard_count': club.positive_count,
+                'positive_count': club.positive_count, 'hard_count': interview_count - club.hard_count,
                 'positive_result': positive_result, 'hard_result': hard_result, 
                 'interviews' : interviews.time, 'time' : time})
     return render(request, 'page/all_interviews.html', {'club': club, 'interviews': interviews})

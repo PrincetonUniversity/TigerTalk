@@ -1,0 +1,131 @@
+{% extends 'page/baseB.html' %}
+{% load static %}
+{% load templatetags %}
+{% block content %}
+
+    <br>
+      <div class="row">
+        <!-- Right bar -->
+        <div class="col-sm-4">
+
+              <center><span class="badge badge-dark"><h3>&nbsp;Interview Info:&nbsp;</h3></span></center>
+              <br>
+
+            <center>
+
+              <div class="jumbotron">
+                <h1><span class="badge badge-primary">{{interview_count}}</span></h1><h3>student{{interview_count|pluralize}} interviewed with this club.</h3>
+              </div>
+
+              <div class="jumbotron">
+                <h1><span class="badge badge-success">{{club.positive_count}}</span></h1><h3> student{{ club.positive_count|pluralize}} out of {{interview_count}} found the interview experience positive.</h3>
+              </div>
+
+              <div class="jumbotron">
+                <h1><span class="badge badge-danger">{{hard_count}}</span></h1><h3> student{{ club.hard_count|pluralize}} out of {{interview_count}} found the interview hard.</h3>
+              </div>
+
+              <div class="jumbotron">
+                <h3>Dissatisfied?</h3>
+                <h3>Tell us why!</h3>
+                <br>
+                <a class="btn btn-primary btn-lg" href="{% url 'interview_new' pk=club.pk %}">Add an interview!</a>
+              </div>
+
+            </center>
+        </div>
+
+        <div class="col-sm-8">
+
+          <div class="jumbotron">
+            <center>
+            <h1 class="mt-4">{{club.name}}</h1>
+
+            <h2>
+              {% if interview_count %}
+                {% if positive_result %}
+                  <a data-toggle="tooltip" data-placement="top" title="A majority of users had a positive interview experience!"><i class="fas fa-thumbs-up"></i></a>
+                {% else %}
+                  &nbsp;&nbsp;<a data-toggle="tooltip" data-placement="top" title="A majority of users didn't have a positive interview experience."><i class="fas fa-thumbs-down"></i></a>
+                {% endif %}
+              {% endif %}
+              {% if interview_count %}
+                {% if hard_result %}
+                  <a data-toggle="tooltip" data-placement="top" title="A majority of users found the interview not so hard!"><i class="fas fa-plus-circle"></i></a>
+                {% else %}
+                  &nbsp;&nbsp;<a data-toggle="tooltip" data-placement="top" title="A majority of users found the interview hard."><i class="fas fa-exclamation-circle"></i></a>
+                {% endif %}
+              {% endif %}
+            </h2>
+            <p>{{club.desc}}</p>
+            <p>
+            </center>
+              <br>
+              <center>
+              <a class="btn btn-primary btn-lg" href="{% url 'interview_new' pk=club.pk %}">Add an interview!</a>
+              </center>
+            </p>
+          </div>
+
+      
+
+          <div class="card">
+            
+            <div class="card-footer">
+              
+                <!--All reviews go here -->
+                {% for interview in interviews %}
+                <div class="card">
+
+                  <div class="card-footer">
+
+                    <div class="container">
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <center>
+                            <button type="button" class="btn btn">
+                              {% if interview.positive %}
+                                <a data-toggle="tooltip" data-placement="top" title="The user had a positive interview experience!"><i class="fas fa-thumbs-up"></i></a>
+                              {% else %}
+                                <a data-toggle="tooltip" data-placement="top" title="The user didn't have a positive interview experience."><i class="fas fa-thumbs-down"></i></a>
+                              {% endif %}
+                            </button>
+                            <button type="button" class="btn btn">
+                              {% if interview.hard %}
+                                <a data-toggle="tooltip" data-placement="top" title="The user found the interview not so hard!"><i class="fas fa-plus-circle"></i></a>
+                              {% else %}
+                                <a data-toggle="tooltip" data-placement="top" title="The user found the interview hard."><i class="fas fa-exclamation-circle"></i></a>
+                              {% endif %}
+                            </button>
+                          </center>
+                          
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="card-body">
+                    <center>{{ interview.created_at }}</center>
+                    <strong>Experience</strong><br><br>
+                    {{interview.text}}<br><br>
+                    
+                  </div>
+
+                </div>
+                <br>
+
+                {% endfor %}
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+
+
+    </div>
+    <br>
+
+
+{% endblock %}
