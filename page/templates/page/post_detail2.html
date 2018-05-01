@@ -114,7 +114,6 @@
                   <a class="btn btn-primary btn-md" href= {{ club.website }}>&nbsp;&nbsp;&nbsp;&nbsp;Website&nbsp;&nbsp;&nbsp;&nbsp;</a>
               {% endif %}
               <br>
-              <br>
               <form method="POST" class="post-form">{% csrf_token %}
                 
                 <button type="submit" class="btn btn-warning btn-md btn-block" name="interest" value="interest">Express interest!</button>
@@ -283,26 +282,126 @@
             </div>
           </div>
         </div>
+
+        <!-- INTERVIEWS SECTION -->
         <div class="col-sm-6 my-6">
           <div class="card">
             <div class="card-body">
-              <h4 class="card-title">Interviews</h4>
-              <center>
-                  <a href="{% url 'interview_new' pk=club.pk %}" class="btn btn-primary btn-md">Tell us about your interview!</a>
+              <h4 class="card-title">
+                <center>Interviews</center></h4>
+                <center>
+                  <a href="{% url 'interview_new' pk=club.pk %}" class="btn btn-primary btn-md">Add an interview!</a>
                   &nbsp;
-                  <a href="{% url 'all_reviews' pk=club.pk %}" class="btn btn-primary btn-md">See all interview comments</a>
+                  <a href="#" class="btn btn-primary btn-md">See all</a>
                 </center>
-                
-              <address>
-                <div class="card">
-                  <div class="card-body">
-
-                  </div>
-                </div>
-              </address>
             </div>
             <div class="card-footer">
-              <a href="#" class="btn btn-primary">Find Out More!</a>
+              
+                <!--All reviews go here -->
+                {% if interview1 != None %}
+                <div class="card">
+
+                  <div class="card-footer">
+
+                    <div class="container">
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <center>
+                            <button type="button" class="btn btn">
+                              {% if interview1.positive %}
+                                <a data-toggle="tooltip" data-placement="top" title="The user had a positive interview experience!"><i class="fas fa-thumbs-up"></i></a>
+                              {% else %}
+                                <a data-toggle="tooltip" data-placement="top" title="The user didn't have a positive interview experience."><i class="fas fa-thumbs-down"></i></a>
+                              {% endif %}
+                            </button>
+                            <button type="button" class="btn btn">
+                              {% if interview1.hard %}
+                                <a data-toggle="tooltip" data-placement="top" title="The user found the interview not so hard!"><i class="fas fa-plus-circle"></i></a>
+                              {% else %}
+                                <a data-toggle="tooltip" data-placement="top" title="The user found the interview hard."><i class="fas fa-exclamation-circle"></i></a>
+                              {% endif %}
+                            </button>
+                          </center>
+                          
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="card-body">
+                    <center>{{ interview1.created_at }}</center>
+                    <strong>Experience</strong><br><br>
+                    {{interview1.text}}<br><br>
+                    
+                  </div>
+
+                </div>
+                <br>
+                {% endif %}
+
+                {% if interview2 != None %}
+                <div class="card">
+
+                  <div class="card-footer">
+
+                    <div class="container">
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <center>
+                            <button type="button" class="btn btn">
+                              {% if interview2.positive %}
+                                <a data-toggle="tooltip" data-placement="top" title="The user had a positive interview experience!"><i class="fas fa-thumbs-up"></i></a>
+                              {% else %}
+                                <a data-toggle="tooltip" data-placement="top" title="The user didn't have a positive interview experience."><i class="fas fa-thumbs-down"></i></a>
+                              {% endif %}
+                            </button>
+                            <button type="button" class="btn btn">
+                              {% if interview2.hard %}
+                                <a data-toggle="tooltip" data-placement="top" title="The user found the interview not so hard!"><i class="fas fa-plus-circle"></i></a>
+                              {% else %}
+                                <a data-toggle="tooltip" data-placement="top" title="The user found the interview hard."><i class="fas fa-exclamation-circle"></i></a>
+                              {% endif %}
+                            </button>
+                          </center>
+                          
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="card-body">
+                    <center>{{ interview2.created_at }}</center>
+                    <strong>Experience</strong><br><br>
+                    {{interview2.text}}<br><br>
+                    
+                  </div>
+                  <br>
+                  <center>
+                    <a href="{% url 'interview_new' pk=club.pk %}" class="btn btn-primary btn-md">Add an interview!</a>
+                    &nbsp;
+                    <a href="#" class="btn btn-primary btn-md">See all</a>
+                  </center>
+
+                </div>
+                <br>
+                {% endif %}
+
+                {% if interview1 == None and interview2 == None %}
+                  <center>
+                    <h5>No one has reviewed this club's interview process. Add one above!</h5>
+                  </center>
+                {% endif %}
+
+              <center>
+                {% if messages %}
+                  <script>
+                  // <ul class="messages">
+                    {% for message in messages %}
+                      alert("{{ message }}");
+                    {% endfor %}
+                  </script>
+                {% endif %}
+              </center>
             </div>
           </div>
         </div>
