@@ -32,6 +32,15 @@ class Review(models.Model):
     student = models.ForeignKey('Student', on_delete=models.PROTECT, null=True)
     club = models.ForeignKey('Club', on_delete=models.PROTECT, null=True)
 
+class Interview(models.Model):
+    text = models.TextField()
+    positive = models.IntegerField(validators=[MaxValueValidator(1), MinValueValidator(0)])
+    hard = models.IntegerField(validators=[MaxValueValidator(1), MinValueValidator(0)])
+    rating = models.IntegerField(default='0')
+    created_at = models.DateTimeField(default=timezone.now)
+    student = models.ForeignKey('Student', on_delete=models.PROTECT, null=True)
+    club = models.ForeignKey('Club', on_delete=models.PROTECT, null=True)
+
 class Club(models.Model):
     name = models.CharField(max_length=200)
     desc = models.TextField()

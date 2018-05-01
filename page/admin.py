@@ -4,6 +4,7 @@ from .models import Club
 from .models import Category
 from .models import Leader
 from .models import Review
+from .models import Interview
 from .models import Student
 
 admin.site.register(Category)
@@ -25,5 +26,13 @@ class ReviewAdmin(admin.ModelAdmin):
         return obj.club.name
     list_display = ('text', 'author', 'club')
 admin.site.register(Review, ReviewAdmin)
+
+class InterviewAdmin(admin.ModelAdmin):
+    def author(self, obj):
+        return obj.student.netid
+    def club(self, obj):
+        return obj.club.name
+    list_display = ('text', 'author', 'club')
+admin.site.register(Interview, InterviewAdmin)
 
 admin.site.register(Student)

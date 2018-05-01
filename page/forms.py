@@ -1,6 +1,7 @@
 from django import forms
 
 from .models import Review
+from .models import Interview
 from .models import Club
 from .models import Leader
 
@@ -34,6 +35,28 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = Review
         fields = ('text', 'fun', 'meaningful', 'stars', 'CBI',)
+
+class PostForm(forms.ModelForm):
+
+    BIN_OPTIONS = (
+        (1, 'Yes'),
+        (0, 'No'),
+    )
+
+    STARS = (
+        (1, '1'),
+        (2, '2'),
+        (3, '3'),
+        (4, '4'),
+        (5, '5'),
+    )
+
+    positive = forms.ChoiceField(widget=HorizRadioSelect, choices=BIN_OPTIONS)
+    hard = forms.ChoiceField(widget=HorizRadioSelect, choices=BIN_OPTIONS)
+
+    class Meta:
+        model = Review
+        fields = ('text', 'positive', 'hard',)
 
 class EditForm(forms.ModelForm):
 
