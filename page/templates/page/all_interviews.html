@@ -6,34 +6,6 @@
     <br>
       <div class="row">
         <!-- Right bar -->
-        <div class="col-sm-4">
-
-              <center><span class="badge badge-dark"><h3>&nbsp;Interview Info:&nbsp;</h3></span></center>
-              <br>
-
-            <center>
-
-              <div class="jumbotron">
-                <h1><span class="badge badge-primary">{{interview_count}}</span></h1><h3>student{{interview_count|pluralize}} interviewed with this club.</h3>
-              </div>
-
-              <div class="jumbotron">
-                <h1><span class="badge badge-success">{{club.positive_count}}</span></h1><h3> student{{ club.positive_count|pluralize}} out of {{interview_count}} found the interview experience positive.</h3>
-              </div>
-
-              <div class="jumbotron">
-                <h1><span class="badge badge-danger">{{hard_count}}</span></h1><h3> student{{ club.hard_count|pluralize}} out of {{interview_count}} found the interview hard.</h3>
-              </div>
-
-              <div class="jumbotron">
-                <h3>Dissatisfied?</h3>
-                <h3>Tell us why!</h3>
-                <br>
-                <a class="btn btn-primary btn-lg" href="{% url 'interview_new' pk=club.pk %}">Add an interview!</a>
-              </div>
-
-            </center>
-        </div>
 
         <div class="col-sm-8">
 
@@ -119,7 +91,37 @@
           </div>
         </div>
 
+        <div class="col-sm-4">
+
+              <center><span class="badge badge-dark"><h3>&nbsp;Interview Info:&nbsp;</h3></span></center>
+              <br>
+
+            <center>
+
+              <div class="jumbotron">
+                <h1><span class="badge badge-primary">{{interview_count}}</span></h1><h3>student{{interview_count|pluralize}} interviewed with this club.</h3>
+              </div>
+
+              <div class="jumbotron">
+                <h1><span class="badge badge-success">{{club.positive_count}}</span></h1><h3> student{{ club.positive_count|pluralize}} out of {{interview_count}} found the interview experience positive.</h3>
+              </div>
+
+              <div class="jumbotron">
+                <h1><span class="badge badge-danger">{{hard_count}}</span></h1><h3> student{{ club.hard_count|pluralize}} out of {{interview_count}} found the interview hard.</h3>
+              </div>
+
+              <div class="jumbotron">
+                <h3>Dissatisfied?</h3>
+                <h3>Tell us why!</h3>
+                <br>
+                <a class="btn btn-primary btn-lg" href="{% url 'interview_new' pk=club.pk %}">Add an interview!</a>
+              </div>
+
+            </center>
+        </div>
+
       </div>
+
 
 
 
