@@ -24,7 +24,8 @@ def post_detail(request, pk):
     global time
     club = get_object_or_404(Club, pk=pk)
     reviews = club.review_set.all()
-    print(reviews)
+    interviews = club.interview_set.all()
+    #print(reviews)
     
     review1 = None;
     review2 = None;
@@ -33,6 +34,14 @@ def post_detail(request, pk):
         review2 = reviews[reviews.count()-2]
     elif reviews.count() == 1:
         review1 = reviews[0]
+
+    interview1 = None;
+    interview2 = None;
+    if interviews.count() > 1:
+        interview1 = interviews[interviews.count()-1]
+        interview2 = interviews[interviews.count()-2]
+    elif interviews.count() == 1:
+        interview1 = interviews[0]
 
     review_count = reviews.count()
     star_result = 0
@@ -54,6 +63,24 @@ def post_detail(request, pk):
             mean_result = 0
     else:
         mean_result = 0
+
+    interview_count = interviews.count()
+    if (interview_count):
+        if ((club.positive_count / interview_count) >= .5):
+            positive_result = 1
+        elif ((club.positive_count / interview_count) < .5):
+            positive_result = 0
+    else:
+        positive_result = 0
+
+    if (interview_count):
+        if ((club.hard_count / interview_count) >= .5):
+            hard_result = 1
+        elif ((club.hard_count / interview_count) < .5):
+            hard_result = 0
+    else:
+       hard_result = 0
+
 
     photo_count = 0
     photo1 = None
@@ -100,7 +127,8 @@ def post_detail(request, pk):
             return render(request, 'page/post_detail2.html', {'club': club, 'review_count': review_count, 'fun_count': club.fun_count, 
                 'happy_result': happy_result, 'mean_result': mean_result, 'star_count': star_result, 
                 'reviews': reviews.time, 'time': time, 'count':photo_count, 'photo1':photo1, 
-                'photo2':photo2, 'photo3':photo3, 'review1':review1, 'review2': review2})
+                'photo2':photo2, 'photo3':photo3, 'review1':review1, 'review2': review2, 'positive_result':positive_result,
+                'hard_result':hard_result, 'interview1':interview1, 'interview2':interview2})
 
         elif sort == "2":
             time = 2
@@ -109,14 +137,16 @@ def post_detail(request, pk):
                 'mean_count': club.meaning_count, 'happy_result': happy_result, 
                 'mean_result': mean_result, 'star_count': star_result, 'reviews': reviews.rating, 
                 'time': time, 'count':photo_count, 'photo1':photo1, 'photo2':photo2, 
-                'photo3':photo3, 'review1':review1, 'review2': review2})
+                'photo3':photo3, 'review1':review1, 'review2': review2, 'positive_result':positive_result,
+                'hard_result':hard_result, 'interview1':interview1, 'interview2':interview2})
 
     else:
         return render(request, 'page/post_detail2.html', {'club': club, 'review_count': review_count, 
             'fun_count': club.fun_count, 'mean_count': club.meaning_count, 'happy_result': happy_result, 
             'mean_result': mean_result, 'star_count': star_result, 'reviews': reviews.time, 
             'time': time, 'count':photo_count, 'photo1':photo1, 'photo2':photo2, 'photo3':photo3, 
-            'review1':review1, 'review2': review2})
+            'review1':review1, 'review2': review2, 'positive_result':positive_result,
+                'hard_result':hard_result, 'interview1':interview1, 'interview2':interview2})
 
 @CAS_login_required
 def top20(request):
