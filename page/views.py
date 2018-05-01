@@ -185,7 +185,8 @@ def all_reviews(request, pk):
         sort = request.GET['sort']
         if sort == "1":
             time = 1
-            return render(request, 'page/all_reviews.html', {'club': club, 'fun_count': club.fun_count, 
+            return render(request, 'page/all_reviews.html', {'club': club, 'review_count': review_count, 
+                'fun_count': club.fun_count, 'mean_count': club.meaning_count,
                 'happy_result': happy_result, 'mean_result': mean_result, 
                 'reviews' : reviews.time, 'time' : time})
 
@@ -199,6 +200,56 @@ def all_reviews(request, pk):
     else:
         return render(request, 'page/all_reviews.html', {'club': club, 'review_count': review_count, 'fun_count': club.fun_count, 'mean_count': club.meaning_count, 'happy_result': happy_result, 'mean_result': mean_result, 'reviews' : reviews.time, 'time' : time})
     return render(request, 'page/all_reviews.html', {'club': club, 'reviews': reviews})
+
+@CAS_login_required
+def all_interviews(request, pk):
+    global time;
+    club = get_object_or_404(Club, pk=pk)
+
+    interviews = club.interview_set.all()
+    interview_count = interviews.count()
+
+    if (interview_count):
+        if ((club.positive_count / interview_count) >= .5):
+            positive_result = 1
+        elif ((club.hard_count / interview_count) < .5):
+            positive_result = 0
+    else:
+        positive_result = 0
+
+    if (interview_count):
+        if ((club.hard_count / interview_count) >= .5):
+            hard_result = 1
+        elif ((club.hard_count / interview_count) < .5):
+            hard_result = 0
+    else:
+        hard_result = 0
+
+    interviews.time = interviews.order_by('-created_at')
+    interviews.rating = interviews.order_by('-rating')
+
+    if 'sort' in request.GET:
+        sort = request.GET['sort']
+        if sort == "1":
+            time = 1
+            return render(request, 'page/all_interviews.html', {'club': club, 'interview_count': interview_count,
+                'positive_count': club.positive_count, 'hard_count': club.positive_count,
+                'positive_result': positive_result, 'hard_result': hard_result, 
+                'interviews' : interviews.time, 'time' : time})
+
+        elif sort == "2":
+            time = 2
+            return render(request, 'page/all_interviews.html', {'club': club, 'interview_count': interview_count,
+                'positive_count': club.positive_count, 'hard_count': club.positive_count,
+                'positive_result': positive_result, 'hard_result': hard_result, 
+                'interviews' : interviews.time, 'time' : time})
+
+    else:
+        return render(request, 'page/all_interviews.html', {'club': club, 'interview_count': interview_count,
+                'positive_count': club.positive_count, 'hard_count': club.positive_count,
+                'positive_result': positive_result, 'hard_result': hard_result, 
+                'interviews' : interviews.time, 'time' : time})
+    return render(request, 'page/all_interviews.html', {'club': club, 'interviews': interviews})
 
 @CAS_login_required
 def post_list_full(request):
