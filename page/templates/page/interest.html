@@ -5,23 +5,41 @@
 <br>
     <div class="container">
 
-      <div class="top1">
         <div class="row">
           <div class="col-sm-12">
             <center>
               <h1><u>We're Interested!</u></h1>
+              <br>
               <p>Below is a list of the emails of students who have expressed interest in your club. Feel free to reach out to them and add them to your listserv!</p>
             </center>
           </div>
         </div>
-      </div>
-      <br>
-    <br />
-    <br />
-    {% for student in students %}
-    <p>
-    <a href="{{student.netid|mail}}@princeton.edu">{{student.netid}}@princeton.edu</a>
-	</p>
-    {% endfor %}
+
+        <div class="row">
+
+          <div class="col-sm-6">
+            <div class="jumbotron">
+              <center>
+                <h3><u>The list</u></h3>
+                {% for student in students %}
+                  <p>
+                    <br>
+                    <a href="{{student.netid|mail}}@princeton.edu">{{student.netid}}@princeton.edu</a>
+                  </p>
+                {% endfor %}
+              </center>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="jumbotron">
+              <center>
+                <h3>Number of students:<br></h3>
+                <h1><span class="badge badge-primary">{{students.count}}</span></h1>
+              </center>
+            </div>
+          </div>
+
+        </div>
+
 
 {% endblock %}

@@ -109,9 +109,9 @@
                   <br>{{ club.category.all|join:", " }}<br>
               {% endif %}
               <br>
-              <a href="{{club.email|mail}}" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;Contact us!&nbsp;&nbsp;&nbsp;&nbsp;</a>
+              <a href="{{club.email|mail}}" class="btn btn-primary btn-md">&nbsp;&nbsp;&nbsp;&nbsp;Contact us!&nbsp;&nbsp;&nbsp;&nbsp;</a>
               {% if club.website %}
-                  <a class="btn btn-primary" href= {{ club.website }}>&nbsp;&nbsp;&nbsp;&nbsp;Website&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                  <a class="btn btn-primary btn-md" href= {{ club.website }}>&nbsp;&nbsp;&nbsp;&nbsp;Website&nbsp;&nbsp;&nbsp;&nbsp;</a>
               {% endif %}
               <br>
               <br>
@@ -133,9 +133,9 @@
               <h4 class="card-title">
                 <center>Reviews</center></h4>
                 <center>
-                  <a href="{% url 'post_new' pk=club.pk %}" class="btn btn-primary">Add a review!</a>
+                  <a href="{% url 'post_new' pk=club.pk %}" class="btn btn-primary btn-md">Add a review!</a>
                   &nbsp;
-                  <a href="{% url 'all_reviews' pk=club.pk %}" class="btn btn-primary">See all reviews</a>
+                  <a href="{% url 'all_reviews' pk=club.pk %}" class="btn btn-primary btn-md">See all reviews</a>
                 </center>
             </div>
             <div class="card-footer">
@@ -288,9 +288,9 @@
             <div class="card-body">
               <h4 class="card-title">Interviews</h4>
               <center>
-                  <a href="{% url 'interview_new' pk=club.pk %}" class="btn btn-primary">Tell us about your interview!</a>
+                  <a href="{% url 'interview_new' pk=club.pk %}" class="btn btn-primary btn-md">Tell us about your interview!</a>
                   &nbsp;
-                  <a href="{% url 'all_reviews' pk=club.pk %}" class="btn btn-primary">See all interview comments</a>
+                  <a href="{% url 'all_reviews' pk=club.pk %}" class="btn btn-primary btn-md">See all interview comments</a>
                 </center>
               <address>
                 <div class="card">
