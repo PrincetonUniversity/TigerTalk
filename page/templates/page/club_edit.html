@@ -45,8 +45,8 @@
             <div class="jumbotron">
               <center><h3>Leadership</h3></center>
               <br>
+              {{ formset.management_form }}
               <table>
-                {{ formset.management_form }}
                 {% for form in formset %}
                 {{ form }}
                 {% endfor %}
