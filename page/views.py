@@ -13,14 +13,11 @@ from django.contrib.auth.models import User
 from django.forms import inlineformset_factory
 
 
-time = 1
-
 def post_list(request):
     return render(request, 'page/splash-page.html')
 
 @CAS_login_required
 def post_detail(request, pk):
-    global time
     club = get_object_or_404(Club, pk=pk)
     reviews = club.review_set.all()
     interviews = club.interview_set.all()
@@ -108,43 +105,13 @@ def post_detail(request, pk):
             photo_count += 1
             photo1 = club.photo3
 
-    reviews.time = reviews.order_by('-created_at')
-    reviews.rating = reviews.order_by('-rating')
-
-    if request.method == "POST":
-        if request.POST.get("interest"):
-            if request.user.student.clubs_interested.filter(pk=pk):
-                messages.info(request, 'You already expressed interest in this club!')
-                return HttpResponseRedirect(reverse('post_detail', args=[pk]))
-            request.user.student.clubs_interested.add(club)
-
-    if 'sort' in request.GET:
-        sort = request.GET['sort']
-        if sort == "1":
-            time = 1
-            return render(request, 'page/post_detail2.html', {'club': club, 'review_count': review_count, 'fun_count': club.fun_count, 
-                'happy_result': happy_result, 'mean_result': mean_result, 'star_count': star_result, 
-                'reviews': reviews.time, 'time': time, 'count':photo_count, 'photo1':photo1, 
-                'photo2':photo2, 'photo3':photo3, 'review1':review1, 'review2': review2, 'positive_result':positive_result,
-                'hard_result':hard_result, 'interview1':interview1, 'interview2':interview2})
-
-        elif sort == "2":
-            time = 2
-            return render(request, 'page/post_detail2.html', {'club': club, 
-                'review_count': review_count, 'fun_count': club.fun_count, 
-                'mean_count': club.meaning_count, 'happy_result': happy_result, 
-                'mean_result': mean_result, 'star_count': star_result, 'reviews': reviews.rating, 
-                'time': time, 'count':photo_count, 'photo1':photo1, 'photo2':photo2, 
-                'photo3':photo3, 'review1':review1, 'review2': review2, 'positive_result':positive_result,
-                'hard_result':hard_result, 'interview1':interview1, 'interview2':interview2})
-
-    else:
-        return render(request, 'page/post_detail2.html', {'club': club, 'review_count': review_count, 
-            'fun_count': club.fun_count, 'mean_count': club.meaning_count, 'happy_result': happy_result, 
-            'mean_result': mean_result, 'star_count': star_result, 'reviews': reviews.time, 
-            'time': time, 'count':photo_count, 'photo1':photo1, 'photo2':photo2, 'photo3':photo3, 
-            'review1':review1, 'review2': review2, 'positive_result':positive_result,
-                'hard_result':hard_result, 'interview1':interview1, 'interview2':interview2})
+    
+    return render(request, 'page/post_detail2.html', {'club': club, 'review_count': review_count, 
+        'fun_count': club.fun_count, 'mean_count': club.meaning_count, 'happy_result': happy_result, 
+        'mean_result': mean_result, 'star_count': star_result, 
+        'count':photo_count, 'photo1':photo1, 'photo2':photo2, 'photo3':photo3, 
+        'review1':review1, 'review2': review2, 'positive_result':positive_result,
+        'hard_result':hard_result, 'interview1':interview1, 'interview2':interview2})
 
 @CAS_login_required
 def top20(request):
@@ -154,7 +121,7 @@ def top20(request):
 
 @CAS_login_required
 def all_reviews(request, pk):
-    global time;
+    time = 0
     club = get_object_or_404(Club, pk=pk)
 
     reviews = club.review_set.all()
