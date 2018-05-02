@@ -11,7 +11,7 @@
 
           <div class="jumbotron">
             <center>
-            <h1 class="mt-4">{{club.name}}</h1>
+            <h1 class="mt-4"><a href="{% url 'post_detail' pk=club.pk %}">{{club.name}}</a></h1>
 
             <h2>
               {% if interview_count %}
