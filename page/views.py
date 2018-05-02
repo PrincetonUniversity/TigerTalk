@@ -105,7 +105,11 @@ def post_detail(request, pk):
             photo_count += 1
             photo1 = club.photo3
 
-    
+    if request.method == "POST":
+        if request.POST.get('interest') != None:
+            request.user.student.clubs_interested.add(club)
+
+
     return render(request, 'page/post_detail2.html', {'club': club, 'review_count': review_count, 
         'fun_count': club.fun_count, 'mean_count': club.meaning_count, 'happy_result': happy_result, 
         'mean_result': mean_result, 'star_count': star_result, 
@@ -210,7 +214,8 @@ def post_list_full(request):
 def my_clubs(request):
     email = request.user.student.netid + "@princeton.edu"
     clubs = Club.objects.filter(email=email).distinct() | Club.objects.filter(leader__email=email).distinct()
-    return render(request, 'page/my_clubs.html', {'clubs': clubs, 'count': clubs.count()})
+    clubs_interested = request.user.student.clubs_interested
+    return render(request, 'page/my_clubs.html', {'clubs': clubs, 'clubs_interested':clubs_interested, 'count': clubs.count()})
 
 def review_increment(request, pk_Club, pk_Review):
     review = get_object_or_404(Review, pk=pk_Review)
