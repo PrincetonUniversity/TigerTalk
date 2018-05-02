@@ -16,9 +16,7 @@ from django.forms import inlineformset_factory
 time = 1
 
 def post_list(request):
-    clubs = Club.objects.all()
-    clubs = clubs.order_by('-name')
-    return render(request, 'page/splash-page.html', {'clubs': clubs})
+    return render(request, 'page/splash-page.html')
 
 @CAS_login_required
 def post_detail(request, pk):
@@ -254,6 +252,7 @@ def all_interviews(request, pk):
 @CAS_login_required
 def post_list_full(request):
     clubs = Club.objects.all()
+    clubs = clubs.order_by('name')
     return render(request, 'page/post_list_full.html', {'clubs': clubs})
 
 @CAS_login_required
