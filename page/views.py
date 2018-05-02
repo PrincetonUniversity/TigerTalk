@@ -2,7 +2,6 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from .models import Club, Category, Leader, Review, Student
 from .forms import PostForm, LoginForm, EditForm, InterviewForm
-from .decorators import CAS_login_required
 from django.db import models
 from django.db.models import Count
 from django.http import HttpResponse, HttpResponseRedirect
@@ -11,6 +10,7 @@ from django.urls import reverse
 from django.contrib import auth, messages
 from django.contrib.auth.models import User
 from django.forms import inlineformset_factory
+from django.contrib.auth.decorators import login_required
 
 
 time = 1
@@ -18,7 +18,7 @@ time = 1
 def post_list(request):
     return render(request, 'page/splash-page.html')
 
-@CAS_login_required
+@login_required(login_url='/login/')
 def post_detail(request, pk):
     global time
     club = get_object_or_404(Club, pk=pk)
@@ -146,13 +146,13 @@ def post_detail(request, pk):
             'review1':review1, 'review2': review2, 'positive_result':positive_result,
                 'hard_result':hard_result, 'interview1':interview1, 'interview2':interview2})
 
-@CAS_login_required
+@login_required(login_url='/login/')
 def top20(request):
     clubs = Club.objects.all()
     clubs = clubs.order_by('-total_stars', 'name')[:20]
     return render(request, 'page/top20.html', {'clubs': clubs})
 
-@CAS_login_required
+@login_required(login_url='/login/')
 def all_reviews(request, pk):
     global time;
     club = get_object_or_404(Club, pk=pk)
@@ -199,7 +199,7 @@ def all_reviews(request, pk):
         return render(request, 'page/all_reviews.html', {'club': club, 'review_count': review_count, 'fun_count': club.fun_count, 'mean_count': club.meaning_count, 'happy_result': happy_result, 'mean_result': mean_result, 'reviews' : reviews.time, 'time' : time})
     return render(request, 'page/all_reviews.html', {'club': club, 'reviews': reviews})
 
-@CAS_login_required
+@login_required(login_url='/login/')
 def all_interviews(request, pk):
     global time;
     club = get_object_or_404(Club, pk=pk)
@@ -249,18 +249,19 @@ def all_interviews(request, pk):
                 'interviews' : interviews.time, 'time' : time})
     return render(request, 'page/all_interviews.html', {'club': club, 'interviews': interviews})
 
-@CAS_login_required
+@login_required(login_url='/login/')
 def post_list_full(request):
     clubs = Club.objects.all()
     clubs = clubs.order_by('name')
     return render(request, 'page/post_list_full.html', {'clubs': clubs})
 
-@CAS_login_required
+@login_required(login_url='/login/')
 def my_clubs(request):
     email = request.user.student.netid + "@princeton.edu"
     clubs = Club.objects.filter(email=email).distinct() | Club.objects.filter(leader__email=email).distinct()
     return render(request, 'page/my_clubs.html', {'clubs': clubs})
 
+@login_required(login_url='/login/')
 def review_increment(request, pk_Club, pk_Review):
     review = get_object_or_404(Review, pk=pk_Review)
     if request.user.student.review_votes.filter(pk=review.pk):
@@ -272,6 +273,7 @@ def review_increment(request, pk_Club, pk_Review):
         request.user.student.save()
         return HttpResponseRedirect(reverse('post_detail', args=[pk_Club]))
 
+@login_required(login_url='/login/')
 def review_decrement(request, pk_Club, pk_Review):
     review = get_object_or_404(Review, pk=pk_Review)
     if request.user.student.review_votes.filter(pk=review.pk):
@@ -283,7 +285,7 @@ def review_decrement(request, pk_Club, pk_Review):
         request.user.student.save()
         return HttpResponseRedirect(reverse('post_detail', args=[pk_Club]))
 
-@CAS_login_required
+@login_required(login_url='/login/')
 def post_new(request, pk):
     if request.user.student.clubs_reviewed.filter(pk=pk):
         messages.info(request, 'You cannot review a club twice!')
@@ -315,7 +317,7 @@ def post_new(request, pk):
             club = get_object_or_404(Club, pk=pk)
         return render(request, 'page/post_edit.html', {'form': form, 'user': request.user, 'club': club})
 
-@CAS_login_required
+@login_required(login_url='/login/')
 def interview_new(request, pk):
     if request.user.student.club_interviews_reviewed.filter(pk=pk):
         messages.info(request, "You already wrote about your interview experience with this club!")
@@ -341,7 +343,7 @@ def interview_new(request, pk):
         return render(request, 'page/interview_edit.html', {'form': form, 'user': request.user, 'club': club})
 
 
-@CAS_login_required
+@login_required(login_url='/login/')
 def edit_page(request, pk):
     club = get_object_or_404(Club, pk=pk)
     LeaderInlineFormSet = inlineformset_factory(Club, Leader, fields=('name','title','email'), min_num=1)
@@ -381,17 +383,14 @@ def edit_page(request, pk):
     else:
         form = EditForm({'name': club.name, 'desc': club.desc, 'website': club.website, 'email': club.email})
         formset = LeaderInlineFormSet(instance=club) 
-    return render(request, 'page/club_edit.html', {'form': form, 'formset':formset, 'user': request.user, 'club': club})       
+    return render(request, 'page/club_edit.html', {'form': form, 'formset':formset, 'user': request.user, 'club': club})
 
-def search_form(request):
-    return render(request, 'page/search_form.html')
-
-@CAS_login_required
+@login_required(login_url='/login/')
 def review_detail(request, pk):
     review = get_object_or_404(Review, pk=pk)
     return render(request, 'page/review_detail.html', {'review': review})
 
-@CAS_login_required
+@login_required(login_url='/login/')
 def interest_page(request, pk):
     club = get_object_or_404(Club, pk=pk)
     email = club.email.split('@')
@@ -409,7 +408,7 @@ def interest_page(request, pk):
     return render(request, 'page/interest.html', {'students': students, 'club':club})       
 
 
-@CAS_login_required
+@login_required(login_url='/login/')
 def search(request):
     if 'q' in request.GET:
         q = request.GET['q']
@@ -473,7 +472,7 @@ def login(request):
             if user is not None:
                 # User has already logged in before
                 auth.login(request, user)
-                return redirect('post_list_full') 
+                return redirect(request.GET['next'])
             else:
                 # first time loggin in - create a user
                 user = User.objects.create_user(username=username, password=password)
@@ -481,7 +480,11 @@ def login(request):
                 student = Student(user=user, netid=netid)
                 student.save()
                 auth.login(request, user)
-                return redirect('post_list_full')
+                return redirect(request.GET['next'])
     else:
         form = LoginForm()
     return render(request, 'page/logintemp.html', {'form': form}) 
+
+def logout(request):
+    auth.logout(request)
+    return redirect(request.META.get('HTTP_REFERER','/'))
