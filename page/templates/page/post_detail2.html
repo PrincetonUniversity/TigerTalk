@@ -91,7 +91,7 @@
             <p>{{club.desc}}</p>
             <p>
               <a class="btn btn-primary btn-lg" href="{% url 'all_reviews' pk=club.pk %}">Check out our reviews!</a>
-              <a class="btn btn-primary btn-lg" href="{% url 'all_interviews' pk=club.pk %}">Check out our interviews!</a>
+              <a class="btn btn-primary btn-lg" href="{% url 'all_interviews' pk=club.pk %}">Check out comments about our interview process!</a>
             </p>
           </div>
           <div class="col-sm-4">
@@ -288,11 +288,11 @@
           <div class="card">
             <div class="card-body">
               <h4 class="card-title">
-                <center>Interviews</center></h4>
+                <center>Interview Comments</center></h4>
                 <center>
-                  <a href="{% url 'interview_new' pk=club.pk %}" class="btn btn-primary btn-md">Add an interview!</a>
+                  <a href="{% url 'interview_new' pk=club.pk %}" class="btn btn-primary btn-md">Tell us about your interview experience!</a>
                   &nbsp;
-                  <a href="{% url 'all_interviews' pk=club.pk %}" class="btn btn-primary btn-md">See all</a>
+                  <a href="{% url 'all_interviews' pk=club.pk %}" class="btn btn-primary btn-md">See all comments</a>
                 </center>
             </div>
             <div class="card-footer">
