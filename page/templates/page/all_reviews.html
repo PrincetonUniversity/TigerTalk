@@ -97,9 +97,10 @@
                     <center>{{ review.created_at }}</center>
                     <strong>Review</strong><br><br>
                     {{review.text}}<br><br>
+                    {% if review.CBI %}
                     <strong>Could be improved</strong><br>
                     {{review.CBI}}<br><br>
-                    
+                    {% endif %}
                       <label class="btn btn-primary active">
                         <a href = "{% url 'review_increment' club.pk review.pk %}">
                           <i class="fas fa-arrow-alt-circle-up"></i>

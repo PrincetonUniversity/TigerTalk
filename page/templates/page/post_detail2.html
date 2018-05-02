@@ -177,9 +177,10 @@
                     <center>{{ review1.created_at }}</center>
                     <strong>Review</strong><br><br>
                     {{review1.text}}<br><br>
+                    {% if review1.CBI %}
                     <strong>Could be improved</strong><br>
                     {{review1.CBI}}<br><br>
-                    
+                    {% endif %}
                       <label class="btn btn-primary active">
                         <a href = "{% url 'review_increment' club.pk review1.pk %}">
                           <i class="fas fa-arrow-alt-circle-up"></i>
@@ -236,9 +237,10 @@
                     <center>{{ review2.created_at }}</center>
                     <strong>Review</strong><br><br>
                     {{review2.text}}<br><br>
+                    {% if review2.CBI %}
                     <strong>Could be improved</strong><br>
                     {{review2.CBI}}<br><br>
-                    
+                    {% endif %}
                       <label class="btn btn-primary active">
                         <a href = "{% url 'review_increment' club.pk review2.pk %}">
                           <i class="fas fa-arrow-alt-circle-up"></i>
