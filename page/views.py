@@ -17,6 +17,7 @@ time = 1
 
 def post_list(request):
     clubs = Club.objects.all()
+    clubs = clubs.order_by('-name')
     return render(request, 'page/splash-page.html', {'clubs': clubs})
 
 @CAS_login_required
@@ -25,7 +26,6 @@ def post_detail(request, pk):
     club = get_object_or_404(Club, pk=pk)
     reviews = club.review_set.all()
     interviews = club.interview_set.all()
-    #print(reviews)
     
     review1 = None;
     review2 = None;
