@@ -210,7 +210,7 @@ def post_list_full(request):
 def my_clubs(request):
     email = request.user.student.netid + "@princeton.edu"
     clubs = Club.objects.filter(email=email).distinct() | Club.objects.filter(leader__email=email).distinct()
-    return render(request, 'page/my_clubs.html', {'clubs': clubs})
+    return render(request, 'page/my_clubs.html', {'clubs': clubs, 'count': clubs.count()})
 
 def review_increment(request, pk_Club, pk_Review):
     review = get_object_or_404(Review, pk=pk_Review)
