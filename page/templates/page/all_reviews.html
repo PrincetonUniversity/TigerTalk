@@ -31,26 +31,11 @@
               {% endif %}
             </h2>
             <p>{{club.desc}}</p>
-            <p>
             </center>
               <br>
               <center>
               <a class="btn btn-primary btn-lg" href="{% url 'post_new' pk=club.pk %}">Add a review!</a>
-              <form method="get">
-                  <b>Sort Reviews By:</b> <br>
-                  {% if time == 2 %}
-                  <select id="sort" name="sort" onchange="this.form.submit()">
-                      <option value="1">Review Date</option>
-                      <option selected="selected" value="2">Review Rating</option>
-                  </select>
-                  {% else %}
-                  <select id="sort" name="sort" onchange="this.form.submit()">
-                      <option selected="selected" value="1">Review Date</option>
-                      <option value="2">Review Rating</option>
-                  </select>
-                  {% endif %}
               </center>
-            </p>
           </div>
 
       
@@ -59,6 +44,35 @@
             
             <div class="card-footer">
               
+              <center>
+                <div class="row">
+                  <div class="col-sm-3">
+                  </div>
+                  <div class="col-sm-6">
+                    <form method="get">
+                      <b>Sort Reviews By:</b> <br>
+
+                      <div class="input-group">
+
+                        {% if time == 2 %}
+                        <select class="custom-select" id="sort" name="sort" onchange="this.form.submit()">
+                            <option value="1">Review Date</option>
+                            <option selected="selected" value="2">Review Rating</option>
+                        </select>
+                        {% else %}
+                        <select class="custom-select" id="sort" name="sort" onchange="this.form.submit()">
+                            <option selected="selected" value="1">Review Date</option>
+                            <option value="2">Review Rating</option>
+                        </select>
+                        {% endif %}
+                      </div>
+                    </form>
+                  </div>
+                  <div class="col-sm-3">
+                  </div>
+                </div>
+              </center>
+              <br> 
                 <!--All reviews go here -->
                 {% for review in reviews %}
                 <div class="card">
