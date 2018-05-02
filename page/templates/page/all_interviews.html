@@ -11,7 +11,7 @@
 
           <div class="jumbotron">
             <center>
-            <h1 class="mt-4">{{club.name}}</h1>
+            <h1 class="mt-4"><a href="{% url 'post_detail' pk=club.pk %}">{{club.name}}</a></h1>
 
             <h2>
               {% if interview_count %}
@@ -34,7 +34,7 @@
             </center>
               <br>
               <center>
-              <a class="btn btn-primary btn-lg" href="{% url 'interview_new' pk=club.pk %}">Add an interview!</a>
+              <a class="btn btn-primary btn-lg" href="{% url 'interview_new' pk=club.pk %}">Submit your interview experience!</a>
               </center>
             </p>
           </div>
@@ -114,7 +114,7 @@
                 <h3>Dissatisfied?</h3>
                 <h3>Tell us why!</h3>
                 <br>
-                <a class="btn btn-primary btn-lg" href="{% url 'interview_new' pk=club.pk %}">Add an interview!</a>
+                <a class="btn btn-primary btn-lg" href="{% url 'interview_new' pk=club.pk %}">Add an comment!</a>
               </div>
 
             </center>

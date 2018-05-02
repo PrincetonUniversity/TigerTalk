@@ -46,7 +46,7 @@ class Club(models.Model):
     desc = models.TextField()
     category = models.ManyToManyField(Category)
     email = models.EmailField(max_length=200)
-    website = models.CharField(max_length=200)
+    website = models.CharField(max_length=200, null=True, blank=True)
     fun_count = models.IntegerField(default = 0)
     meaning_count = models.IntegerField(default = 0)
     positive_count = models.IntegerField(default = 0)

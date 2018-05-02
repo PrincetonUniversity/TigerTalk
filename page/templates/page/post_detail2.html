@@ -91,7 +91,7 @@
             <p>{{club.desc}}</p>
             <p>
               <a class="btn btn-primary btn-lg" href="{% url 'all_reviews' pk=club.pk %}">Check out our reviews!</a>
-              <a class="btn btn-primary btn-lg" href="#">Check out our interviews!</a>
+              <a class="btn btn-primary btn-lg" href="{% url 'all_interviews' pk=club.pk %}">Read about our interview process!</a>
             </p>
           </div>
           <div class="col-sm-4">
@@ -177,9 +177,10 @@
                     <center>{{ review1.created_at }}</center>
                     <strong>Review</strong><br><br>
                     {{review1.text}}<br><br>
+                    {% if review1.CBI %}
                     <strong>Could be improved</strong><br>
                     {{review1.CBI}}<br><br>
-                    
+                    {% endif %}
                       <label class="btn btn-primary active">
                         <a href = "{% url 'review_increment' club.pk review1.pk %}">
                           <i class="fas fa-arrow-alt-circle-up"></i>
@@ -236,9 +237,10 @@
                     <center>{{ review2.created_at }}</center>
                     <strong>Review</strong><br><br>
                     {{review2.text}}<br><br>
+                    {% if review2.CBI %}
                     <strong>Could be improved</strong><br>
                     {{review2.CBI}}<br><br>
-                    
+                    {% endif %}
                       <label class="btn btn-primary active">
                         <a href = "{% url 'review_increment' club.pk review2.pk %}">
                           <i class="fas fa-arrow-alt-circle-up"></i>
@@ -288,11 +290,11 @@
           <div class="card">
             <div class="card-body">
               <h4 class="card-title">
-                <center>Interviews</center></h4>
+                <center>Interview Comments</center></h4>
                 <center>
-                  <a href="{% url 'interview_new' pk=club.pk %}" class="btn btn-primary btn-md">Add an interview!</a>
+                  <a href="{% url 'interview_new' pk=club.pk %}" class="btn btn-primary btn-md">Submit interview experience!</a>
                   &nbsp;
-                  <a href="{% url 'all_interviews' pk=club.pk %}" class="btn btn-primary btn-md">See all</a>
+                  <a href="{% url 'all_interviews' pk=club.pk %}" class="btn btn-primary btn-md">See all comments</a>
                 </center>
             </div>
             <div class="card-footer">
@@ -388,7 +390,7 @@
 
                 {% if interview1 == None and interview2 == None %}
                   <center>
-                    <h5>No one has reviewed this club's interview process. Add one above!</h5>
+                    <h5>No one has reviewed this club's interview process. Add a comment above!</h5>
                   </center>
                 {% endif %}
 
@@ -421,52 +423,9 @@
           </div>
         </div>
       </div>
-
-      <!-- /.row -->
-
-      <br>
-      <br>
-      <div class="row">
-        <div class="col-sm-6 my-6">
-          <div class="card">
-            <img class="card-img-top-lower" src="{% static 'images/orange-background2.pn' %}" alt="">
-            <div class="card-body">
-              <h4 class="card-title">Card title</h4>
-              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque sequi doloribus.</p>
-            </div>
-            <div class="card-footer">
-              <a href="#" class="btn btn-primary">Find Out More!</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-6 my-6">
-          <div class="card">
-            <img class="card-img-top-lower" src="{% static 'images/orange-background2.pn' %}" alt="">
-            <div class="card-body">
-              <h4 class="card-title">Card title</h4>
-              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque sequi doloribus totam ut praesentium aut.</p>
-            </div>
-            <div class="card-footer">
-              <a href="#" class="btn btn-primary">Find Out More!</a>
-            </div>
-          </div>
-        </div>
-
-      </div>
-      <br>
-      <br>
-      <!-- /.row -->
-
     </div>
     <!-- /.container -->
 
-    <!-- Footer -->
-    <footer class="py-5 bg-dark">
-      <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2018</p>
-      </div>
-      <!-- /.container -->
-    </footer>
 
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

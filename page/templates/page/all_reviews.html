@@ -9,7 +9,7 @@
 
           <div class="jumbotron">
             <center>
-            <h1 class="mt-4">{{club.name}}</h1>
+            <h1 class="mt-4"><a href="{% url 'post_detail' pk=club.pk %}">{{club.name}}</a></h1>
 
             <h2>
               {% if club.total_stars %}
@@ -31,13 +31,11 @@
               {% endif %}
             </h2>
             <p>{{club.desc}}</p>
-            <p>
             </center>
               <br>
               <center>
               <a class="btn btn-primary btn-lg" href="{% url 'post_new' pk=club.pk %}">Add a review!</a>
               </center>
-            </p>
           </div>
 
       
@@ -46,6 +44,35 @@
             
             <div class="card-footer">
               
+              <center>
+                <div class="row">
+                  <div class="col-sm-3">
+                  </div>
+                  <div class="col-sm-6">
+                    <form method="get">
+                      <b>Sort Reviews By:</b> <br>
+
+                      <div class="input-group">
+
+                        {% if time == 2 %}
+                        <select class="custom-select" id="sort" name="sort" onchange="this.form.submit()">
+                            <option value="1">Review Date</option>
+                            <option selected="selected" value="2">Review Rating</option>
+                        </select>
+                        {% else %}
+                        <select class="custom-select" id="sort" name="sort" onchange="this.form.submit()">
+                            <option selected="selected" value="1">Review Date</option>
+                            <option value="2">Review Rating</option>
+                        </select>
+                        {% endif %}
+                      </div>
+                    </form>
+                  </div>
+                  <div class="col-sm-3">
+                  </div>
+                </div>
+              </center>
+              <br> 
                 <!--All reviews go here -->
                 {% for review in reviews %}
                 <div class="card">
@@ -84,9 +111,10 @@
                     <center>{{ review.created_at }}</center>
                     <strong>Review</strong><br><br>
                     {{review.text}}<br><br>
+                    {% if review.CBI %}
                     <strong>Could be improved</strong><br>
                     {{review.CBI}}<br><br>
-                    
+                    {% endif %}
                       <label class="btn btn-primary active">
                         <a href = "{% url 'review_increment' club.pk review.pk %}">
                           <i class="fas fa-arrow-alt-circle-up"></i>

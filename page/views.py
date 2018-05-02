@@ -13,14 +13,11 @@ from django.forms import inlineformset_factory
 from django.contrib.auth.decorators import login_required
 
 
-time = 1
-
 def post_list(request):
     return render(request, 'page/splash-page.html')
 
 @login_required(login_url='/login/')
 def post_detail(request, pk):
-    global time
     club = get_object_or_404(Club, pk=pk)
     reviews = club.review_set.all()
     interviews = club.interview_set.all()
@@ -108,43 +105,17 @@ def post_detail(request, pk):
             photo_count += 1
             photo1 = club.photo3
 
-    reviews.time = reviews.order_by('-created_at')
-    reviews.rating = reviews.order_by('-rating')
-
     if request.method == "POST":
-        if request.POST.get("interest"):
-            if request.user.student.clubs_interested.filter(pk=pk):
-                messages.info(request, 'You already expressed interest in this club!')
-                return HttpResponseRedirect(reverse('post_detail', args=[pk]))
+        if request.POST.get('interest') != None:
             request.user.student.clubs_interested.add(club)
 
-    if 'sort' in request.GET:
-        sort = request.GET['sort']
-        if sort == "1":
-            time = 1
-            return render(request, 'page/post_detail2.html', {'club': club, 'review_count': review_count, 'fun_count': club.fun_count, 
-                'happy_result': happy_result, 'mean_result': mean_result, 'star_count': star_result, 
-                'reviews': reviews.time, 'time': time, 'count':photo_count, 'photo1':photo1, 
-                'photo2':photo2, 'photo3':photo3, 'review1':review1, 'review2': review2, 'positive_result':positive_result,
-                'hard_result':hard_result, 'interview1':interview1, 'interview2':interview2})
 
-        elif sort == "2":
-            time = 2
-            return render(request, 'page/post_detail2.html', {'club': club, 
-                'review_count': review_count, 'fun_count': club.fun_count, 
-                'mean_count': club.meaning_count, 'happy_result': happy_result, 
-                'mean_result': mean_result, 'star_count': star_result, 'reviews': reviews.rating, 
-                'time': time, 'count':photo_count, 'photo1':photo1, 'photo2':photo2, 
-                'photo3':photo3, 'review1':review1, 'review2': review2, 'positive_result':positive_result,
-                'hard_result':hard_result, 'interview1':interview1, 'interview2':interview2})
-
-    else:
-        return render(request, 'page/post_detail2.html', {'club': club, 'review_count': review_count, 
-            'fun_count': club.fun_count, 'mean_count': club.meaning_count, 'happy_result': happy_result, 
-            'mean_result': mean_result, 'star_count': star_result, 'reviews': reviews.time, 
-            'time': time, 'count':photo_count, 'photo1':photo1, 'photo2':photo2, 'photo3':photo3, 
-            'review1':review1, 'review2': review2, 'positive_result':positive_result,
-                'hard_result':hard_result, 'interview1':interview1, 'interview2':interview2})
+    return render(request, 'page/post_detail2.html', {'club': club, 'review_count': review_count, 
+        'fun_count': club.fun_count, 'mean_count': club.meaning_count, 'happy_result': happy_result, 
+        'mean_result': mean_result, 'star_count': star_result, 
+        'count':photo_count, 'photo1':photo1, 'photo2':photo2, 'photo3':photo3, 
+        'review1':review1, 'review2': review2, 'positive_result':positive_result,
+        'hard_result':hard_result, 'interview1':interview1, 'interview2':interview2})
 
 @login_required(login_url='/login/')
 def top20(request):
@@ -154,7 +125,10 @@ def top20(request):
 
 @login_required(login_url='/login/')
 def all_reviews(request, pk):
-    global time;
+    if request.user.student.clubs_reviewed.count() == 0 and request.user.student.club_interviews_reviewed.count() == 0:
+        messages.info(request, "You must review just one club or interview experience before you can have access to the all reviews page!")
+        return HttpResponseRedirect(reverse('post_detail', args=[pk]))
+    time = 0
     club = get_object_or_404(Club, pk=pk)
 
     reviews = club.review_set.all()
@@ -201,7 +175,9 @@ def all_reviews(request, pk):
 
 @login_required(login_url='/login/')
 def all_interviews(request, pk):
-    global time;
+    if request.user.student.clubs_reviewed.count() == 0 and request.user.student.club_interviews_reviewed.count() == 0:
+        messages.info(request, "You must review just one club or interview experience before you can have access to this page!")
+        return HttpResponseRedirect(reverse('post_detail', args=[pk]))
     club = get_object_or_404(Club, pk=pk)
 
     interviews = club.interview_set.all()
@@ -223,31 +199,10 @@ def all_interviews(request, pk):
     else:
         hard_result = 0
 
-    interviews.time = interviews.order_by('-created_at')
-    interviews.rating = interviews.order_by('-rating')
-
-    if 'sort' in request.GET:
-        sort = request.GET['sort']
-        if sort == "1":
-            time = 1
-            return render(request, 'page/all_interviews.html', {'club': club, 'interview_count': interview_count,
-                'positive_count': club.positive_count, 'hard_count': interview_count - club.hard_count,
-                'positive_result': positive_result, 'hard_result': hard_result, 
-                'interviews' : interviews.time, 'time' : time})
-
-        elif sort == "2":
-            time = 2
-            return render(request, 'page/all_interviews.html', {'club': club, 'interview_count': interview_count,
-                'positive_count': club.positive_count, 'hard_count': interview_count - club.hard_count,
-                'positive_result': positive_result, 'hard_result': hard_result, 
-                'interviews' : interviews.time, 'time' : time})
-
-    else:
-        return render(request, 'page/all_interviews.html', {'club': club, 'interview_count': interview_count,
-                'positive_count': club.positive_count, 'hard_count': interview_count - club.hard_count,
-                'positive_result': positive_result, 'hard_result': hard_result, 
-                'interviews' : interviews.time, 'time' : time})
-    return render(request, 'page/all_interviews.html', {'club': club, 'interviews': interviews})
+    return render(request, 'page/all_interviews.html', {'club': club, 'interview_count': interview_count,
+        'positive_count': club.positive_count, 'hard_count': interview_count - club.hard_count,
+        'positive_result': positive_result, 'hard_result': hard_result, 
+        'interviews' : interviews})
 
 @login_required(login_url='/login/')
 def post_list_full(request):
@@ -259,7 +214,8 @@ def post_list_full(request):
 def my_clubs(request):
     email = request.user.student.netid + "@princeton.edu"
     clubs = Club.objects.filter(email=email).distinct() | Club.objects.filter(leader__email=email).distinct()
-    return render(request, 'page/my_clubs.html', {'clubs': clubs})
+    clubs_interested = request.user.student.clubs_interested
+    return render(request, 'page/my_clubs.html', {'clubs': clubs, 'clubs_interested':clubs_interested, 'count': clubs.count()})
 
 @login_required(login_url='/login/')
 def review_increment(request, pk_Club, pk_Review):

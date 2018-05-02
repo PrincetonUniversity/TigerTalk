@@ -80,8 +80,56 @@
             </div>
           </div>
         </nav>
+        
+        <br>
+
+          <div class="row">
+            <div class="col-sm-12">
+              <form action="/search/" method="get">
+                <div class="input-group mb-3">
+                  &nbsp;&nbsp;&nbsp;
+                  <div class="input-group-prepend">
+                    <select class="custom-select" id="type" name="type">
+                        <option selected value="%">All clubs</option>
+                      <option value="17">A Cappella</option>
+                      <option value="5">Academic</option>
+                      <option value="6">Career Opportunity</option>
+                      <option value="9">Cultural</option>
+                      <option value="14">Dance</option>
+                      <option value="4">Educational</option>
+                      <option value="10">Environmental</option>
+                      <option value="11">Games</option>
+                      <option value="2">Media</option>
+                      <option value="15">Music</option>
+                      <option value="13">Performing Arts</option>
+                      <option value="8">Political</option>
+                      <option value="1">Publication</option>
+                      <option value="18">Religious</option>
+                      <option value="7">Service</option>
+                      <option value="12">Social</option>
+                      <option value="3">Special Interest</option>
+                      <option value="16">Theater</option>
+                    </select>
+                  </div>
+                  <input type="text" name = "q" class="form-control" aria-label="Text input with dropdown button">
+                      <div class="input-group-append">
+                      <button class="btn btn-outline-dark" type="submit" value = search>Search</button>
+                  </div>
+                  &nbsp;&nbsp;&nbsp;
+                </div>
+              </form>
+            </div>
+          </div>
             {% block content %}
             {% endblock %}
+
+            <!-- Footer -->
+          <footer class="py-5 bg-dark">
+            <div class="container">
+              <p class="m-0 text-center text-white">Questions or concerns? Want your club to be added? Email princetonclubtalk@gmail.com</p>
+            </div>
+            <!-- /.container -->
+          </footer>
 
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

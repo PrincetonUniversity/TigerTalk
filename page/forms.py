@@ -30,7 +30,7 @@ class PostForm(forms.ModelForm):
     meaningful = forms.ChoiceField(widget=HorizRadioSelect, choices=BIN_OPTIONS)
     stars = forms.ChoiceField(widget=HorizRadioSelect, choices=STARS)
 
-    CBI = forms.CharField(max_length=200, required=False)
+    CBI = forms.CharField(max_length=200)
 
     class Meta:
         model = Review
