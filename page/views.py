@@ -168,7 +168,6 @@ def all_reviews(request, pk):
 
 @CAS_login_required
 def all_interviews(request, pk):
-    global time;
     club = get_object_or_404(Club, pk=pk)
 
     interviews = club.interview_set.all()
@@ -190,31 +189,11 @@ def all_interviews(request, pk):
     else:
         hard_result = 0
 
-    interviews.time = interviews.order_by('-created_at')
-    interviews.rating = interviews.order_by('-rating')
-
-    if 'sort' in request.GET:
-        sort = request.GET['sort']
-        if sort == "1":
-            time = 1
-            return render(request, 'page/all_interviews.html', {'club': club, 'interview_count': interview_count,
-                'positive_count': club.positive_count, 'hard_count': interview_count - club.hard_count,
-                'positive_result': positive_result, 'hard_result': hard_result, 
-                'interviews' : interviews.time, 'time' : time})
-
-        elif sort == "2":
-            time = 2
-            return render(request, 'page/all_interviews.html', {'club': club, 'interview_count': interview_count,
-                'positive_count': club.positive_count, 'hard_count': interview_count - club.hard_count,
-                'positive_result': positive_result, 'hard_result': hard_result, 
-                'interviews' : interviews.time, 'time' : time})
-
-    else:
-        return render(request, 'page/all_interviews.html', {'club': club, 'interview_count': interview_count,
-                'positive_count': club.positive_count, 'hard_count': interview_count - club.hard_count,
-                'positive_result': positive_result, 'hard_result': hard_result, 
-                'interviews' : interviews.time, 'time' : time})
-    return render(request, 'page/all_interviews.html', {'club': club, 'interviews': interviews})
+    
+    return render(request, 'page/all_interviews.html', {'club': club, 'interview_count': interview_count,
+        'positive_count': club.positive_count, 'hard_count': interview_count - club.hard_count,
+        'positive_result': positive_result, 'hard_result': hard_result, 
+        'interviews' : interviews})
 
 @CAS_login_required
 def post_list_full(request):
