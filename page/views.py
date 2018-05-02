@@ -121,6 +121,9 @@ def top20(request):
 
 @CAS_login_required
 def all_reviews(request, pk):
+    if request.user.student.clubs_reviewed.count() == 0 and request.user.student.club_interviews_reviewed.count() == 0:
+        messages.info(request, "You must review just one club or interview experience before you can have access to the all reviews page!")
+        return HttpResponseRedirect(reverse('post_detail', args=[pk]))
     time = 0
     club = get_object_or_404(Club, pk=pk)
 
@@ -168,6 +171,9 @@ def all_reviews(request, pk):
 
 @CAS_login_required
 def all_interviews(request, pk):
+    if request.user.student.clubs_reviewed.count() == 0 and request.user.student.club_interviews_reviewed.count() == 0:
+        messages.info(request, "You must review just one club or interview experience before you can have access to this page!")
+        return HttpResponseRedirect(reverse('post_detail', args=[pk]))
     club = get_object_or_404(Club, pk=pk)
 
     interviews = club.interview_set.all()
@@ -189,7 +195,6 @@ def all_interviews(request, pk):
     else:
         hard_result = 0
 
-    
     return render(request, 'page/all_interviews.html', {'club': club, 'interview_count': interview_count,
         'positive_count': club.positive_count, 'hard_count': interview_count - club.hard_count,
         'positive_result': positive_result, 'hard_result': hard_result, 

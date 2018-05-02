@@ -91,7 +91,7 @@
             <p>{{club.desc}}</p>
             <p>
               <a class="btn btn-primary btn-lg" href="{% url 'all_reviews' pk=club.pk %}">Check out our reviews!</a>
-              <a class="btn btn-primary btn-lg" href="#">Check out our interviews!</a>
+              <a class="btn btn-primary btn-lg" href="{% url 'all_interviews' pk=club.pk %}">Check out our interviews!</a>
             </p>
           </div>
           <div class="col-sm-4">
