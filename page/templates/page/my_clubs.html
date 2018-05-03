@@ -25,7 +25,7 @@
             </center>
             <br>
 
-            {% if count %}
+            
             {% for club in clubs %} 
             <div class="jumbotron">
                 <h2><a href="{% url 'post_detail' pk=club.pk %}">{{club.name}}</a>
@@ -57,24 +57,7 @@
             <br>
             <br>
           </div>
-              {% else %}
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-              {% endif %}
+              
           <div class="col-sm-6">
               <h1><u><center>Clubs of Interest</center></u></h1>
               <br>
