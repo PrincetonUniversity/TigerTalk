@@ -39,7 +39,6 @@
                     <i class="fas fa-users"></i>
                   </a>
                 </h2>
-                <br>
                 <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                   <div class="btn-group mr-2" role="group" aria-label="First group">
                     <a class="btn btn-primary btn-lg btn-block" href="{% url 'all_reviews' pk=club.pk %}">Reviews</a>
@@ -77,13 +76,28 @@
                 <br>
               {% endif %}
           <div class="col-sm-6">
-            <center>
-              <h1><u>Clubs of Interest</u></h1>
+              <h1><u><center>Clubs of Interest</center></u></h1>
+              <br>
               {% for club in clubs_interested %}
+                <div class="jumbotron">
+                <h2><a href="{% url 'post_detail' pk=club.pk %}">{{club.name}}</a>
+                  {% if club.total_stars %}
+                    &nbsp; &nbsp;{{club.total_stars|floatformat:"-1"}} <a data-toggle="tooltip" data-placement="top" title="Average ranking for {{club.name}}"><i class="fas fa-star"></a></i>  
+                  {% endif %}
+                </h2>
+                <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                  <div class="btn-group mr-2" role="group" aria-label="First group">
+                    <a class="btn btn-primary btn-lg btn-block" href="{% url 'all_reviews' pk=club.pk %}">Reviews</a>
+                  </div>
+                  <div class="btn-group mr-2" role="group" aria-label="Second group">
+                    <a class="btn btn-primary btn-lg btn-block" href="{% url 'all_interviews' pk=club.pk %}">Interviews</a>
+                  </div>
+                </div>
+                
+            </div>
 
 
               {% endfor %}
-            </center>
           </div>
         </div>
       </div>
