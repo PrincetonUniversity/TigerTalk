@@ -232,7 +232,7 @@ def my_clubs(request):
 def review_increment(request, pk_Club, pk_Review):
     review = get_object_or_404(Review, pk=pk_Review)
     if request.user.student.review_votes.filter(pk=review.pk):
-        return HttpResponseRedirect(reverse('post_detail', args=[pk_Club]))
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     else:
         review.rating += 1;
         review.save()
@@ -244,7 +244,7 @@ def review_increment(request, pk_Club, pk_Review):
 def review_decrement(request, pk_Club, pk_Review):
     review = get_object_or_404(Review, pk=pk_Review)
     if request.user.student.review_votes.filter(pk=review.pk):
-        return HttpResponseRedirect(reverse('post_detail', args=[pk_Club]))
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     else:
         review.rating -= 1;
         review.save()
