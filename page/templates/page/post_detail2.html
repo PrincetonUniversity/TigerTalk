@@ -100,7 +100,18 @@
             </p>
           </div>
           <div class="col-sm-4">
-            <h2 class="mt-4">Club info</h2>
+            <h2 class="mt-4">
+              Club info
+
+              {% if accept %}
+              <a data-toggle="tooltip" data-placement="top" title="Edit your club's page!" href="{% url 'edit_page' pk=club.pk %}" class="btn btn-warning btn-md">
+                <i class="fas fa-plus-circle"></i>
+              </a>
+              <a data-toggle="tooltip" data-placement="top" title="See who is interested in your club!" href="{% url 'interest_page' pk=club.pk %}" class="btn btn-warning btn-md">
+                <i class="fas fa-users"></i>
+              </a>
+              {% endif %}
+            </h2>
             <address>
               <strong>Leadership</strong>
               <i class="fas fa-user"></i>
@@ -120,9 +131,7 @@
               {% endif %}
               <br>
               {% if accept %}
-              <a href="{% url 'edit_page' pk=club.pk %}" class="btn btn-warning btn-block btn-md">Edit your club information</a>
               
-              <a href="{% url 'interest_page' pk=club.pk %}" class="btn btn-warning btn-block btn-md">See who is interested in your club</a>
               {% else %}
               <form method="POST" class="post-form">{% csrf_token %}
                 
