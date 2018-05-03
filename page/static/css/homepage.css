@@ -6,7 +6,6 @@
 
 body {
   padding-top: 54px;
-  background-image: url("../images/nassau_hall.jpg");
   background-size:     cover;                      /* <------ */
   background-repeat:   no-repeat;
   background-position: center;
@@ -28,13 +27,18 @@ body {
   body {
     padding-top: 56px;
   }
+
 }
 
 /*.panel-body {
   background-color: #E8E8E8;
 }*/
 
-
+.top3 {
+  background-image: url("../images/nassau_hall.jpg");
+  background-position: center;
+  background-size: cover;
+}
 
 .notopaque{
   background: red;
