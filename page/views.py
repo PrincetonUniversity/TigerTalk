@@ -118,8 +118,11 @@ def post_detail(request, pk):
 
     if request.method == "POST":
         if request.POST.get('interest') != None:
-            request.user.student.clubs_interested.add(club)
-            messages.info(request, 'Thank you for expressing interest in this club!')
+            if club in request.user.student.clubs_interested.all():
+                messages.info(request, 'You already expressed interest in this club!')
+            else:
+                request.user.student.clubs_interested.add(club)
+                messages.info(request, 'Thank you for expressing interest in this club!')
 
 
     return render(request, 'page/post_detail2.html', {'club': club, 'review_count': review_count, 
