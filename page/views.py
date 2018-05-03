@@ -116,12 +116,21 @@ def post_detail(request, pk):
             photo_count += 1
             photo1 = club.photo3
 
+    if club in request.user.student.clubs_interested.all():
+        interest = True
+    else:
+        interest = False
+
+
     if request.method == "POST":
         if request.POST.get('interest') != None:
             if club in request.user.student.clubs_interested.all():
-                messages.info(request, 'You already expressed interest in this club!')
+                request.user.student.clubs_interested.remove(club)
+                interest = False
+                messages.info(request, 'You have removed your interest in this club!')
             else:
                 request.user.student.clubs_interested.add(club)
+                interest = True
                 messages.info(request, 'Thank you for expressing interest in this club!')
 
 
@@ -130,7 +139,7 @@ def post_detail(request, pk):
         'mean_result': mean_result, 'star_count': star_result, 
         'count':photo_count, 'photo1':photo1, 'photo2':photo2, 'photo3':photo3, 
         'review1':review1, 'review2': review2, 'positive_result':positive_result,
-        'hard_result':hard_result, 'interview1':interview1, 'interview2':interview2, 'accept':accept})
+        'hard_result':hard_result, 'interview1':interview1, 'interview2':interview2, 'accept':accept, 'interest':interest})
 
 @login_required(login_url='/login/')
 def top20(request):

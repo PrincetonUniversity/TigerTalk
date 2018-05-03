@@ -134,8 +134,11 @@
               
               {% else %}
               <form method="POST" class="post-form">{% csrf_token %}
-                
+                {% if interest == False %}
                 <button type="submit" class="btn btn-warning btn-md btn-block" name="interest" value="interest">Express interest!</button>
+                {% else %}
+                <button type="submit" class="btn btn-warning btn-md btn-block" name="interest" value="interest">Unexpress interest!</button>
+                {% endif %}
               </form>
               {% endif %}
             </address>
