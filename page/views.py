@@ -456,3 +456,4 @@ def login(request):
 def logout(request):
     auth.logout(request)
     return redirect('/')
+    # return redirect('https://fed.princeton.edu/cas/logout?url=http://clubtalk.herokuapp.com/')
