@@ -139,7 +139,7 @@ def top20(request):
 def all_reviews(request, pk):
     if request.user.student.clubs_reviewed.count() == 0 and request.user.student.club_interviews_reviewed.count() == 0:
         messages.info(request, "You must review just one club or interview experience before you can have access to the all reviews page!")
-        return HttpResponseRedirect(reverse('post_detail', args=[pk]))
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     time = 0
     club = get_object_or_404(Club, pk=pk)
 
@@ -189,7 +189,7 @@ def all_reviews(request, pk):
 def all_interviews(request, pk):
     if request.user.student.clubs_reviewed.count() == 0 and request.user.student.club_interviews_reviewed.count() == 0:
         messages.info(request, "You must review just one club or interview experience before you can have access to this page!")
-        return HttpResponseRedirect(reverse('post_detail', args=[pk]))
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     club = get_object_or_404(Club, pk=pk)
 
     interviews = club.interview_set.all()
