@@ -14,8 +14,13 @@
       </div>
     </header>
     -->
-
-    
+    {% if messages %}
+      <script>
+        {% for message in messages %}
+          alert("{{ message }}");
+        {% endfor %}
+      </script>
+    {% endif %}
 
     <!-- Page Content -->
     <div class="container">
@@ -270,17 +275,6 @@
                     <h5>This club has no reviews. Add one above!</h5>
                   </center>
                 {% endif %}
-
-              <center>
-                {% if messages %}
-                  <script>
-                  // <ul class="messages">
-                    {% for message in messages %}
-                      alert("{{ message }}");
-                    {% endfor %}
-                  </script>
-                {% endif %}
-              </center>
             </div>
           </div>
         </div>
@@ -393,17 +387,6 @@
                     <h5>No one has reviewed this club's interview process. Add a comment above!</h5>
                   </center>
                 {% endif %}
-
-              <center>
-                {% if messages %}
-                  <script>
-                  // <ul class="messages">
-                    {% for message in messages %}
-                      alert("{{ message }}");
-                    {% endfor %}
-                  </script>
-                {% endif %}
-              </center>
             </div>
           </div>
         </div>
