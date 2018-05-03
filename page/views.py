@@ -418,7 +418,7 @@ def logintemp(request):
         if user is not None:
             # User has already logged in before
             auth.login(request, user)
-            return redirect('/') 
+            return redirect(request.GET['next']) 
         else:
             # first time loggin in - create a user
             user = User.objects.create_user(username=username, password=password)
@@ -426,7 +426,7 @@ def logintemp(request):
             student = Student(user=user, netid=netid)
             student.save()
             auth.login(request, user)
-            return redirect('/')
+            return redirect(request.GET['next'])
     elif "location" in auth_attempt:
         return redirect(auth_attempt["location"])
     else:
