@@ -22,16 +22,27 @@ def post_detail(request, pk):
     reviews = club.review_set.all()
     interviews = club.interview_set.all()
     
-    review1 = None;
-    review2 = None;
+    accept = False
+    email = club.email.split('@')
+    if request.user.student.netid == email[0]:
+        accept = True
+    else:
+        leaders = club.leader_set.all()
+        for leader in leaders:
+            emailL = leader.email.split('@')
+            if request.user.student.netid == emailL[0]:
+                accept = True
+
+    review1 = None
+    review2 = None
     if reviews.count() > 1:
         review1 = reviews[reviews.count()-1]
         review2 = reviews[reviews.count()-2]
     elif reviews.count() == 1:
         review1 = reviews[0]
 
-    interview1 = None;
-    interview2 = None;
+    interview1 = None
+    interview2 = None
     if interviews.count() > 1:
         interview1 = interviews[interviews.count()-1]
         interview2 = interviews[interviews.count()-2]
@@ -115,7 +126,7 @@ def post_detail(request, pk):
         'mean_result': mean_result, 'star_count': star_result, 
         'count':photo_count, 'photo1':photo1, 'photo2':photo2, 'photo3':photo3, 
         'review1':review1, 'review2': review2, 'positive_result':positive_result,
-        'hard_result':hard_result, 'interview1':interview1, 'interview2':interview2})
+        'hard_result':hard_result, 'interview1':interview1, 'interview2':interview2, 'accept':accept})
 
 @login_required(login_url='/login/')
 def top20(request):
