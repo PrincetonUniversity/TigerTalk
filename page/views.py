@@ -119,6 +119,7 @@ def post_detail(request, pk):
     if request.method == "POST":
         if request.POST.get('interest') != None:
             request.user.student.clubs_interested.add(club)
+            messages.info(request, 'Thank you for expressing interest in this club!')
 
 
     return render(request, 'page/post_detail2.html', {'club': club, 'review_count': review_count, 
@@ -225,7 +226,7 @@ def post_list_full(request):
 def my_clubs(request):
     email = request.user.student.netid + "@princeton.edu"
     clubs = Club.objects.filter(email=email).distinct() | Club.objects.filter(leader__email=email).distinct()
-    clubs_interested = request.user.student.clubs_interested
+    clubs_interested = request.user.student.clubs_interested.all()
     return render(request, 'page/my_clubs.html', {'clubs': clubs, 'clubs_interested':clubs_interested, 'count': clubs.count()})
 
 @login_required(login_url='/login/')
