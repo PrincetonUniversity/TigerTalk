@@ -71,11 +71,11 @@ class Club(models.Model):
 class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="student")
     netid = models.CharField(max_length=50)
-    clubs_reviewed = models.ManyToManyField(Club, related_name="submissions")
-    club_interviews_reviewed = models.ManyToManyField(Club, related_name="interviews")
-    review_votes = models.ManyToManyField(Review, related_name="votes")
-    clubs_liked = models.ManyToManyField(Club, related_name="likes")
-    clubs_interested = models.ManyToManyField(Club, related_name="interested")
+    clubs_reviewed = models.ManyToManyField(Club, related_name="submissions", null=True, blank=True)
+    club_interviews_reviewed = models.ManyToManyField(Club, related_name="interviews", null=True, blank=True)
+    review_votes = models.ManyToManyField(Review, related_name="votes", null=True, blank=True)
+    clubs_liked = models.ManyToManyField(Club, related_name="likes", null=True, blank=True)
+    clubs_interested = models.ManyToManyField(Club, related_name="interested", null=True, blank=True)
 
     def __str__(self):
         return self.netid
