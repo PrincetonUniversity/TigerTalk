@@ -119,10 +119,16 @@
                   <a class="btn btn-primary btn-md" href= {{ club.website }}>&nbsp;&nbsp;&nbsp;&nbsp;Website&nbsp;&nbsp;&nbsp;&nbsp;</a>
               {% endif %}
               <br>
+              {% if accept %}
+              <a href="{% url 'edit_page' pk=club.pk %}" class="btn btn-warning btn-block btn-md">Edit your club information</a>
+              
+              <a href="{% url 'interest_page' pk=club.pk %}" class="btn btn-warning btn-block btn-md">See who is interested in your club</a>
+              {% else %}
               <form method="POST" class="post-form">{% csrf_token %}
                 
                 <button type="submit" class="btn btn-warning btn-md btn-block" name="interest" value="interest">Express interest!</button>
               </form>
+              {% endif %}
             </address>
           </div>
         </div>
@@ -393,6 +399,7 @@
 
       </div>
       <br>
+      <!--
       {% if accept %}
         <div class="jumbotron">
           <div class="row">
@@ -406,7 +413,7 @@
             </div>
           </div>
         </div>
-      {% endif %}
+      {% endif %}-->
     </div>
     <!-- /.container -->
 
