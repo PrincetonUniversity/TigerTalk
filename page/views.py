@@ -225,7 +225,7 @@ def post_list_full(request):
 def my_clubs(request):
     email = request.user.student.netid + "@princeton.edu"
     clubs = Club.objects.filter(email=email).distinct() | Club.objects.filter(leader__email=email).distinct()
-    clubs_interested = request.user.student.clubs_interested
+    clubs_interested = request.user.student.clubs_interested.all()
     return render(request, 'page/my_clubs.html', {'clubs': clubs, 'clubs_interested':clubs_interested, 'count': clubs.count()})
 
 @login_required(login_url='/login/')
