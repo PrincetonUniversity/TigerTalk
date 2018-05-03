@@ -256,7 +256,7 @@ def review_decrement(request, pk_Club, pk_Review):
 def post_new(request, pk):
     if request.user.student.clubs_reviewed.filter(pk=pk):
         messages.info(request, 'You cannot review a club twice!')
-        return HttpResponseRedirect(reverse('post_detail', args=[pk]))
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     else:
         if request.method == "POST":
             form = PostForm(request.POST)
@@ -288,7 +288,7 @@ def post_new(request, pk):
 def interview_new(request, pk):
     if request.user.student.club_interviews_reviewed.filter(pk=pk):
         messages.info(request, "You already wrote about your interview experience with this club!")
-        return HttpResponseRedirect(reverse('post_detail', args=[pk]))
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     else:
         if request.method == "POST":
             form = InterviewForm(request.POST)
