@@ -89,7 +89,7 @@ body {
 
 .panelT {
   border: 2px solid black;
-  background-color: rgb(255, 255, 255, .85);
+  background-color: RGBA(255, 255, 255, .85);
   border-radius: 10px;
 
 }
