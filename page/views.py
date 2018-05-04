@@ -229,10 +229,32 @@ def all_interviews(request, pk):
         'interviews' : interviews})
 
 @login_required(login_url='/login/')
-def post_list_full(request):
+def post_list_full(request, num):
+    count = 75 * int(num);
     clubs = Club.objects.all()
-    clubs = clubs.order_by('name')
-    return render(request, 'page/post_list_full.html', {'clubs': clubs})
+
+    if (clubs.count() <= (count+75)):
+        clubs = clubs.order_by('name')[count:]
+    else:
+        clubs = clubs.order_by('name')[count:count+75]
+
+    notFirst = 1;
+    notLast = 1;
+    if num == 0:
+        notFirst = 0;
+    elif num == 4:
+        notLast = 0;
+
+    numPrev = int(num)-1;
+    numNext = int(num)+1;
+    if numPrev < 0:
+        numPrev = 0;
+        notFirst = 0;
+    elif numNext > 4:
+        notLast = 0;
+
+    return render(request, 'page/post_list_full.html', {'clubs': clubs, 'num': num,
+        'numPrev': numPrev, 'numNext': numNext, 'notFirst': notFirst, 'notLast': notLast},)
 
 @login_required(login_url='/login/')
 def my_clubs(request):
