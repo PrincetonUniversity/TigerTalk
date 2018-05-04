@@ -414,12 +414,11 @@ def interest_page(request, pk):
 def search(request):
     if 'q' in request.GET:
         q = request.GET['q']
-        if q == "":
+        type = request.GET['type']
+        if q == "" and type == "%":
             return post_list_full(request, 0)
 
-        type = request.GET['type']
-
-        if type == "%":
+        elif type == "%":
             if not q:
                 clubs = Club.objects.all()
             else:
