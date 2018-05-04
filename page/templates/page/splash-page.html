@@ -65,7 +65,7 @@
               <div class="collapse navbar-collapse" id="navbarResponsive">
                   <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                      <a class="nav-link" href="/clublist">All Clubs</a>
+                      <a class="nav-link" href="{% url 'post_list_full' num=0 %}">All Clubs</a>
                     </li>
                     <li class="nav-item active">
                       <a class="nav-link" href="/myclubs">My Clubs</a>
@@ -141,7 +141,7 @@
                         &nbsp;&nbsp;&nbsp;
                       </div>
                       </form>
-                            <a class="btn btn-outline-primary btn-lg" href="{% url 'post_list_full' %}">&nbsp;&nbsp;All clubs&nbsp;&nbsp;</a>
+                            <a class="btn btn-outline-primary btn-lg" href="{% url 'post_list_full' num=0 %}">&nbsp;&nbsp;All clubs&nbsp;&nbsp;</a>
                             &nbsp;&nbsp;
                             <a class="btn btn-outline-secondary btn-lg" href="{% url 'top20' %}">&nbsp;&nbsp;Top 20&nbsp;&nbsp;</a>
                             <br>
