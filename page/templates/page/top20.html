@@ -36,7 +36,7 @@
           <div class="col-sm-4">
             <address>
               <br>
-              <strong>Involved Students</strong>
+              <strong>Leaders</strong>
               <i class="fas fa-user"></i>
               {% for leader in club.leader_set.all %}
                 <br>{{leader.title}}: <a href="{{leader.email|mail}}">{{leader.name}}</a>

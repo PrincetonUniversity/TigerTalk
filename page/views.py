@@ -229,10 +229,32 @@ def all_interviews(request, pk):
         'interviews' : interviews})
 
 @login_required(login_url='/login/')
-def post_list_full(request):
+def post_list_full(request, num):
+    count = 75 * int(num);
     clubs = Club.objects.all()
-    clubs = clubs.order_by('name')
-    return render(request, 'page/post_list_full.html', {'clubs': clubs})
+
+    if (clubs.count() <= (count+75)):
+        clubs = clubs.order_by('name')[count:]
+    else:
+        clubs = clubs.order_by('name')[count:count+75]
+
+    notFirst = 1;
+    notLast = 1;
+    if num == 0:
+        notFirst = 0;
+    elif num == 4:
+        notLast = 0;
+
+    numPrev = int(num)-1;
+    numNext = int(num)+1;
+    if numPrev < 0:
+        numPrev = 0;
+        notFirst = 0;
+    elif numNext > 4:
+        notLast = 0;
+
+    return render(request, 'page/post_list_full.html', {'clubs': clubs, 'num': num,
+        'numPrev': numPrev, 'numNext': numNext, 'notFirst': notFirst, 'notLast': notLast},)
 
 @login_required(login_url='/login/')
 def my_clubs(request):
@@ -392,28 +414,29 @@ def interest_page(request, pk):
 def search(request):
     if 'q' in request.GET:
         q = request.GET['q']
+        if q == "":
+            return post_list_full(request, 0)
+
         type = request.GET['type']
 
         if type == "%":
             if not q:
                 clubs = Club.objects.all()
-                return render(request, 'page/search_results.html', {'clubs': clubs})
             else:
                 q2 = q.split(' ')
                 clubs = Club.objects.filter(name__icontains=q2[0]) | Club.objects.filter(desc__icontains=q2[0])
                 for i in range(1, len(q2)):
                     clubs = clubs.filter(name__icontains=q2[i]) | clubs.filter(desc__icontains=q2[i])
-                return render(request, 'page/search_results.html', {'clubs': clubs, 'query': q})
         else:
             clubs = Club.objects.filter(category__id=type)
-            if not q:
-                return render(request, 'page/search_results.html', {'clubs': clubs})
-            else:
-                q2 = q.split(' ')
-                clubs = clubs.filter(name__icontains=q2[0]) | clubs.filter(desc__icontains=q2[0])
-                for i in range(1, len(q2)):
-                    clubs = clubs.filter(name__icontains=q2[i]) | clubs.filter(desc__icontains=q2[i])
-                return render(request, 'page/search_results.html', {'clubs': clubs, 'query': q}) 
+            q2 = q.split(' ')
+            clubs = clubs.filter(name__icontains=q2[0]) | clubs.filter(desc__icontains=q2[0])
+            for i in range(1, len(q2)):
+                clubs = clubs.filter(name__icontains=q2[i]) | clubs.filter(desc__icontains=q2[i])
+
+
+
+    return render(request, 'page/search_results.html', {'clubs': clubs, 'query': q})
 
 def logintemp(request):
     C = CASClient.CASClient(request)
