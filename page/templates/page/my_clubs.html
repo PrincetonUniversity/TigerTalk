@@ -56,10 +56,21 @@
             <br>
             <br>
             <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
           </div>
               
           <div class="col-sm-6">
-              <h1><u><center>Clubs of Interest</center></u></h1>
+            <center>
+              <h1><u>Clubs of Interest</u></h1>
+              {% if clubs_interested %}
+              {% else %}
+              <p>You have not expressed interest in any clubs. What are you waiting for! Go to a club's page and click on the express interest button to let them know you're interested!</p>
+              {% endif %}
+              </center>
               <br>
               {% for club in clubs_interested %}
                 <div class="jumbotron">
@@ -68,6 +79,7 @@
                     &nbsp; &nbsp;{{club.total_stars|floatformat:"-1"}} <a data-toggle="tooltip" data-placement="top" title="Average ranking for {{club.name}}"><i class="fas fa-star"></a></i>  
                   {% endif %}
                 </h2>
+
                 <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                   <div class="btn-group mr-2" role="group" aria-label="First group">
                     <a class="btn btn-primary btn-lg btn-block" href="{% url 'all_reviews' pk=club.pk %}">Reviews</a>
@@ -75,12 +87,22 @@
                   <div class="btn-group mr-2" role="group" aria-label="Second group">
                     <a class="btn btn-primary btn-lg btn-block" href="{% url 'all_interviews' pk=club.pk %}">Interviews</a>
                   </div>
-                </div>
-                
+                </div>    
             </div>
 
 
               {% endfor %}
+              <br>
+              <br>
+              <br>
+              <br>
+              <br>
+              <br>
+              <br>
+              <br>
+              <br>
+              <br>
+              <br>
           </div>
         </div>
       </div>

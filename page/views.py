@@ -149,9 +149,9 @@ def top20(request):
 
 @login_required(login_url='/login/')
 def all_reviews(request, pk):
-    if request.user.student.clubs_reviewed.count() == 0 and request.user.student.club_interviews_reviewed.count() == 0:
-        messages.info(request, "You must review just one club or interview experience before you can have access to the all reviews page!")
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    #if request.user.student.clubs_reviewed.count() == 0 and request.user.student.club_interviews_reviewed.count() == 0:
+    #    messages.info(request, "You must review just one club or interview experience before you can have access to the all reviews page!")
+    #    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     time = 0
     club = get_object_or_404(Club, pk=pk)
 
@@ -199,9 +199,9 @@ def all_reviews(request, pk):
 
 @login_required(login_url='/login/')
 def all_interviews(request, pk):
-    if request.user.student.clubs_reviewed.count() == 0 and request.user.student.club_interviews_reviewed.count() == 0:
-        messages.info(request, "You must review just one club or interview experience before you can have access to this page!")
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    #if request.user.student.clubs_reviewed.count() == 0 and request.user.student.club_interviews_reviewed.count() == 0:
+    #    messages.info(request, "You must review just one club or interview experience before you can have access to this page!")
+    #    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     club = get_object_or_404(Club, pk=pk)
 
     interviews = club.interview_set.all()
