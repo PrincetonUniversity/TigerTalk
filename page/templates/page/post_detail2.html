@@ -390,14 +390,14 @@
                     
                   </div>
                   <br>
-                  <center>
-                    <a href="{% url 'interview_new' pk=club.pk %}" class="btn btn-primary btn-md">Add an interview!</a>
-                    &nbsp;
-                    <a href="{% url 'all_interviews' pk=club.pk %}" class="btn btn-primary btn-md">See all</a>
-                  </center>
 
                 </div>
                 <br>
+                <center>
+                  <a href="{% url 'interview_new' pk=club.pk %}" class="btn btn-primary btn-md">Submit interview experience!</a>
+                  &nbsp;
+                  <a href="{% url 'all_interviews' pk=club.pk %}" class="btn btn-primary btn-md">See all comments</a>
+                </center>
                 {% endif %}
 
                 {% if interview1 == None and interview2 == None %}

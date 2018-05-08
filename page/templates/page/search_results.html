@@ -28,7 +28,7 @@
           <div class="col-sm-8">
             <h2 class="mt-4"><a href="{% url 'post_detail' pk=club.pk %}">{{club.name}}</a>
               {% if club.total_stars %}
-                &nbsp; &nbsp;{{club.total_stars|floatformat:"-2"}} <a data-toggle="tooltip" data-placement="top" title="Average ranking for {{club.name}}"><i class="fas fa-star"></a></i>  
+                &nbsp; &nbsp;{{club.total_stars|floatformat:"-1"}} <a data-toggle="tooltip" data-placement="top" title="Average ranking for {{club.name}}"><i class="fas fa-star"></a></i>  
               {% endif %}
             </h2>
             <p>{{club.desc}}</p>
@@ -58,7 +58,16 @@
         </div>
       </div>
 
-            {% endfor %}           
+            {% endfor %}
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>  
+            <br>
+            <br>           
         </ul>       
     {% else %}  
         <div class="jumbotron">
@@ -83,7 +92,7 @@
             <div class="row"> 
                 <div class="col-sm-6">
                     <center>
-                        <a href="/clublist" class="btn btn-primary"><h4>Check out all of Princeton's clubs!</h4></a>
+                        <a href="{% url 'post_list_full' num=0 %}" class="btn btn-primary"><h4>Check out all of Princeton's clubs!</h4></a>
                     </center>
                 </div>
                 <div class="col-sm-6">
