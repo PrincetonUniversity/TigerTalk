@@ -43,9 +43,9 @@ class Interview(models.Model):
 
 class Club(models.Model):
     name = models.CharField(max_length=200)
-    desc = models.TextField()
-    category = models.ManyToManyField(Category)
-    email = models.EmailField(max_length=200)
+    desc = models.TextField(null=True, blank=True)
+    category = models.ManyToManyField(Category, blank=True)
+    email = models.EmailField(max_length=200, null=True, blank=True)
     website = models.CharField(max_length=200, null=True, blank=True)
     fun_count = models.IntegerField(default = 0)
     meaning_count = models.IntegerField(default = 0)
