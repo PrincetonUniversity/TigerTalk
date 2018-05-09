@@ -273,7 +273,7 @@ def review_increment(request, pk_Club, pk_Review):
         review.save()
         request.user.student.review_votes.add(review)
         request.user.student.save()
-        return HttpResponseRedirect(reverse('post_detail', args=[pk_Club]))
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 @login_required(login_url='/login/')
 def review_decrement(request, pk_Club, pk_Review):
@@ -285,7 +285,7 @@ def review_decrement(request, pk_Club, pk_Review):
         review.save()
         request.user.student.review_votes.add(review)
         request.user.student.save()
-        return HttpResponseRedirect(reverse('post_detail', args=[pk_Club]))
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 @login_required(login_url='/login/')
 def post_new(request, pk):
