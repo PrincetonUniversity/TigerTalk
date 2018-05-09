@@ -16,11 +16,22 @@ body {
   font-size: 20px;
 }
 
+
 .container-1 {
   background-image: url("../images/nassau_hall.jpg");
   background-size:     cover;                      /* <------ */
   background-repeat:   no-repeat;
   background-position: center;
+}
+
+.btn.btn-outline-primary.btn-lg.h {
+    margin-top: 10px;
+}
+.btn.btn-outline-danger.btn-lg.h {
+    margin-top: 10px;
+}
+.btn.btn-outline-secondary.btn-lg.h {
+    margin-top: 10px;
 }
 
 @media (min-width: 992px) {
