@@ -20,4 +20,5 @@ urlpatterns = [
     url(r'^interview/(?P<pk>\d+)/allinterviews$', views.all_interviews, name='all_interviews'),
     url(r'^post/edit/(?P<pk>\d+)/$', views.edit_page, name='edit_page'),
     url(r'^post/interest/(?P<pk>\d+)/$', views.interest_page, name='interest_page'),
+    url(r'^aboutus$', views.about_us, name='about_us'),
 ]

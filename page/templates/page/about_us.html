@@ -1,0 +1,186 @@
+{% load static %}
+{% load templatetags %}
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Princeton Club Talk</title>
+    <link rel="icon" href="{% static 'images/tiger_logo.png' %}">
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'fontawesome/fontawesome-all.css' %}" rel="stylesheet">
+    <link href="{% static 'css/homepage.css' %}" rel="stylesheet">
+
+  </head>
+
+    <body>
+
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <center>
+                <h5 class="modal-title" id="exampleModalLabel">Confused where to start?</h5>
+              </center>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item"></li>
+                <li class="list-group-item"><center><h4>Confused where to start?</h4></center></li>
+                <li class="list-group-item">From the homepage, you can <b>search</b> for any Princeton extracurricular club. On each <b>club's page</b>, you can browse info related to the club, read other students' reviews of the club, or read past interview experiences. If you're a club leader, you can <b>customize and edit</b> your club's page from the <b>"My Clubs"</b> tab (or from your club's page directly).</li>
+                <li class="list-group-item"><center><h4>Don't see your club?</h4></center></li>
+                <li class="list-group-item">Club Talk currently only features all ODUS-recognized clubs (per their website). If you want your club to be added, email princetonclubtalk@gmail.com.</li>
+                <li class="list-group-item"><center><h4>Questions or comments?<h4></h4></li>
+                <li class="list-group-item">We love feedback! If you found a bug or would like a new feature to be added, please email djmajor@princeton.edu.</li>
+              </ul>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal"><center>I'm good to go!</center></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+        <div class="container">
+
+          <!-- Introduction Row -->
+          <h1 class="my-4"><center>About Us</center>
+          </h1>
+          <center>
+          <p><b>Princeton Club Talk</b> was built as a final project for <a href="https://www.cs.princeton.edu/courses/archive/spring18/cos333/">COS333: Advanced Programming Techniques</a> in <b>Spring 2018</b> taught by <a href="https://www.cs.princeton.edu/~bwk/">Brian Kernighan</a> and <a href="https://www.cs.princeton.edu/people/profile/lumbroso">Jérémie Lumbroso</a>.</p>
+          <br>
+          <p>We would like to give a special thanks to our advisor, <b>Jerry Wei</b>, for the help, advice, and encouragement throughout the development process.</p>
+          <br>
+          <p>We love feedback! If you find any bugs, have any questions, or would like your non-ODUS club to be added, please contact us at <b>princetonclubtalk@gmail.com</b> and we'll get back to you straight away!</p>
+        </center>
+
+          <!-- Team Members Row -->
+          <div class="row">
+            <div class="col-lg-12">
+              <center><h2 class="my-4">Our Team</h2></center>
+              <br>
+            </div>
+            <div class="col-lg-4 col-sm-6 text-center mb-4">
+              <img class="rounded-circle img-fluid d-block mx-auto" src="{% static 'images/David_pic.jpg' %}" alt="">
+              <br>
+              <h3><center>David Major<br>
+                <small>CS '20</small> 
+                <a href="https://www.instagram.com/davidmajor1/">
+                  &nbsp;<i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/david-major-99a62812b/">&nbsp;
+                  <i class="fab fa-linkedin-in"></i>
+                </a>
+                </center>
+              </h3>
+              <p>David is a CS major getting a certificate in the History and Practice of Diplomacy. He hails from New York City and enjoys travelling, reading, and hanging out with friends.</p>
+            </div>
+            <div class="col-lg-4 col-sm-6 text-center mb-4">
+              <img class="rounded-circle img-fluid d-block mx-auto" src="{% static 'images/Uri_pic.PNG' %}" alt="">
+              <br>
+              <h3><center>Uri Schwartz<br>
+                <small>CS '20</small>
+                <a href="https://www.instagram.com/uri.schwartz/">
+                  &nbsp;<i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/uri-schwartz-5a0b7214b/">&nbsp;
+                  <i class="fab fa-linkedin-in"></i>
+                </a>
+                </center>
+              </h3>
+              <p>What does this team member to? Keep it short! This is also a great spot for social links!</p>
+            </div>
+            <div class="col-lg-4 col-sm-6 text-center mb-4">
+              <img class="rounded-circle img-fluid d-block mx-auto" src="http://placehold.it/200x200" alt="">
+              <h3><center>Michael Stambler<br>
+                <small>ORFE '20</small>
+                <a href="https://www.instagram.com/stambleman7/">
+                  &nbsp;<i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/michael-stambler-79287413b/">&nbsp;
+                  <i class="fab fa-linkedin-in"></i>
+                </a>
+                </center>
+              </h3>
+              <p>What does this team member to? Keep it short! This is also a great spot for social links!</p>
+            </div>
+            
+          </div>
+
+        </div>
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+            <div class="container">
+              <a class="navbar-brand" href="/"><i class="far fa-comments"></i> Princeton Club Talk <span class="badge badge-dark">Beta</span></a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarResponsive">
+                  <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                      <a class="nav-link" href="{% url 'post_list_full' num=0 %}">All Clubs</a>
+                    </li>
+                    <li class="nav-item active">
+                      <a class="nav-link" href="/myclubs">My Clubs</a>
+                    </li>
+                    <li class="nav-item active">
+                      <a class="nav-link" href="/top20">Top 20</a>
+                    </li>
+                    <li class="nav-item active">
+                      <a class="nav-link" href="/aboutus">About Us</a>
+                    </li>
+                    <li class="nav-item active">
+                      <a class="nav-link" data-toggle="modal" data-target="#exampleModal" href="#">Help!</a>
+                    </li>
+                    {% if request.user.is_authenticated %}
+                    <li class="nav-item active">
+                      <a class="nav-link" href="/logout">Logout</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item active">
+                      <a class="nav-link" href="/login/?next={{request.path}}">Login</a>
+                    </li>
+                    {% endif %}
+                  </ul>
+              </div>
+            </div>
+        </nav>
+
+
+
+        <!-- /.container -->
+      <footer class="py-5 bg-dark">
+      <div class="container">
+        <br>
+        <p class="m-0 text-center text-white">"What enables the wise ... [to] achieve things beyond the reach of ordinary men is FOREKNOWLEDGE." - <a href="https://en.wikipedia.org/wiki/The_Art_of_War">Sun Tzu</a></p>
+        <br>
+      </div>
+      <!-- /.container -->
+      </footer>
+
+    
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script>
+          $(document).ready(function(){
+              $('[data-toggle="tooltip"]').tooltip();   
+          });
+        </script>
+    </body>
+</html>
