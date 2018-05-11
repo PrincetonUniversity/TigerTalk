@@ -16,6 +16,9 @@ body {
   font-size: 20px;
 }
 
+.panelT.panel-default-2 {
+  margin: 1em 0em;
+}
 
 .container-1 {
   background-image: url("../images/nassau_hall.jpg");
