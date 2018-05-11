@@ -415,7 +415,12 @@ def search(request):
     if 'q' in request.GET:
         q = request.GET['q']
         type = request.GET['type']
-        if q == "" and type == "%":
+
+        if len(q) > 50:
+            q = ""
+            clubs = []
+
+        elif q == "" and type == "%":
             return post_list_full(request, 0)
 
         elif type == "%":
