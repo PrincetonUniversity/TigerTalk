@@ -96,7 +96,7 @@
             <p>{{club.desc}}</p>
             <p>
               <a class="btn btn-primary btn-lg" href="{% url 'all_reviews' pk=club.pk %}">Check out our reviews!</a>
-              <a class="btn btn-primary btn-lg" href="{% url 'all_interviews' pk=club.pk %}">Read about our interview process!</a>
+              <a class="btn btn-primary btn-lg" href="{% url 'all_interviews' pk=club.pk %}">Check out our interviews!</a>
             </p>
           </div>
           <div class="col-sm-4">
@@ -125,11 +125,10 @@
                   <br>{{ club.category.all|join:", " }}<br>
               {% endif %}
               <br>
-              <a href="{{club.email|mail}}" class="btn btn-primary btn-md">&nbsp;&nbsp;&nbsp;&nbsp;Contact us!&nbsp;&nbsp;&nbsp;&nbsp;</a>
+              <a href="{{club.email|mail}}" class="btn btn-primary btn-md btn-block">Contact us!</a>
               {% if club.website %}
-                  <a class="btn btn-primary btn-md" href= {{ club.website }}>&nbsp;&nbsp;&nbsp;&nbsp;Website&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                  <a class="btn btn-info btn-md btn-block" href= {{ club.website }}>Website</a>
               {% endif %}
-              <br>
               {% if accept %}
               
               {% else %}
