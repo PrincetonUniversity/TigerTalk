@@ -468,6 +468,9 @@ def logintemp(request):
     else:
         abort(500)
 
+def about_us(request):
+    return render(request, 'page/about_us.html')
+
 def login(request):
     if request.method == "POST":
         form = LoginForm(request.POST)
@@ -491,6 +494,7 @@ def login(request):
     else:
         form = LoginForm()
     return render(request, 'page/logintemp.html', {'form': form}) 
+
 
 def logout(request):
     auth.logout(request)
