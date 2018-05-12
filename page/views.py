@@ -266,14 +266,12 @@ def my_clubs(request):
 @login_required(login_url='/login/')
 def review_increment(request, pk_Club, pk_Review):
     review = get_object_or_404(Review, pk=pk_Review)
-    if request.user.student.review_votes.filter(pk=review.pk):
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-    else:
+    if not request.user.student.review_votes.filter(pk=review.pk):
         review.rating += 1;
         review.save()
         request.user.student.review_votes.add(review)
         request.user.student.save()
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    return HttpResponse(upvotes) #request.META.get('HTTP_REFERER'))
 
 @login_required(login_url='/login/')
 def review_decrement(request, pk_Club, pk_Review):
