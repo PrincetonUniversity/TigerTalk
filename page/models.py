@@ -73,7 +73,8 @@ class Student(models.Model):
     netid = models.CharField(max_length=50)
     clubs_reviewed = models.ManyToManyField(Club, related_name="submissions", blank=True)
     club_interviews_reviewed = models.ManyToManyField(Club, related_name="interviews", blank=True)
-    review_votes = models.ManyToManyField(Review, related_name="votes", blank=True)
+    review_upvotes = models.ManyToManyField(Review, related_name="upvotes", blank=True)
+    review_downvotes = models.ManyToManyField(Review, related_name="downvotes", blank=True)
     clubs_liked = models.ManyToManyField(Club, related_name="likes", blank=True)
     clubs_interested = models.ManyToManyField(Club, related_name="interested", blank=True)
 
