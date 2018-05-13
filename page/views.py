@@ -11,6 +11,7 @@ from django.contrib import auth, messages
 from django.contrib.auth.models import User
 from django.forms import inlineformset_factory
 from django.contrib.auth.decorators import login_required
+import json
 
 
 def post_list(request):
@@ -133,6 +134,13 @@ def post_detail(request, pk):
                 interest = True
                 messages.info(request, 'Thank you for expressing interest in this club!')
 
+    if review1:
+        review1.is_up = False
+        review1.is_down = False
+        if request.user.student.review_upvotes.filter(pk=review1.pk):
+            review1.is_up = True
+        elif request.user.student.review_upvotes.filter(pk=review1.pk):
+            review1.is_down = True
 
     return render(request, 'page/post_detail2.html', {'club': club, 'review_count': review_count, 
         'fun_count': club.fun_count, 'mean_count': club.meaning_count, 'happy_result': happy_result, 
@@ -266,26 +274,36 @@ def my_clubs(request):
 @login_required(login_url='/login/')
 def review_increment(request, pk_Club, pk_Review):
     review = get_object_or_404(Review, pk=pk_Review)
-    if request.user.student.review_votes.filter(pk=review.pk):
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    if request.user.student.review_upvotes.filter(pk=review.pk):
+        review.rating -=1
+        request.user.student.review_upvotes.remove(review)
     else:
-        review.rating += 1;
-        review.save()
-        request.user.student.review_votes.add(review)
-        request.user.student.save()
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        review.rating += 1
+        if request.user.student.review_downvotes.filter(pk=review.pk):
+            review.rating += 1
+            request.user.student.review_downvotes.remove(review)
+        request.user.student.review_upvotes.add(review)
+    review.save()
+    request.user.student.save()
+    data = json.dumps(review.rating)
+    return HttpResponse(data, content_type='application/json')
 
 @login_required(login_url='/login/')
 def review_decrement(request, pk_Club, pk_Review):
     review = get_object_or_404(Review, pk=pk_Review)
-    if request.user.student.review_votes.filter(pk=review.pk):
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    if request.user.student.review_downvotes.filter(pk=review.pk):
+        review.rating += 1
+        request.user.student.review_downvotes.remove(review)
     else:
-        review.rating -= 1;
-        review.save()
-        request.user.student.review_votes.add(review)
-        request.user.student.save()
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        review.rating -= 1
+        if request.user.student.review_upvotes.filter(pk=review.pk):
+            review.rating -= 1
+            request.user.student.review_upvotes.remove(review)
+        request.user.student.review_downvotes.add(review)
+    review.save()
+    request.user.student.save()
+    data = json.dumps(review.rating)
+    return HttpResponse(data, content_type='application/json')
 
 @login_required(login_url='/login/')
 def post_new(request, pk):

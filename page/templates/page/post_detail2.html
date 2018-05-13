@@ -203,18 +203,14 @@
                     <strong>Could be improved</strong><br>
                     {{review1.CBI}}<br><br>
                     {% endif %}
-                      <label class="btn btn-primary active">
-                        <a href = "{% url 'review_increment' club.pk review1.pk %}">
-                          <i class="fas fa-arrow-alt-circle-up"></i>
-                        </a>
+                      <label class="btn btn-primary active upvote" data-url="{% url 'review_increment' club.pk review1.pk %}" data-id="{{review1.pk}}">
+                          <i id="up-{{review1.pk}}" class="far fa-arrow-alt-circle-up"></i>
                       </label>
-                      <label class="btn btn-info active">
-                        <a data-toggle="tooltip" data-placement="top" title="How many users found this review helpful.">{{review1.rating}}</a>
+                      <label data-toggle="tooltip" data-placement="top" title="How many users found this review helpful." class="btn btn-info active" id="vote_count-{{review1.pk}}">
+                        {{review1.rating}}
                       </label>
-                      <label class="btn btn-primary active" name="downvote">
-                        <a href="{% url 'review_decrement' club.pk review1.pk %}">
-                          <i class="fas fa-arrow-alt-circle-down"></i>
-                        </a>
+                      <label class="btn btn-primary active downvote" data-url="{% url 'review_decrement' club.pk review1.pk %}" data-id="{{review1.pk}}">
+                          <i id="down-{{review1.pk}}" class="far fa-arrow-alt-circle-down"></i>
                       </label>
                   </div>
 
@@ -263,18 +259,14 @@
                     <strong>Could be improved</strong><br>
                     {{review2.CBI}}<br><br>
                     {% endif %}
-                      <label class="btn btn-primary active">
-                        <a href = "{% url 'review_increment' club.pk review2.pk %}">
-                          <i class="fas fa-arrow-alt-circle-up"></i>
-                        </a>
+                      <label class="btn btn-primary active upvote" data-url="{% url 'review_increment' club.pk review2.pk %}" data-id="{{review2.pk}}">
+                          <i class="far fa-arrow-alt-circle-up"></i>
                       </label>
-                      <label class="btn btn-info active">
-                        <a data-toggle="tooltip" data-placement="top" title="How many users found this review helpful.">{{review2.rating}}</a>
+                      <label data-toggle="tooltip" data-placement="top" title="How many users found this review helpful." class="btn btn-info active" id="vote_count-{{review2.pk}}">
+                        {{review2.rating}}
                       </label>
-                      <label class="btn btn-primary active" name="downvote">
-                        <a href="{% url 'review_decrement' club.pk review2.pk %}">
-                          <i class="fas fa-arrow-alt-circle-down"></i>
-                        </a>
+                      <label class="btn btn-primary active downvote" data-url="{% url 'review_decrement' club.pk review2.pk %}" data-id="{{review2.pk}}">
+                          <i class="far fa-arrow-alt-circle-down"></i>
                       </label>
                   </div>
 
