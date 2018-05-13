@@ -3,25 +3,6 @@
 {% load templatetags %}
 {% block content %}
 
-    <!-- Header with Background Image 
-    <header class="business-header">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
-            <h1 class="display-3 text-center text-white mt-4">Business Name or Tagline</h1>
-          </div>
-        </div>
-      </div>
-    </header>
-    -->
-    {% if messages %}
-      <script>
-        {% for message in messages %}
-          alert("{{ message }}");
-        {% endfor %}
-      </script>
-    {% endif %}
-
     <!-- Page Content -->
     <div class="container">
       {% if count != 0 %}
@@ -132,13 +113,11 @@
               {% if accept %}
               
               {% else %}
-              <form method="POST" class="post-form">{% csrf_token %}
-                {% if interest == False %}
-                <button type="submit" class="btn btn-warning btn-md btn-block" name="interest" value="interest">Express interest!</button>
+                {% if not interest %}
+                <label class="btn btn-warning btn-md btn-block express" data-url="{% url 'express_interest' club.pk %}">Express interest!</button>
                 {% else %}
-                <button type="submit" class="btn btn-warning btn-md btn-block" name="interest" value="interest">Unexpress interest!</button>
+                <label class="btn btn-warning btn-md btn-block express" data-url="{% url 'express_interest' club.pk %}">Unexpress interest!</button>
                 {% endif %}
-              </form>
               {% endif %}
             </address>
           </div>

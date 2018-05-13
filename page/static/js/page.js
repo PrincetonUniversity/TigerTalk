@@ -25,4 +25,21 @@ $(document).ready(function() {
 	        }
 	    });
 	});
+
+	$(".express").click(function() {
+		var view_url = $(this).attr('data-url');
+		$.ajax({
+	        url: view_url,
+	        type: "GET",
+	        success: function(data) {
+	        	if (data == 0) {
+	        		$(".express").html("Express interest!");
+	        	}
+	        	else {
+	        		$(".express").html("Unexpress interest!");
+	        	}
+	        }
+	    });
+	});
+
 });

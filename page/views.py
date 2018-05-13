@@ -122,18 +122,6 @@ def post_detail(request, pk):
     else:
         interest = False
 
-
-    if request.method == "POST":
-        if request.POST.get('interest') != None:
-            if club in request.user.student.clubs_interested.all():
-                request.user.student.clubs_interested.remove(club)
-                interest = False
-                messages.info(request, 'You have removed your interest in this club!')
-            else:
-                request.user.student.clubs_interested.add(club)
-                interest = True
-                messages.info(request, 'Thank you for expressing interest in this club!')
-
     if review1:
         review1.is_up = False
         review1.is_down = False
@@ -148,6 +136,18 @@ def post_detail(request, pk):
         'count':photo_count, 'photo1':photo1, 'photo2':photo2, 'photo3':photo3, 
         'review1':review1, 'review2': review2, 'positive_result':positive_result,
         'hard_result':hard_result, 'interview1':interview1, 'interview2':interview2, 'accept':accept, 'interest':interest})
+
+@login_required(login_url='/login')
+def express_interest(request, pk):
+    club = get_object_or_404(Club, pk=pk)
+    if club in request.user.student.clubs_interested.all():
+        request.user.student.clubs_interested.remove(club)
+        express = 0
+    else:
+        request.user.student.clubs_interested.add(club)
+        express = 1
+    data = json.dumps(express)
+    return HttpResponse(data, content_type='application/json')
 
 @login_required(login_url='/login/')
 def top20(request):
