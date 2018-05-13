@@ -122,14 +122,6 @@ def post_detail(request, pk):
     else:
         interest = False
 
-    if review1:
-        review1.is_up = False
-        review1.is_down = False
-        if request.user.student.review_upvotes.filter(pk=review1.pk):
-            review1.is_up = True
-        elif request.user.student.review_upvotes.filter(pk=review1.pk):
-            review1.is_down = True
-
     return render(request, 'page/post_detail2.html', {'club': club, 'review_count': review_count, 
         'fun_count': club.fun_count, 'mean_count': club.meaning_count, 'happy_result': happy_result, 
         'mean_result': mean_result, 'star_count': star_result, 
