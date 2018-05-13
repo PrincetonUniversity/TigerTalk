@@ -23,10 +23,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '47)056$8*$-!go4a-l47)^$e!y6vcx&cha42h#k=xuio4pe5p$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
 ALLOWED_HOSTS = ['clubtalk.herokuapp.com', '127.0.0.1']
 
+DEBUG = True
 
 # Application definition
 

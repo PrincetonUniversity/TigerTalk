@@ -511,3 +511,9 @@ def logout(request):
     auth.logout(request)
     return redirect('/')
     # return redirect('https://fed.princeton.edu/cas/logout?url=http://clubtalk.herokuapp.com/')
+
+def handler404(request, exception):
+    return render(request, 'page/404.html', status=404)
+
+def handler500(request, excpetion):
+    return render(request, 'page/500.html', status=500)
