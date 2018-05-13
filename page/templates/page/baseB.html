@@ -2,6 +2,13 @@
 {% load templatetags %}
 <!DOCTYPE html>
 <html lang="en">
+{% if messages %}
+      <script>
+        {% for message in messages %}
+          alert("{{ message }}");
+        {% endfor %}
+      </script>
+    {% endif %}
 
   <head>
 

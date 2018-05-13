@@ -417,8 +417,11 @@ def search(request):
         type = request.GET['type']
 
         if len(q) > 50:
-            q = ""
-            clubs = []
+            #q = ""
+            #clubs = []
+            messages.info(request, "Your search query is too long!")
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
 
         elif q == "" and type == "%":
             return post_list_full(request, 0)
