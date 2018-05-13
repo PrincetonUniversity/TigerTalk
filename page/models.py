@@ -9,9 +9,9 @@ class Category(models.Model):
         return self.name
 
 class Leader(models.Model):
-    name = models.CharField(max_length=200)
-    title = models.CharField(max_length=200)
-    email = models.EmailField(max_length=100)
+    name = models.CharField(max_length=40)
+    title = models.CharField(max_length=40)
+    email = models.EmailField(max_length=40)
     club = models.ForeignKey('Club', on_delete=models.PROTECT, null=True)
 
     def __str__(self):
@@ -22,7 +22,7 @@ class AutoDateTimeField(models.DateTimeField):
         return datetime.datetime.now()
 
 class Review(models.Model):
-    text = models.TextField(max_length=5000)
+    text = models.TextField(max_length=2000)
     fun = models.IntegerField(validators=[MaxValueValidator(1), MinValueValidator(0)])
     meaningful = models.IntegerField(validators=[MaxValueValidator(1), MinValueValidator(0)])
     stars = models.IntegerField(validators=[MaxValueValidator(5), MinValueValidator(1)])
@@ -33,7 +33,7 @@ class Review(models.Model):
     club = models.ForeignKey('Club', on_delete=models.PROTECT, null=True)
 
 class Interview(models.Model):
-    text = models.TextField(max_length=5000)
+    text = models.TextField(max_length=2000)
     positive = models.IntegerField(validators=[MaxValueValidator(1), MinValueValidator(0)])
     hard = models.IntegerField(validators=[MaxValueValidator(1), MinValueValidator(0)])
     rating = models.IntegerField(default='0')
@@ -42,11 +42,11 @@ class Interview(models.Model):
     club = models.ForeignKey('Club', on_delete=models.PROTECT, null=True)
 
 class Club(models.Model):
-    name = models.CharField(max_length=200)
-    desc = models.TextField(max_length=5000, null=True, blank=True)
+    name = models.CharField(max_length=80)
+    desc = models.TextField(max_length=1600, null=True, blank=True)
     category = models.ManyToManyField(Category, blank=True)
-    email = models.EmailField(max_length=200)
-    website = models.CharField(max_length=200, null=True, blank=True)
+    email = models.EmailField(max_length=30)
+    website = models.CharField(max_length=400, null=True, blank=True)
     fun_count = models.IntegerField(default = 0)
     meaning_count = models.IntegerField(default = 0)
     positive_count = models.IntegerField(default = 0)
