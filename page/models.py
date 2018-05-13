@@ -9,7 +9,7 @@ class Category(models.Model):
         return self.name
 
 class Leader(models.Model):
-    name = models.CharField(max_length=40)
+    name = models.CharField(max_length=50)
     title = models.CharField(max_length=40)
     email = models.EmailField(max_length=40)
     club = models.ForeignKey('Club', on_delete=models.PROTECT, null=True)
